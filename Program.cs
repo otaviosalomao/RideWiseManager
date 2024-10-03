@@ -1,21 +1,17 @@
-using Microsoft.EntityFrameworkCore;
-using ride_wise_api.Infrastructure;
-using System;
+using ride_wise_api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.ConfigureServices();
+builder.Services.ConfigureDbContext(builder.Configuration);
+builder.Services.ConfigureRepositories();
+builder.Services.ConfigureLogger();
+builder.Services.ConfigureMapper();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<RiseWiseManagerDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("RiseWiseManagerDatabase")));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

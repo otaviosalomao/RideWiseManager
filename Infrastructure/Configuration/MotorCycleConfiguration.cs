@@ -8,7 +8,7 @@ namespace ride_wise_api.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<MotorCycle> builder)
         {
-            builder.HasKey(u => new { u.LicensePlate });            
+            builder.HasKey(u => new { u.LicensePlate });
         }
     }
 }

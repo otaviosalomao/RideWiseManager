@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Data;
-using System.Reflection;
-using System;
 using ride_wise_api.Domain.Models;
+using System.Reflection;
 
 namespace ride_wise_api.Infrastructure
 {
