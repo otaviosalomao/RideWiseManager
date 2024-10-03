@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ride_wise_api.Domain.Models;
-using System.Reflection.Metadata;
 
 namespace ride_wise_api.Infrastructure.Configuration
 {
@@ -11,7 +10,7 @@ namespace ride_wise_api.Infrastructure.Configuration
         {
             builder.HasKey(u => new { u.Identification });
             builder.HasOne(u => u.MotorCycle)
-            .WithOne(u=> u.Rental)
+            .WithOne(u => u.Rental)
             .HasForeignKey<MotorCycle>(e => e.Identification)
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();

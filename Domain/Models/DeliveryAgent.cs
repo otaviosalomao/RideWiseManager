@@ -11,6 +11,6 @@ namespace ride_wise_api.Domain.Models
         public int DriverLicenseNumber { get; set; }
         public DriverLicenseType DriverLicenseType { get; set; }
         public string DriverLicenseImage { get; set; }
-        public Rental Rental { get; set; }        
+        public Rental Rental { get; set; }
     }
 }

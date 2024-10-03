@@ -1,4 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ride_wise_api.Application.Models;
+using ride_wise_api.Application.Services.Interfaces;
+using System.Net;
+using System.Net.Mime;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,11 +13,25 @@ namespace ride_wise_api.Controllers
     [ApiController]
     public class MotorCyclesController : ControllerBase
     {
+        readonly IMotorCycleService _motorCycleService;
+        readonly ILoggerManager _logger;
+
+        public MotorCyclesController(
+            IMotorCycleService motorCycleService,
+            ILoggerManager loggerManager)
+        {
+            _logger = loggerManager;
+            _motorCycleService = motorCycleService;
+        }
+
         // GET: api/<MotorCyclesController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Consumes(MediaTypeNames.Application.Json)]        
+        public async Task<IActionResult> Get(string licensePlate)
         {
-            return new string[] { "value1", "value2" };
+            _logger.LogInfo("get motorcycle request");
+            var result = await _motorCycleService.GetAsync(licensePlate);
+            return Ok(result);
         }
 
         // GET api/<MotorCyclesController>/5
