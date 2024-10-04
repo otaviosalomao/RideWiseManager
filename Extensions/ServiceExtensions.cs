@@ -22,6 +22,9 @@ namespace ride_wise_api.Extensions
             services.AddTransient<IRentalService, RentalService>();
             services.AddTransient<IDeliveryAgentService, DeliveryAgentService>();
             services.AddTransient<IMotorcycleService, MotorcycleService>();
+            services.AddScoped<IMessageBusService, MessageBusService>();
+            services.AddScoped<IMotorcycleMessageBusProducer, MotorcycleMessageBusProducer>();
+            services.AddScoped<IRabbitMqService, RabbitMqService>();
         }
         public static void ConfigureRepositories(this IServiceCollection services)
         {
@@ -40,12 +43,11 @@ namespace ride_wise_api.Extensions
         {
             var mapperConfig = new MapperConfiguration(mc =>
             {
-                mc.AddProfile(new MappingProfile());
+                mc.AddProfile(new MotorcycleRequestMapper());
+                mc.AddProfile(new MotorcycleResultMapper());
             });
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
-
-
         }
     }
 }

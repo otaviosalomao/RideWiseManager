@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ride_wise_api.Domain.Models;
-using System.Reflection.Emit;
 
 namespace ride_wise_api.Infrastructure.Configuration
 {
