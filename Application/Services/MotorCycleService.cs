@@ -51,7 +51,7 @@ namespace ride_wise_api.Application.Services
             {
                 _logger.LogError($"Motorcycle not found for identification {identification}");
                 return false;
-            }            
+            }
             await _repositoryManager.Motorcycle.Delete(motorcycle.FirstOrDefault());
             _repositoryManager.Save();
             return true;
@@ -63,7 +63,7 @@ namespace ride_wise_api.Application.Services
             return _mapper.Map<IEnumerable<MotorcycleResult>>(motorcycles);
         }
 
-        public async Task<bool> UpdateLicensePlateAsync(string identification, MotorcycleLicensePlate licensePlate)
+        public async Task<bool> UpdateLicensePlateAsync(string identification, string licensePlate)
         {
             var filter = new MotorcycleFilter(identification: identification);
             var motorcycle =
@@ -75,7 +75,7 @@ namespace ride_wise_api.Application.Services
                 throw new Exception(errorMessage);
             }
             var updateMotorcycle = motorcycle.FirstOrDefault();
-            updateMotorcycle.LicensePlate = licensePlate.LicensePlate;
+            updateMotorcycle.LicensePlate = licensePlate;
             await _repositoryManager.Motorcycle.Update(updateMotorcycle);
             _repositoryManager.Save();
             return true;

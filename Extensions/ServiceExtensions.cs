@@ -43,12 +43,11 @@ namespace ride_wise_api.Extensions
         {
             var mapperConfig = new MapperConfiguration(mc =>
             {
-                mc.AddProfile(new MappingProfile());
+                mc.AddProfile(new MotorcycleRequestMapper());
+                mc.AddProfile(new MotorcycleResultMapper());
             });
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
-
-
         }
     }
 }

@@ -3,6 +3,7 @@ using ride_wise_api.Application.Models;
 using ride_wise_api.Application.Services.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Mime;
+using System.Security.Claims;
 
 namespace ride_wise_api.Controllers
 {
@@ -22,8 +23,7 @@ namespace ride_wise_api.Controllers
         }
 
         // GET: api/<MotorcyclesController>
-        [HttpGet]
-        [Consumes(MediaTypeNames.Application.Json)]
+        [HttpGet]        
         public async Task<IActionResult> Get([FromQuery] string? placa = null)
         {
             try
@@ -31,7 +31,11 @@ namespace ride_wise_api.Controllers
                 _logger.LogInfo("get motorcycle request");
                 var motocycleFilter = new MotorcycleFilter(licensePlate: placa);
                 var result = await _motorcycleService.GetAsync(motocycleFilter);
-                return Ok(result);
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+                return NotFound(new { mensagem = "Moto(s) não encontrada(s)" });
             }
             catch (Exception ex)
             {
@@ -41,8 +45,7 @@ namespace ride_wise_api.Controllers
         }
 
         // GET api/<MotorcyclesController>/5
-        [HttpGet("{id}")]
-        [Consumes(MediaTypeNames.Application.Json)]
+        [HttpGet("{id}")]              
         public async Task<IActionResult> GetByIdentification([FromRoute] string id)
         {
             try
@@ -50,7 +53,11 @@ namespace ride_wise_api.Controllers
                 _logger.LogInfo($"get motorcycle by identification {id}");
                 var filter = new MotorcycleFilter(identification: id);
                 var result = await _motorcycleService.GetAsync(filter);
-                return Ok(result);
+                if (result.Any())
+                {
+                    return Ok(result?.FirstOrDefault());
+                }
+                return NotFound(new { mensagem = "Moto não encontrada" });
             }
             catch (Exception ex)
             {
@@ -67,31 +74,31 @@ namespace ride_wise_api.Controllers
             {
                 _logger.LogInfo($"create motorcycle {motorcycleRequest}");
                 var result = await _motorcycleService.CreateAsync(motorcycleRequest);
-                return Ok(result);
+                return Created("",result);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Erro creating motorcycle {motorcycleRequest}: {ex.Message}");
-                return StatusCode(500);
+                return StatusCode(400, new { mensagem = "Dados inválidos" });
             }
         }
 
-        // PATCH api/<MotorcyclesController>/5
-        [HttpPatch("{identification}/license-plate")]
+        // PUT api/<MotorcyclesController>/5
+        [HttpPut("{id}/placa")]
         public async Task<IActionResult> Put(
-            [FromRoute] string identification,
+            [Required][FromRoute] string id,
             [FromBody] MotorcycleLicensePlate licensePlate)
         {
             try
             {
-                _logger.LogInfo($"update licensePlate from motorcycle identification {identification}");
-                var result = await _motorcycleService.UpdateLicensePlateAsync(identification, licensePlate);
-                return Ok(result);
+                _logger.LogInfo($"update licensePlate from motorcycle identification {id}");
+                await _motorcycleService.UpdateLicensePlateAsync(id, licensePlate.Placa);
+                return Ok(new { mensagem = "Placa modificada com sucesso" });
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Erro updating motorcycle {identification}: {ex.Message}");
-                return StatusCode(500);
+                _logger.LogError($"Erro updating motorcycle {id}: {ex.Message}");
+                return StatusCode(400, new { mensagem = "Dados inválidos" });
             }
         }
 
@@ -103,12 +110,12 @@ namespace ride_wise_api.Controllers
             {
                 _logger.LogInfo($"delete motorcycle identification {identification}");
                 var result = await _motorcycleService.DeleteAsync(identification);
-                return Ok(result);
+                return Ok();
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Erro deleting motorcycle {identification}: {ex.Message}");
-                return StatusCode(500);
+                return StatusCode(400, new { mensagem = "Dados inválidos" });
             }
         }
     }

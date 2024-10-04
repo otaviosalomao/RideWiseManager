@@ -2,6 +2,6 @@
 {
     public class MotorcycleLicensePlate
     {
-        public string LicensePlate { get; set; }
+        public string Placa { get; set; }
     }
 }

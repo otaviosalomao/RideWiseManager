@@ -6,7 +6,7 @@ namespace ride_wise_api.Application.Services.Interfaces
     {
         Task<IEnumerable<MotorcycleResult>> GetAsync(MotorcycleFilter filters);
         Task<MotorcycleResult> CreateAsync(MotorcycleRequest request);
-        Task<bool> UpdateLicensePlateAsync(string identification, MotorcycleLicensePlate licensePlate);
+        Task<bool> UpdateLicensePlateAsync(string identification, string licensePlate);
         Task<bool> DeleteAsync(string identification);
     }
 }
