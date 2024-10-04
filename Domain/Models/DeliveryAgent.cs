@@ -4,6 +4,7 @@ namespace ride_wise_api.Domain.Models
 {
     public class DeliveryAgent
     {
+        public int Id { get; set; }
         public string Identification { get; set; }
         public string Name { get; set; }
         public string IdentificationDocument { get; set; }
@@ -11,6 +12,5 @@ namespace ride_wise_api.Domain.Models
         public int DriverLicenseNumber { get; set; }
         public DriverLicenseType DriverLicenseType { get; set; }
         public string DriverLicenseImage { get; set; }
-        public Rental Rental { get; set; }
     }
 }

@@ -1,62 +1,114 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ride_wise_api.Application.Models;
 using ride_wise_api.Application.Services.Interfaces;
-using System.Net;
+using System.ComponentModel.DataAnnotations;
 using System.Net.Mime;
-
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ride_wise_api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("motorcycles")]
     [ApiController]
-    public class MotorCyclesController : ControllerBase
+    public class MotorcyclesController : ControllerBase
     {
-        readonly IMotorCycleService _motorCycleService;
+        readonly IMotorcycleService _motorcycleService;
         readonly ILoggerManager _logger;
 
-        public MotorCyclesController(
-            IMotorCycleService motorCycleService,
+        public MotorcyclesController(
+            IMotorcycleService motorCycleService,
             ILoggerManager loggerManager)
         {
             _logger = loggerManager;
-            _motorCycleService = motorCycleService;
+            _motorcycleService = motorCycleService;
         }
 
-        // GET: api/<MotorCyclesController>
+        // GET: api/<MotorcyclesController>
         [HttpGet]
-        [Consumes(MediaTypeNames.Application.Json)]        
-        public async Task<IActionResult> Get(string licensePlate)
+        [Consumes(MediaTypeNames.Application.Json)]
+        public async Task<IActionResult> Get([FromQuery] MotorcycleFilter filters)
         {
-            _logger.LogInfo("get motorcycle request");
-            var result = await _motorCycleService.GetAsync(licensePlate);
-            return Ok(result);
+            try
+            {
+                _logger.LogInfo("get motorcycle request");
+                var result = await _motorcycleService.GetAsync(filters);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Erro getting motorcycle by {filters}: {ex.Message}");
+                return StatusCode(500);
+            }
         }
 
-        // GET api/<MotorCyclesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET api/<MotorcyclesController>/5
+        [HttpGet("{identification}")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public async Task<IActionResult> GetByIdentification([FromRoute] string identification)
         {
-            return "value";
+            try
+            {
+                _logger.LogInfo($"get motorcycle by identification {identification}");
+                var filter = new MotorcycleFilter(identification: identification);
+                var result = await _motorcycleService.GetAsync(filter);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Erro getting motorcycle by {identification}: {ex.Message}");
+                return StatusCode(500);
+            }
         }
 
-        // POST api/<MotorCyclesController>
+        // POST api/<MotorcyclesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([Required][FromBody] MotorcycleRequest motorcycleRequest)
         {
+            try
+            {
+                _logger.LogInfo($"create motorcycle {motorcycleRequest}");
+                var result = await _motorcycleService.CreateAsync(motorcycleRequest);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Erro creating motorcycle {motorcycleRequest}: {ex.Message}");
+                return StatusCode(500);
+            }
         }
 
-        // PUT api/<MotorCyclesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // PATCH api/<MotorcyclesController>/5
+        [HttpPatch("{identification}/license-plate")]
+        public async Task<IActionResult> Put(
+            [FromRoute] string identification, 
+            [FromBody] MotorcycleLicensePlate licensePlate)
         {
+            try
+            {
+                _logger.LogInfo($"update licensePlate from motorcycle identification {identification}");
+                var result = await _motorcycleService.UpdateLicensePlateAsync(identification, licensePlate);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Erro updating motorcycle {identification}: {ex.Message}");
+                return StatusCode(500);
+            }
         }
 
-        // DELETE api/<MotorCyclesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // DELETE api/<MotorcyclesController>/5
+        [HttpDelete("{identification}")]
+        public async Task<IActionResult> Delete([Required][FromRoute] string identification)
         {
+            try
+            {
+                _logger.LogInfo($"delete motorcycle identification {identification}");
+                var result = await _motorcycleService.DeleteAsync(identification);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Erro deleting motorcycle {identification}: {ex.Message}");
+                return StatusCode(500);
+            }
         }
     }
 }

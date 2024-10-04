@@ -12,8 +12,8 @@ using ride_wise_api.Infrastructure;
 namespace ride_wise_api.Migrations
 {
     [DbContext(typeof(RiseWiseManagerDbContext))]
-    [Migration("20241003160447_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20241004020651_InitialStructure")]
+    partial class InitialStructure
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,7 +59,7 @@ namespace ride_wise_api.Migrations
                     b.ToTable("DeliveryAgents");
                 });
 
-            modelBuilder.Entity("ride_wise_api.Domain.Models.MotorCycle", b =>
+            modelBuilder.Entity("ride_wise_api.Domain.Models.Motorcycle", b =>
                 {
                     b.Property<string>("LicensePlate")
                         .HasColumnType("text");
@@ -80,7 +80,7 @@ namespace ride_wise_api.Migrations
                     b.HasIndex("Identification")
                         .IsUnique();
 
-                    b.ToTable("MotorCycles");
+                    b.ToTable("Motorcycles");
                 });
 
             modelBuilder.Entity("ride_wise_api.Domain.Models.Rental", b =>
@@ -100,7 +100,7 @@ namespace ride_wise_api.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("MotorCycleIdentification")
+                    b.Property<string>("MotorcycleIdentification")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -128,11 +128,11 @@ namespace ride_wise_api.Migrations
                     b.Navigation("Rental");
                 });
 
-            modelBuilder.Entity("ride_wise_api.Domain.Models.MotorCycle", b =>
+            modelBuilder.Entity("ride_wise_api.Domain.Models.Motorcycle", b =>
                 {
                     b.HasOne("ride_wise_api.Domain.Models.Rental", "Rental")
-                        .WithOne("MotorCycle")
-                        .HasForeignKey("ride_wise_api.Domain.Models.MotorCycle", "Identification")
+                        .WithOne("Motorcycle")
+                        .HasForeignKey("ride_wise_api.Domain.Models.Motorcycle", "Identification")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -144,7 +144,7 @@ namespace ride_wise_api.Migrations
                     b.Navigation("DeliveryAgent")
                         .IsRequired();
 
-                    b.Navigation("MotorCycle")
+                    b.Navigation("Motorcycle")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

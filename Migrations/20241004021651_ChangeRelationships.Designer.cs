@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ride_wise_api.Infrastructure;
@@ -11,9 +12,11 @@ using ride_wise_api.Infrastructure;
 namespace ride_wise_api.Migrations
 {
     [DbContext(typeof(RiseWiseManagerDbContext))]
-    partial class RiseWiseManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241004021651_ChangeRelationships")]
+    partial class ChangeRelationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,9 +43,6 @@ namespace ride_wise_api.Migrations
                     b.Property<int>("DriverLicenseType")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Identification")
                         .IsRequired()
                         .HasColumnType("text");
@@ -58,17 +58,10 @@ namespace ride_wise_api.Migrations
 
             modelBuilder.Entity("ride_wise_api.Domain.Models.Motorcycle", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Identification")
-                        .IsRequired()
+                    b.Property<string>("LicensePlate")
                         .HasColumnType("text");
 
-                    b.Property<string>("LicensePlate")
+                    b.Property<string>("Identification")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -79,10 +72,7 @@ namespace ride_wise_api.Migrations
                     b.Property<int>("Year")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("LicensePlate")
-                        .IsUnique();
+                    b.HasKey("LicensePlate");
 
                     b.ToTable("Motorcycles");
                 });
@@ -111,13 +101,11 @@ namespace ride_wise_api.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MotorcycleId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("MotorcycleIdentification")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MotorcycleLicensePlate")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -131,7 +119,7 @@ namespace ride_wise_api.Migrations
 
                     b.HasKey("Identification");
 
-                    b.HasIndex("MotorcycleId");
+                    b.HasIndex("MotorcycleLicensePlate");
 
                     b.HasIndex("DeliveryAgentDriverLicenseNumber", "DeliveryAgentIdentificationDocument");
 
@@ -142,7 +130,7 @@ namespace ride_wise_api.Migrations
                 {
                     b.HasOne("ride_wise_api.Domain.Models.Motorcycle", "Motorcycle")
                         .WithMany()
-                        .HasForeignKey("MotorcycleId")
+                        .HasForeignKey("MotorcycleLicensePlate")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

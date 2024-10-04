@@ -6,15 +6,15 @@ namespace ride_wise_api.Application.Repositories
     public class RepositoryManager : IRepositoryManager
     {
         private readonly RiseWiseManagerDbContext _context;
-        private readonly Lazy<IMotorCycleRepository> _motorCycleRepository;
+        private readonly Lazy<IMotorcycleRepository> _motorcycleRepository;
 
         public RepositoryManager(RiseWiseManagerDbContext context)
         {
             _context = context;
-            _motorCycleRepository = new Lazy<IMotorCycleRepository>(() => new MotorCycleRepository(context));
+            _motorcycleRepository = new Lazy<IMotorcycleRepository>(() => new MotorcycleRepository(context));
         }
 
-        public IMotorCycleRepository MotorCycle => _motorCycleRepository.Value;
+        public IMotorcycleRepository Motorcycle => _motorcycleRepository.Value;
 
         public void Save()
         {

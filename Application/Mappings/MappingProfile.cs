@@ -7,9 +7,12 @@ namespace ride_wise_api.Application.Mappings
     public class MappingProfile : Profile
     {
         public MappingProfile()
-        {            
-            CreateMap<MotorCycleResult, MotorCycle>();
-            CreateMap<MotorCycle, MotorCycleRequest>();
+        {
+            CreateMap<MotorcycleResult, Motorcycle>();
+            CreateMap<Motorcycle, MotorcycleRequest>();
+            CreateMap<Motorcycle, MotorcycleResult>();
+            CreateMap<Motorcycle, MotorcycleLicensePlate>();
+            CreateMap<MotorcycleRequest, Motorcycle>();            
         }
     }
 }

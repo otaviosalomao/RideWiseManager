@@ -1,6 +1,6 @@
 ﻿namespace ride_wise_api.Application.Models
 {
-    public class MotorCycleResult
+    public class MotorcycleResult
     {
         public string Identification { get; set; }
         public int Year { get; set; }

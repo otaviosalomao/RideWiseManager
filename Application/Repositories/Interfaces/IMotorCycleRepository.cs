@@ -3,13 +3,12 @@ using ride_wise_api.Domain.Models;
 
 namespace ride_wise_api.Application.Repositories.Interfaces
 {
-    public interface IMotorCycleRepository
+    public interface IMotorcycleRepository
     {
-        Task<MotorCycle> CreateMotorCycle(MotorCycle motorCycle);
-        Task DeleteMotorCycle(MotorCycle motorCycle);
-        Task UpdateMotorCycle(MotorCycle motorCycle);
-        Task<IEnumerable<MotorCycle>> GetAllMotorCycle();
-        Task<MotorCycle> GetMotorCycleByLicensePlate(string licensePlate);
+        Task<Motorcycle> Create(Motorcycle motorCycle);
+        Task Delete(Motorcycle motorCycle);
+        Task Update(Motorcycle motorCycle);
+        Task<IEnumerable<Motorcycle>> Get(MotorcycleFilter filters);
 
     }
 }

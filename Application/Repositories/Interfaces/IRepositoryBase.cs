@@ -4,8 +4,8 @@ namespace ride_wise_api.Application.Repositories.Interfaces
 {
     public interface IRepositoryBase<T>
     {
-        IQueryable<T> FindAll();
-        IQueryable<T> FindByCondition(Expression<Func<T, bool>> exmpression);
+        IQueryable<T> GetAll();
+        IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
         T Create(T entity);
         void Delete(T entity);
         void Update(T entity);

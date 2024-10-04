@@ -2,11 +2,11 @@
 
 namespace ride_wise_api.Application.Services.Interfaces
 {
-    public interface IMotorCycleService
+    public interface IMotorcycleService
     {
-        Task<IEnumerable<MotorCycleResult>> GetAsync(string LicensePlate);
-        Task<MotorCycleResult> CreateAsync(MotorCycleRequest request);
-        Task<bool> UpdateAsync(string identificationDocument, MotorCycleRequest request);
+        Task<IEnumerable<MotorcycleResult>> GetAsync(MotorcycleFilter filters);
+        Task<MotorcycleResult> CreateAsync(MotorcycleRequest request);
+        Task<bool> UpdateLicensePlateAsync(string identification, MotorcycleLicensePlate licensePlate);
         Task<bool> DeleteAsync(string identification);
     }
 }
