@@ -22,6 +22,9 @@ namespace ride_wise_api.Extensions
             services.AddTransient<IRentalService, RentalService>();
             services.AddTransient<IDeliveryAgentService, DeliveryAgentService>();
             services.AddTransient<IMotorcycleService, MotorcycleService>();
+            services.AddScoped<IMessageBusService, MessageBusService>();
+            services.AddScoped<IMotorcycleMessageBusProducer, MotorcycleMessageBusProducer>();
+            services.AddScoped<IRabbitMqService, RabbitMqService>();
         }
         public static void ConfigureRepositories(this IServiceCollection services)
         {
