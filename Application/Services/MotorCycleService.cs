@@ -11,29 +11,34 @@ namespace ride_wise_api.Application.Services
         private readonly IRepositoryManager _repositoryManager;
         private readonly IMapper _mapper;
         readonly ILoggerManager _logger;
+        readonly IMotorcycleMessageBusProducer _messageBusProducer;
 
         public MotorcycleService(
             IMapper mapper,
             IRepositoryManager repositoryManager,
-             ILoggerManager loggerManager)
+             ILoggerManager loggerManager,
+             IMotorcycleMessageBusProducer messageBusProducer)
         {
             _repositoryManager = repositoryManager;
             _mapper = mapper;
             _logger = loggerManager;
+            _messageBusProducer = messageBusProducer;
+            _messageBusProducer = messageBusProducer;
         }
 
         public async Task<MotorcycleResult> CreateAsync(MotorcycleRequest request)
         {
             var motorcycle =
-                await _repositoryManager.Motorcycle.Get(new MotorcycleFilter(licensePlate: request.LicensePlate));
-            if (motorcycle.Any()) 
+                await _repositoryManager.Motorcycle.Get(new MotorcycleFilter(licensePlate: request.Placa));
+            if (motorcycle.Any())
             {
-                var errorMessage = $"Motorcycle with licensePlate {request.LicensePlate} already exist";
+                var errorMessage = $"Motorcycle with licensePlate {request.Placa} already exist";
                 _logger.LogError(errorMessage);
                 throw new Exception(errorMessage);
             }
             var motorCycle = _mapper.Map<Motorcycle>(request);
             var result = await _repositoryManager.Motorcycle.Create(motorCycle);
+            await _messageBusProducer.Publish(result);
             _repositoryManager.Save();
             return _mapper.Map<MotorcycleResult>(result);
         }
@@ -46,7 +51,7 @@ namespace ride_wise_api.Application.Services
             {
                 _logger.LogError($"Motorcycle not found for identification {identification}");
                 return false;
-            }
+            }            
             await _repositoryManager.Motorcycle.Delete(motorcycle.FirstOrDefault());
             _repositoryManager.Save();
             return true;
@@ -66,7 +71,7 @@ namespace ride_wise_api.Application.Services
             if (!motorcycle.Any())
             {
                 var errorMessage = $"Motorcycle not found for identification {identification}";
-               _logger.LogError(errorMessage);
+                _logger.LogError(errorMessage);
                 throw new Exception(errorMessage);
             }
             var updateMotorcycle = motorcycle.FirstOrDefault();

@@ -6,7 +6,7 @@ using System.Net.Mime;
 
 namespace ride_wise_api.Controllers
 {
-    [Route("motorcycles")]
+    [Route("motos")]
     [ApiController]
     public class MotorcyclesController : ControllerBase
     {
@@ -24,36 +24,37 @@ namespace ride_wise_api.Controllers
         // GET: api/<MotorcyclesController>
         [HttpGet]
         [Consumes(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> Get([FromQuery] MotorcycleFilter filters)
+        public async Task<IActionResult> Get([FromQuery] string? placa = null)
         {
             try
             {
                 _logger.LogInfo("get motorcycle request");
-                var result = await _motorcycleService.GetAsync(filters);
+                var motocycleFilter = new MotorcycleFilter(licensePlate: placa);
+                var result = await _motorcycleService.GetAsync(motocycleFilter);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Erro getting motorcycle by {filters}: {ex.Message}");
+                _logger.LogError($"Erro getting motorcycle by license plate {placa}: {ex.Message}");
                 return StatusCode(500);
             }
         }
 
         // GET api/<MotorcyclesController>/5
-        [HttpGet("{identification}")]
+        [HttpGet("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> GetByIdentification([FromRoute] string identification)
+        public async Task<IActionResult> GetByIdentification([FromRoute] string id)
         {
             try
             {
-                _logger.LogInfo($"get motorcycle by identification {identification}");
-                var filter = new MotorcycleFilter(identification: identification);
+                _logger.LogInfo($"get motorcycle by identification {id}");
+                var filter = new MotorcycleFilter(identification: id);
                 var result = await _motorcycleService.GetAsync(filter);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Erro getting motorcycle by {identification}: {ex.Message}");
+                _logger.LogError($"Erro getting motorcycle by {id}: {ex.Message}");
                 return StatusCode(500);
             }
         }
@@ -78,7 +79,7 @@ namespace ride_wise_api.Controllers
         // PATCH api/<MotorcyclesController>/5
         [HttpPatch("{identification}/license-plate")]
         public async Task<IActionResult> Put(
-            [FromRoute] string identification, 
+            [FromRoute] string identification,
             [FromBody] MotorcycleLicensePlate licensePlate)
         {
             try

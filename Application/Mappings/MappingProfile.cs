@@ -12,7 +12,7 @@ namespace ride_wise_api.Application.Mappings
             CreateMap<Motorcycle, MotorcycleRequest>();
             CreateMap<Motorcycle, MotorcycleResult>();
             CreateMap<Motorcycle, MotorcycleLicensePlate>();
-            CreateMap<MotorcycleRequest, Motorcycle>();            
+            CreateMap<MotorcycleRequest, Motorcycle>();
         }
     }
 }
