@@ -1,12 +1,12 @@
-﻿using ride_wise_api.Application.Repositories.Interfaces;
-using ride_wise_api.Application.Repositories;
-using ride_wise_api.Application.Services.Interfaces;
-using ride_wise_api.Application.Services;
-using ride_wise_api.Infrastructure;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper;
-using ride_wise_api.Application.Mappings;
 using NLog;
+using ride_wise_api.Application.Mappings;
+using ride_wise_api.Application.Repositories;
+using ride_wise_api.Application.Repositories.Interfaces;
+using ride_wise_api.Application.Services;
+using ride_wise_api.Application.Services.Interfaces;
+using ride_wise_api.Infrastructure;
 
 namespace ride_wise_api.Extensions
 {
@@ -21,19 +21,19 @@ namespace ride_wise_api.Extensions
         {
             services.AddTransient<IRentalService, RentalService>();
             services.AddTransient<IDeliveryAgentService, DeliveryAgentService>();
-            services.AddTransient<IMotorCycleService, MotorCycleService>();
+            services.AddTransient<IMotorcycleService, MotorcycleService>();
         }
         public static void ConfigureRepositories(this IServiceCollection services)
         {
             services.AddScoped<IRepositoryManager, RepositoryManager>();
-            services.AddTransient<IMotorCycleRepository, MotorCycleRepository>();
+            services.AddTransient<IMotorcycleRepository, MotorcycleRepository>();
         }
 
         public static void ConfigureLogger(this IServiceCollection services)
         {
-            LogManager.Setup(option => 
+            LogManager.Setup(option =>
                 option.LoadConfigurationFromFile(string.Concat(Directory.GetCurrentDirectory(), "/Nlog.config")));
-            services.AddSingleton<ILoggerManager, LoggerManager>();            
+            services.AddSingleton<ILoggerManager, LoggerManager>();
         }
 
         public static void ConfigureMapper(this IServiceCollection services)
@@ -45,7 +45,7 @@ namespace ride_wise_api.Extensions
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-            
+
         }
     }
 }

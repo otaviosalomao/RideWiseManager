@@ -2,38 +2,43 @@
 using ride_wise_api.Application.Repositories.Interfaces;
 using ride_wise_api.Domain.Models;
 using ride_wise_api.Infrastructure;
+using System.Linq.Expressions;
 
 namespace ride_wise_api.Application.Repositories
 {
-    public class MotorCycleRepository : RepositoryBase<MotorCycle>, IMotorCycleRepository
+    public class MotorcycleRepository : RepositoryBase<Motorcycle>, IMotorcycleRepository
     {
-        public MotorCycleRepository(RiseWiseManagerDbContext repositoryContext) : base(repositoryContext)
+        public MotorcycleRepository(RiseWiseManagerDbContext repositoryContext) : base(repositoryContext)
         {
         }
 
-        public async Task<MotorCycle> CreateMotorCycle(MotorCycle motorCycle)
+        public async Task<Motorcycle> Create(Motorcycle motorCycle)
         {
-            return Create(motorCycle);
+            return base.Create(motorCycle);
         }
 
-        public async Task DeleteMotorCycle(MotorCycle motorCycle)
+        public async Task Delete(Motorcycle motorCycle)
         {
-            Delete(motorCycle);
+            base.Delete(motorCycle);
         }
 
-        public async Task<IEnumerable<MotorCycle>> GetAllMotorCycle()
+        public async Task<IEnumerable<Motorcycle>> Get(MotorcycleFilter filters)
         {
-            return FindAll();
+            var parameter = Expression.Parameter(typeof(Motorcycle), "x");
+            Expression? comparison = GenerateDinamicExpression(filters, parameter);
+            if (comparison is not null)
+            {
+                var lambda = Expression.Lambda<Func<Motorcycle, bool>>(comparison, parameter);
+                return FindByCondition(lambda);
+            }
+            return GetAll();
         }
 
-        public async Task<MotorCycle> GetMotorCycleByLicensePlate(string licensePlate)
+        public async Task Update(Motorcycle motorCycle)
         {
-            return FindByCondition(o => o.LicensePlate == licensePlate).FirstOrDefault();
+            base.Update(motorCycle);
         }
 
-        public async Task UpdateMotorCycle(MotorCycle motorCycle)
-        {
-            Update(motorCycle);
-        }
+
     }
 }

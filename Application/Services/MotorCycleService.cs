@@ -1,52 +1,76 @@
 ﻿using AutoMapper;
 using ride_wise_api.Application.Models;
-using ride_wise_api.Application.Repositories;
 using ride_wise_api.Application.Repositories.Interfaces;
 using ride_wise_api.Application.Services.Interfaces;
 using ride_wise_api.Domain.Models;
 
 namespace ride_wise_api.Application.Services
 {
-    public class MotorCycleService : IMotorCycleService
+    public class MotorcycleService : IMotorcycleService
     {
         private readonly IRepositoryManager _repositoryManager;
         private readonly IMapper _mapper;
+        readonly ILoggerManager _logger;
 
-        public MotorCycleService(
+        public MotorcycleService(
             IMapper mapper,
-            IRepositoryManager repositoryManager)
+            IRepositoryManager repositoryManager,
+             ILoggerManager loggerManager)
         {
             _repositoryManager = repositoryManager;
             _mapper = mapper;
+            _logger = loggerManager;
         }
 
-        public async Task<MotorCycleResult> CreateAsync(MotorCycleRequest request)
+        public async Task<MotorcycleResult> CreateAsync(MotorcycleRequest request)
         {
-            var motorCycle = _mapper.Map<MotorCycle>(request);
-            var result = await _repositoryManager.MotorCycle.CreateMotorCycle(motorCycle);
-            _repositoryManager.Save();
-            return _mapper.Map<MotorCycleResult>(result);
+            try
+            {
+                var motorCycle = _mapper.Map<Motorcycle>(request);
+                var result = await _repositoryManager.Motorcycle.Create(motorCycle);
+                _repositoryManager.Save();
+                return _mapper.Map<MotorcycleResult>(result);
+            }
+            catch
+            {
+                _logger.LogError($"Error creating motorcycle {request}");
+                throw;
+            }
         }
 
         public async Task<bool> DeleteAsync(string identification)
         {
-            var motorCycle = await _repositoryManager.MotorCycle.GetMotorCycleByLicensePlate(identification);
-            await _repositoryManager.MotorCycle.DeleteMotorCycle(motorCycle);
+            var motorcycle =
+                await _repositoryManager.Motorcycle.Get(new MotorcycleFilter(identification: identification));
+            if (!motorcycle.Any())
+            {
+                _logger.LogError($"Motorcycle not found for identification {identification}");
+                return false;
+            }
+            await _repositoryManager.Motorcycle.Delete(motorcycle.FirstOrDefault());
             _repositoryManager.Save();
             return true;
         }
 
-        public async Task<IEnumerable<MotorCycleResult>> GetAsync(string licensePlate)
+        public async Task<IEnumerable<MotorcycleResult>> GetAsync(MotorcycleFilter filters)
         {
-            if (!string.IsNullOrEmpty(licensePlate))
-            {
-                return _mapper.Map<IEnumerable<MotorCycleResult>>(new List<MotorCycle>() { await _repositoryManager.MotorCycle.GetMotorCycleByLicensePlate(licensePlate) });
-            }
-            return _mapper.Map<IEnumerable<MotorCycleResult>>(await _repositoryManager.MotorCycle.GetAllMotorCycle());
+            var motorcycles = await _repositoryManager.Motorcycle.Get(filters);
+            return _mapper.Map<IEnumerable<MotorcycleResult>>(motorcycles);
         }
 
-        public async Task<bool> UpdateAsync(string identification, MotorCycleRequest request)
+        public async Task<bool> UpdateLicensePlateAsync(string identification, MotorcycleLicensePlate licensePlate)
         {
+            var filter = new MotorcycleFilter(identification: identification);
+            var motorcycle =
+                await _repositoryManager.Motorcycle.Get(filter);
+            if (!motorcycle.Any())
+            {
+                _logger.LogError($"Motorcycle not found for identification {identification}");
+            }
+            var updateMotorcycle = motorcycle.FirstOrDefault();
+            updateMotorcycle.LicensePlate = licensePlate.LicensePlate;
+            await _repositoryManager.Motorcycle.Update(updateMotorcycle);
+            _repositoryManager.Save();
             return true;
         }
     }

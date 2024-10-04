@@ -2,7 +2,7 @@
 {
     public interface IRepositoryManager
     {
-        IMotorCycleRepository MotorCycle {  get; }
+        IMotorcycleRepository Motorcycle { get; }
         void Save();
     }
 }
