@@ -2,6 +2,7 @@
 {
     public class Rental
     {
+        public int Id { get; set; }
         public string Identification { get; set; }
         public string DeliveryAgentIdentification { get; set; }
         public string MotorcycleIdentification { get; set; }

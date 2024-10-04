@@ -24,18 +24,18 @@ namespace ride_wise_api.Application.Services
 
         public async Task<MotorcycleResult> CreateAsync(MotorcycleRequest request)
         {
-            try
+            var motorcycle =
+                await _repositoryManager.Motorcycle.Get(new MotorcycleFilter(licensePlate: request.LicensePlate));
+            if (motorcycle.Any()) 
             {
-                var motorCycle = _mapper.Map<Motorcycle>(request);
-                var result = await _repositoryManager.Motorcycle.Create(motorCycle);
-                _repositoryManager.Save();
-                return _mapper.Map<MotorcycleResult>(result);
+                var errorMessage = $"Motorcycle with licensePlate {request.LicensePlate} already exist";
+                _logger.LogError(errorMessage);
+                throw new Exception(errorMessage);
             }
-            catch
-            {
-                _logger.LogError($"Error creating motorcycle {request}");
-                throw;
-            }
+            var motorCycle = _mapper.Map<Motorcycle>(request);
+            var result = await _repositoryManager.Motorcycle.Create(motorCycle);
+            _repositoryManager.Save();
+            return _mapper.Map<MotorcycleResult>(result);
         }
 
         public async Task<bool> DeleteAsync(string identification)
@@ -65,7 +65,9 @@ namespace ride_wise_api.Application.Services
                 await _repositoryManager.Motorcycle.Get(filter);
             if (!motorcycle.Any())
             {
-                _logger.LogError($"Motorcycle not found for identification {identification}");
+                var errorMessage = $"Motorcycle not found for identification {identification}";
+               _logger.LogError(errorMessage);
+                throw new Exception(errorMessage);
             }
             var updateMotorcycle = motorcycle.FirstOrDefault();
             updateMotorcycle.LicensePlate = licensePlate.LicensePlate;
