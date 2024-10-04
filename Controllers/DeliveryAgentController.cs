@@ -1,43 +1,39 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using ride_wise_api.Application.Models;
+using ride_wise_api.Application.Services.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace ride_wise_api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("entregadores")]
     [ApiController]
     public class DeliveryAgentController : ControllerBase
     {
-        // GET: api/<DeliveryAgentController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        readonly IDeliveryAgentService _deliveryAgentService;
+        readonly ILoggerManager _logger;
 
-        // GET api/<DeliveryAgentController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        public DeliveryAgentController(
+            IDeliveryAgentService deliveryAgentService,
+            ILoggerManager loggerManager)
         {
-            return "value";
+            _logger = loggerManager;
+            _deliveryAgentService = deliveryAgentService;
         }
-
-        // POST api/<DeliveryAgentController>
+        // POST api/<MotorcyclesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([Required][FromBody] MotorcycleRequest motorcycleRequest)
         {
-        }
-
-        // PUT api/<DeliveryAgentController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<DeliveryAgentController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            try
+            {
+                _logger.LogInfo($"create delivery agent {motorcycleRequest}");
+                var result = await _deliveryAgentService.CreateAsync(motorcycleRequest);
+                return Created("", result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Erro creating delivery agent {motorcycleRequest}: {ex.Message}");
+                return StatusCode(400, new { mensagem = "Dados inválidos" });
+            }
         }
     }
 }

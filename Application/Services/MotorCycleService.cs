@@ -22,8 +22,7 @@ namespace ride_wise_api.Application.Services
             _repositoryManager = repositoryManager;
             _mapper = mapper;
             _logger = loggerManager;
-            _messageBusProducer = messageBusProducer;
-            _messageBusProducer = messageBusProducer;
+            _messageBusProducer = messageBusProducer;            
         }
 
         public async Task<MotorcycleResult> CreateAsync(MotorcycleRequest request)
