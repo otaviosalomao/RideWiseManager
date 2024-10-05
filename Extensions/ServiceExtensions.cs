@@ -7,6 +7,9 @@ using ride_wise_api.Application.Repositories.Interfaces;
 using ride_wise_api.Application.Services;
 using ride_wise_api.Application.Services.Interfaces;
 using ride_wise_api.Infrastructure;
+using FluentValidation;
+using ride_wise_api.Application.Validators;
+using FluentValidation.AspNetCore;
 
 namespace ride_wise_api.Extensions
 {
@@ -16,12 +19,14 @@ namespace ride_wise_api.Extensions
         {
             services.AddDbContext<RiseWiseManagerDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("RiseWiseManagerDatabase")));
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
         public static void ConfigureServices(this IServiceCollection services)
         {
             services.AddTransient<IRentalService, RentalService>();
             services.AddTransient<IDeliveryAgentService, DeliveryAgentService>();
             services.AddTransient<IMotorcycleService, MotorcycleService>();
+            services.AddTransient<IDriverLicenseFileManager, DriverLicenseFileManager>();
             services.AddScoped<IMessageBusService, MessageBusService>();
             services.AddScoped<IMotorcycleMessageBusProducer, MotorcycleMessageBusProducer>();
             services.AddScoped<IRabbitMqService, RabbitMqService>();
@@ -30,6 +35,7 @@ namespace ride_wise_api.Extensions
         {
             services.AddScoped<IRepositoryManager, RepositoryManager>();
             services.AddTransient<IMotorcycleRepository, MotorcycleRepository>();
+            services.AddTransient<IDeliveryAgentRepository, DeliveryAgentRepository>();
         }
 
         public static void ConfigureLogger(this IServiceCollection services)
@@ -45,9 +51,17 @@ namespace ride_wise_api.Extensions
             {
                 mc.AddProfile(new MotorcycleRequestMapper());
                 mc.AddProfile(new MotorcycleResultMapper());
+                mc.AddProfile(new DeliveryAgentRequestMapper());
+                mc.AddProfile(new DeliveryAgentResultMapper());
             });
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
+        }
+        public static void AddValidators(this IServiceCollection services)
+        {
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssemblyContaining<MotorcycleRequestValidator>();
+            services.AddValidatorsFromAssemblyContaining<DeliveryAgentRequestValidator>();
         }
     }
 }

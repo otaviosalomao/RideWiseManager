@@ -1,3 +1,4 @@
+using ride_wise_api.Application.Validators;
 using ride_wise_api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +10,7 @@ builder.Services.ConfigureLogger();
 builder.Services.ConfigureMapper();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddValidators();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

@@ -10,7 +10,7 @@ namespace ride_wise_api.Domain.Models
         public string IdentificationDocument { get; set; }
         public DateTime BirthDate { get; set; }
         public int DriverLicenseNumber { get; set; }
-        public DriverLicenseType DriverLicenseType { get; set; }
-        public string DriverLicenseImage { get; set; }
+        public string DriverLicenseFilePath { get; set; }
+        public DriverLicenseType DriverLicenseType { get; set; }          
     }
 }
