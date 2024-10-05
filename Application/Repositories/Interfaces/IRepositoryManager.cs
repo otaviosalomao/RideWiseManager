@@ -3,7 +3,7 @@
     public interface IRepositoryManager
     {
         IMotorcycleRepository Motorcycle { get; }
-        IMotorcycleRepository DeliveryAgent { get; }
+        IDeliveryAgentRepository DeliveryAgent { get; }
         void Save();
     }
 }

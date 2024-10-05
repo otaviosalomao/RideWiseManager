@@ -3,6 +3,7 @@
     public enum DriverLicenseType
     {
         A,
-        B
+        B,
+        AB
     }
 }

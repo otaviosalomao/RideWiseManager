@@ -16,8 +16,8 @@ namespace ride_wise_api.Application.Services
         public MotorcycleService(
             IMapper mapper,
             IRepositoryManager repositoryManager,
-             ILoggerManager loggerManager,
-             IMotorcycleMessageBusProducer messageBusProducer)
+            ILoggerManager loggerManager,
+            IMotorcycleMessageBusProducer messageBusProducer)
         {
             _repositoryManager = repositoryManager;
             _mapper = mapper;

@@ -19,19 +19,35 @@ namespace ride_wise_api.Controllers
             _logger = loggerManager;
             _deliveryAgentService = deliveryAgentService;
         }
-        // POST api/<MotorcyclesController>
+        // POST
         [HttpPost]
-        public async Task<IActionResult> Post([Required][FromBody] MotorcycleRequest motorcycleRequest)
+        public async Task<IActionResult> Post([Required][FromBody] DeliveryAgentRequest deliveryAgentRequest)
         {
             try
             {
-                _logger.LogInfo($"create delivery agent {motorcycleRequest}");
-                var result = await _deliveryAgentService.CreateAsync(motorcycleRequest);
+                _logger.LogInfo($"create delivery agent {deliveryAgentRequest}");
+                var result = await _deliveryAgentService.CreateAsync(deliveryAgentRequest);
                 return Created("", result);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Erro creating delivery agent {motorcycleRequest}: {ex.Message}");
+                _logger.LogError($"Erro creating delivery agent {deliveryAgentRequest}: {ex.Message}");
+                return StatusCode(400, new { mensagem = "Dados inválidos" });
+            }
+        }
+        // POST
+        [HttpPost("{id}/cnh")]
+        public async Task<IActionResult> Post([Required][FromBody] DeliveryAgentDriverLicenseRequest imagem_cnh, [Required][FromRoute] string id)
+        {
+            try
+            {
+                _logger.LogInfo($"Updating delivery agent {id}");
+                await _deliveryAgentService.UpdateIdentificationDocumentImageAsync(id, imagem_cnh.Imagem_cnh);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Erro updating delivery agent identification {id}: {ex.Message}");
                 return StatusCode(400, new { mensagem = "Dados inválidos" });
             }
         }
