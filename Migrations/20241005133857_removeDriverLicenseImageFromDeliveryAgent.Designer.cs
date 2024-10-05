@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ride_wise_api.Infrastructure;
@@ -11,9 +12,11 @@ using ride_wise_api.Infrastructure;
 namespace ride_wise_api.Migrations
 {
     [DbContext(typeof(RiseWiseManagerDbContext))]
-    partial class RiseWiseManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241005133857_removeDriverLicenseImageFromDeliveryAgent")]
+    partial class removeDriverLicenseImageFromDeliveryAgent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,11 +34,7 @@ namespace ride_wise_api.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("BirthDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("DriverLicenseFilePath")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("DriverLicenseType")
                         .HasColumnType("integer");

@@ -15,16 +15,20 @@ namespace ride_wise_api.Application.Repositories
         {
             return base.Create(deliveryAgent);
         }
-        public async Task<IEnumerable<DeliveryAgent>> Get(DeliveryAgentFilter filters)
+        public async Task<DeliveryAgent> Get(DeliveryAgentFilter filters)
         {
             var parameter = Expression.Parameter(typeof(DeliveryAgent), "x");
             Expression? comparison = GenerateDinamicExpression(filters, parameter);
             if (comparison is not null)
             {
                 var lambda = Expression.Lambda<Func<DeliveryAgent, bool>>(comparison, parameter);
-                return FindByCondition(lambda);
+                return FindByCondition(lambda).FirstOrDefault();
             }
-            return GetAll();
+            return GetAll().FirstOrDefault();
+        }      
+        public async Task Update(DeliveryAgent deliveryAgent)
+        {
+            base.Update(deliveryAgent);
         }
     }
 }

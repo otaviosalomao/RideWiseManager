@@ -7,14 +7,17 @@ namespace ride_wise_api.Application.Repositories
     {
         private readonly RiseWiseManagerDbContext _context;
         private readonly Lazy<IMotorcycleRepository> _motorcycleRepository;
+        private readonly Lazy<IDeliveryAgentRepository> _deliveryAgentRepository;        
 
         public RepositoryManager(RiseWiseManagerDbContext context)
         {
             _context = context;
             _motorcycleRepository = new Lazy<IMotorcycleRepository>(() => new MotorcycleRepository(context));
+            _deliveryAgentRepository = new Lazy<IDeliveryAgentRepository>(() => new DeliveryAgentRepository(context));
         }
 
         public IMotorcycleRepository Motorcycle => _motorcycleRepository.Value;
+        public IDeliveryAgentRepository DeliveryAgent => _deliveryAgentRepository.Value;
 
         public void Save()
         {

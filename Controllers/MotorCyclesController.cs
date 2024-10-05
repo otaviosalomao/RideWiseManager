@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using ride_wise_api.Application.Models;
 using ride_wise_api.Application.Services.Interfaces;
+using ride_wise_api.Application.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Mime;
 using System.Security.Claims;
@@ -72,7 +74,7 @@ namespace ride_wise_api.Controllers
         {
             try
             {
-                _logger.LogInfo($"create motorcycle {motorcycleRequest}");
+                _logger.LogInfo($"create motorcycle {motorcycleRequest}");                
                 var result = await _motorcycleService.CreateAsync(motorcycleRequest);
                 return Created("",result);
             }
