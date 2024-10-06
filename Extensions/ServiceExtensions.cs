@@ -53,6 +53,8 @@ namespace ride_wise_api.Extensions
                 mc.AddProfile(new MotorcycleResultMapper());
                 mc.AddProfile(new DeliveryAgentRequestMapper());
                 mc.AddProfile(new DeliveryAgentResultMapper());
+                mc.AddProfile(new RentalRequestMapper());
+                mc.AddProfile(new RentalResultMapper());
             });
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);

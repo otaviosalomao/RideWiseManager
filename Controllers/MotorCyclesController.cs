@@ -17,11 +17,11 @@ namespace ride_wise_api.Controllers
         readonly ILoggerManager _logger;
 
         public MotorcyclesController(
-            IMotorcycleService motorCycleService,
+            IMotorcycleService motorcycleService,
             ILoggerManager loggerManager)
         {
             _logger = loggerManager;
-            _motorcycleService = motorCycleService;
+            _motorcycleService = motorcycleService;
         }
 
         // GET: api/<MotorcyclesController>
@@ -42,7 +42,7 @@ namespace ride_wise_api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Erro getting motorcycle by license plate {placa}: {ex.Message}");
-                return StatusCode(500);
+                return StatusCode(400, new { mensagem = "Dados inválidos" });
             }
         }
 
@@ -64,7 +64,7 @@ namespace ride_wise_api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Erro getting motorcycle by {id}: {ex.Message}");
-                return StatusCode(500);
+                return StatusCode(400, new { mensagem = "Dados inválidos" });
             }
         }
 
