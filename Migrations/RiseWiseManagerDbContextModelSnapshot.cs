@@ -90,32 +90,18 @@ namespace ride_wise_api.Migrations
             modelBuilder.Entity("ride_wise_api.Domain.Models.Rental", b =>
                 {
                     b.Property<string>("Identification")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text");
-
-                    b.Property<int>("DeliveryAgentDriverLicenseNumber")
-                        .HasColumnType("integer");
 
                     b.Property<string>("DeliveryAgentIdentification")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("DeliveryAgentIdentificationDocument")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("EndDate")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("EstimatedEndDate")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MotorcycleId")
-                        .HasColumnType("integer");
+                    b.Property<DateTime>("EstimatedEndDate")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("MotorcycleIdentification")
                         .IsRequired()
@@ -125,36 +111,12 @@ namespace ride_wise_api.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("StartDate")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Identification");
 
-                    b.HasIndex("MotorcycleId");
-
-                    b.HasIndex("DeliveryAgentDriverLicenseNumber", "DeliveryAgentIdentificationDocument");
-
                     b.ToTable("Rentals");
-                });
-
-            modelBuilder.Entity("ride_wise_api.Domain.Models.Rental", b =>
-                {
-                    b.HasOne("ride_wise_api.Domain.Models.Motorcycle", "Motorcycle")
-                        .WithMany()
-                        .HasForeignKey("MotorcycleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ride_wise_api.Domain.Models.DeliveryAgent", "DeliveryAgent")
-                        .WithMany()
-                        .HasForeignKey("DeliveryAgentDriverLicenseNumber", "DeliveryAgentIdentificationDocument")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DeliveryAgent");
-
-                    b.Navigation("Motorcycle");
                 });
 #pragma warning restore 612, 618
         }

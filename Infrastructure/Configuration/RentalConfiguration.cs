@@ -8,9 +8,8 @@ namespace ride_wise_api.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<Rental> builder)
         {
-            builder.HasKey(u => new { u.Identification });
-            builder.HasOne(u => u.Motorcycle);
-            builder.HasOne(u => u.DeliveryAgent);
+            builder.HasKey(u => new { u.Identification });            
+            builder.Property(f => f.Identification).ValueGeneratedOnAdd();
         }
     }
 }

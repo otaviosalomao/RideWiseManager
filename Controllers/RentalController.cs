@@ -1,43 +1,79 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using ride_wise_api.Application.Models;
+using ride_wise_api.Application.Services;
+using ride_wise_api.Application.Services.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace ride_wise_api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("locacao")]
     [ApiController]
     public class RentalController : ControllerBase
     {
-        // GET: api/<RentalController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        readonly IRentalService _rentalService;
+        readonly ILoggerManager _logger;
 
-        // GET api/<RentalController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        public RentalController(
+            IRentalService rentalService,
+            ILoggerManager loggerManager)
         {
-            return "value";
+            _logger = loggerManager;
+            _rentalService = rentalService;
         }
-
-        // POST api/<RentalController>
+        // POST
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([Required][FromBody] RentalRequest rentalRequest)
         {
+            try
+            {
+                _logger.LogInfo($"create rental {rentalRequest}");
+                var result = await _rentalService.CreateAsync(rentalRequest);
+                return Created("", result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Erro creating rental {rentalRequest}: {ex.Message}");
+                return StatusCode(400, new { mensagem = "Dados inválidos" });
+            }
         }
-
-        // PUT api/<RentalController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // GET 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById([FromRoute] string id)
         {
+            try
+            {
+                _logger.LogInfo($"get rental by identification {id}");
+                var filter = new RentalFilter(identification: id);
+                var result = await _rentalService.GetAsync(filter);
+                if (result is not null)
+                {
+                    return Ok(result);
+                }
+                return NotFound(new { mensagem = "Locação não encontrada" });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Erro getting rental by {id}: {ex.Message}");
+                return StatusCode(400, new { mensagem = "Dados inválidos" });
+            }
         }
-
-        // DELETE api/<RentalController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // PUT 
+        [HttpPut("{id}/devolucao")]
+        public async Task<IActionResult> Put(
+            [Required][FromRoute] string id,
+            [FromBody] RentalDevolutionDate devolutionDate)
         {
+            try
+            {
+                _logger.LogInfo($"update devolutionDate from rental identification {id}");
+                await _rentalService.UpdateDevolutionDateAsync(id, devolutionDate.Data_devolucao);
+                return Ok(new { mensagem = "Data de devolução modificada com sucesso" });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Erro updating rental {id}: {ex.Message}");
+                return StatusCode(400, new { mensagem = "Dados inválidos" });
+            }
         }
     }
 }

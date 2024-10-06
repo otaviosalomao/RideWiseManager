@@ -35,8 +35,8 @@ namespace ride_wise_api.Application.Services
                 _logger.LogError(errorMessage);
                 throw new Exception(errorMessage);
             }
-            var motorCycle = _mapper.Map<Motorcycle>(request);
-            var result = await _repositoryManager.Motorcycle.Create(motorCycle);
+            var newMotorcycle = _mapper.Map<Motorcycle>(request);
+            var result = await _repositoryManager.Motorcycle.Create(newMotorcycle);
             await _messageBusProducer.Publish(result);
             _repositoryManager.Save();
             return _mapper.Map<MotorcycleResult>(result);

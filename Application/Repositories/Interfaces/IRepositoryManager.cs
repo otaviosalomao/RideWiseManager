@@ -4,6 +4,7 @@
     {
         IMotorcycleRepository Motorcycle { get; }
         IDeliveryAgentRepository DeliveryAgent { get; }
+        IRentalRepository Rental { get; }
         void Save();
     }
 }
