@@ -15,6 +15,13 @@ namespace ride_wise_api.Application.Repositories
         {
             return base.Create(deliveryAgent);
         }
+        public async Task<bool> Exists(string Identification)
+        {
+            var filter = new DeliveryAgentFilter(
+               identification: Identification);
+            var result = await Get(filter);
+            return result is not null;
+        }
         public async Task<DeliveryAgent> Get(DeliveryAgentFilter filters)
         {
             var parameter = Expression.Parameter(typeof(DeliveryAgent), "x");
