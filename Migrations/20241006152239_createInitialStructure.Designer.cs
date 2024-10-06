@@ -12,8 +12,8 @@ using ride_wise_api.Infrastructure;
 namespace ride_wise_api.Migrations
 {
     [DbContext(typeof(RiseWiseManagerDbContext))]
-    [Migration("20241004020651_InitialStructure")]
-    partial class InitialStructure
+    [Migration("20241006152239_createInitialStructure")]
+    partial class createInitialStructure
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,13 +34,16 @@ namespace ride_wise_api.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("BirthDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("DriverLicenseImage")
+                    b.Property<string>("DriverLicenseFilePath")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("DriverLicenseType")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Id")
                         .HasColumnType("integer");
 
                     b.Property<string>("Identification")
@@ -53,18 +56,22 @@ namespace ride_wise_api.Migrations
 
                     b.HasKey("DriverLicenseNumber", "IdentificationDocument");
 
-                    b.HasIndex("Identification")
-                        .IsUnique();
-
                     b.ToTable("DeliveryAgents");
                 });
 
             modelBuilder.Entity("ride_wise_api.Domain.Models.Motorcycle", b =>
                 {
-                    b.Property<string>("LicensePlate")
-                        .HasColumnType("text");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Identification")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LicensePlate")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -75,9 +82,9 @@ namespace ride_wise_api.Migrations
                     b.Property<int>("Year")
                         .HasColumnType("integer");
 
-                    b.HasKey("LicensePlate");
+                    b.HasKey("Id");
 
-                    b.HasIndex("Identification")
+                    b.HasIndex("LicensePlate")
                         .IsUnique();
 
                     b.ToTable("Motorcycles");
@@ -86,19 +93,18 @@ namespace ride_wise_api.Migrations
             modelBuilder.Entity("ride_wise_api.Domain.Models.Rental", b =>
                 {
                     b.Property<string>("Identification")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
                     b.Property<string>("DeliveryAgentIdentification")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("EndDate")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("EstimatedEndDate")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<DateTime>("EstimatedEndDate")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("MotorcycleIdentification")
                         .IsRequired()
@@ -108,44 +114,12 @@ namespace ride_wise_api.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("StartDate")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Identification");
 
                     b.ToTable("Rentals");
-                });
-
-            modelBuilder.Entity("ride_wise_api.Domain.Models.DeliveryAgent", b =>
-                {
-                    b.HasOne("ride_wise_api.Domain.Models.Rental", "Rental")
-                        .WithOne("DeliveryAgent")
-                        .HasForeignKey("ride_wise_api.Domain.Models.DeliveryAgent", "Identification")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Rental");
-                });
-
-            modelBuilder.Entity("ride_wise_api.Domain.Models.Motorcycle", b =>
-                {
-                    b.HasOne("ride_wise_api.Domain.Models.Rental", "Rental")
-                        .WithOne("Motorcycle")
-                        .HasForeignKey("ride_wise_api.Domain.Models.Motorcycle", "Identification")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Rental");
-                });
-
-            modelBuilder.Entity("ride_wise_api.Domain.Models.Rental", b =>
-                {
-                    b.Navigation("DeliveryAgent")
-                        .IsRequired();
-
-                    b.Navigation("Motorcycle")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

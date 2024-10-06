@@ -12,14 +12,14 @@ namespace ride_wise_api.Application.Repositories
         {
         }
 
-        public async Task<Motorcycle> Create(Motorcycle motorCycle)
+        public async Task<Motorcycle> Create(Motorcycle motorcycle)
         {
-            return base.Create(motorCycle);
+            return base.Create(motorcycle);
         }
 
-        public async Task Delete(Motorcycle motorCycle)
+        public async Task Delete(Motorcycle motorcycle)
         {
-            base.Delete(motorCycle);
+            base.Delete(motorcycle);
         }
 
         public async Task<IEnumerable<Motorcycle>> Get(MotorcycleFilter filters)
@@ -34,11 +34,9 @@ namespace ride_wise_api.Application.Repositories
             return GetAll();
         }
 
-        public async Task Update(Motorcycle motorCycle)
+        public async Task Update(Motorcycle motorcycle)
         {
-            base.Update(motorCycle);
+            base.Update(motorcycle);
         }
-
-
     }
 }

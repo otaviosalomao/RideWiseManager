@@ -2,8 +2,7 @@
 using Newtonsoft.Json;
 
 namespace ride_wise_api.Application.Models
-{
-    [Serializable]
+{    
     public class MotorcycleResult
     {        
         public string Identificador { get; set; }        
