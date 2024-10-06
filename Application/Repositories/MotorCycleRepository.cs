@@ -22,6 +22,14 @@ namespace ride_wise_api.Application.Repositories
             base.Delete(motorcycle);
         }
 
+        public async Task<bool> Exists(string Identification)
+        {
+            var filter = new MotorcycleFilter(
+               identification: Identification);
+            var result = await Get(filter);
+            return result.Any();
+        }
+
         public async Task<IEnumerable<Motorcycle>> Get(MotorcycleFilter filters)
         {
             var parameter = Expression.Parameter(typeof(Motorcycle), "x");
