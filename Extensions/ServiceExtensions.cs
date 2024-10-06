@@ -10,6 +10,8 @@ using ride_wise_api.Infrastructure;
 using FluentValidation;
 using ride_wise_api.Application.Validators;
 using FluentValidation.AspNetCore;
+using ride_wise_api.Domain.Services.Interfaces;
+using ride_wise_api.Domain.Services;
 
 namespace ride_wise_api.Extensions
 {
@@ -26,6 +28,7 @@ namespace ride_wise_api.Extensions
             services.AddTransient<IRentalService, RentalService>();
             services.AddTransient<IDeliveryAgentService, DeliveryAgentService>();
             services.AddTransient<IMotorcycleService, MotorcycleService>();
+            services.AddTransient<IRentService, RentService>();
             services.AddTransient<IDriverLicenseFileManager, DriverLicenseFileManager>();
             services.AddScoped<IMessageBusService, MessageBusService>();
             services.AddScoped<IMotorcycleMessageBusProducer, MotorcycleMessageBusProducer>();
@@ -64,6 +67,7 @@ namespace ride_wise_api.Extensions
             services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssemblyContaining<MotorcycleRequestValidator>();
             services.AddValidatorsFromAssemblyContaining<DeliveryAgentRequestValidator>();
+            services.AddValidatorsFromAssemblyContaining<RentalRequestValidator>();
         }
     }
 }

@@ -12,7 +12,7 @@ using ride_wise_api.Infrastructure;
 namespace ride_wise_api.Migrations
 {
     [DbContext(typeof(RiseWiseManagerDbContext))]
-    [Migration("20241006152239_createInitialStructure")]
+    [Migration("20241006171459_createInitialStructure")]
     partial class createInitialStructure
     {
         /// <inheritdoc />
@@ -96,6 +96,12 @@ namespace ride_wise_api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<decimal>("DailyValue")
+                        .HasColumnType("numeric");
+
                     b.Property<string>("DeliveryAgentIdentification")
                         .IsRequired()
                         .HasColumnType("text");
@@ -110,9 +116,8 @@ namespace ride_wise_api.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("PlanNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("PlanNumber")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp without time zone");

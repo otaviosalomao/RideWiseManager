@@ -56,7 +56,9 @@ namespace ride_wise_api.Migrations
                     StartDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     EndDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     EstimatedEndDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    PlanNumber = table.Column<string>(type: "text", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    PlanNumber = table.Column<int>(type: "integer", nullable: false),
+                    DailyValue = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {

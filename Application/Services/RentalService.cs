@@ -3,6 +3,7 @@ using ride_wise_api.Application.Models;
 using ride_wise_api.Application.Repositories.Interfaces;
 using ride_wise_api.Application.Services.Interfaces;
 using ride_wise_api.Domain.Models;
+using ride_wise_api.Domain.Services.Interfaces;
 
 namespace ride_wise_api.Application.Services
 {
@@ -10,21 +11,41 @@ namespace ride_wise_api.Application.Services
     {
         private readonly IRepositoryManager _repositoryManager;
         private readonly IMapper _mapper;
-        readonly ILoggerManager _logger;        
+        readonly ILoggerManager _logger;  
+        readonly IRentService _rentService;
 
         public RentalService(
             IMapper mapper,
             IRepositoryManager repositoryManager,
-            ILoggerManager loggerManager)
+            ILoggerManager loggerManager,
+            IRentService rentService)
         {
             _repositoryManager = repositoryManager;
             _mapper = mapper;
-            _logger = loggerManager;            
+            _logger = loggerManager;    
+            _rentService = rentService;
         }
         public async Task<RentalResult> CreateAsync(RentalRequest request)
         {
+            var rentalFilters = new RentalFilter(
+                deliveryAgentIdentification: request.Entregador_id,
+                motorcycleIdentification: request.Moto_id);
             var rental =
-                await _repositoryManager.Rental.Get(new RentalFilter(deliveryAgentIdentification: request.Entregador_id));
+                await _repositoryManager.Rental.Get(rentalFilters);            
+            var existMotorcycle = await _repositoryManager.Motorcycle.Exists(request.Moto_id);
+            var existDeliveryAgent = await _repositoryManager.DeliveryAgent.Exists(request.Entregador_id);
+            if (!existDeliveryAgent)
+            {
+                var errorMessage = $"Delivery agent with Id {request.Entregador_id} not found";
+                _logger.LogError(errorMessage);
+                throw new Exception(errorMessage);
+            }
+            if (!existMotorcycle)
+            {
+                var errorMessage = $"Motorcycle with Id {request.Moto_id} not found";
+                _logger.LogError(errorMessage);
+                throw new Exception(errorMessage);
+            }
             if (rental is not null)
             {
                 var errorMessage = $"Rental with Id {request.Entregador_id} already exist";
@@ -32,6 +53,7 @@ namespace ride_wise_api.Application.Services
                 throw new Exception(errorMessage);
             }
             var newRental = _mapper.Map<Rental>(request);
+            newRental.DailyValue = _rentService.RentValue(newRental.PlanNumber);
             var result = await _repositoryManager.Rental.Create(newRental);            
             _repositoryManager.Save();
             return _mapper.Map<RentalResult>(result);
