@@ -1,6 +1,6 @@
-﻿using ride_wise_api.Domain.Enums;
+﻿using RideWise.Api.Domain.Enums;
 
-namespace ride_wise_api.Domain.Models
+namespace RideWise.Api.Domain.Models
 {
     public class DeliveryAgent
     {

@@ -1,6 +1,6 @@
-﻿using ride_wise_api.Domain.Services.Interfaces;
+﻿using RideWise.Api.Domain.Services.Interfaces;
 
-namespace ride_wise_api.Domain.Services
+namespace RideWise.Api.Domain.Services
 {
     public class RentService : IRentService
     {

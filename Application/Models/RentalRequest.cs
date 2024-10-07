@@ -1,4 +1,4 @@
-﻿namespace ride_wise_api.Application.Models
+﻿namespace RideWise.Api.Application.Models
 {
     public class RentalRequest
     {

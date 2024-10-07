@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using ride_wise_api.Application.Models;
-using ride_wise_api.Domain.Models;
+using RideWise.Api.Application.Models;
+using RideWise.Api.Domain.Models;
 
-namespace ride_wise_api.Application.Mappings
+namespace RideWise.Api.Application.Mappings
 {
     public class RentalResultMapper : Profile
     {

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ride_wise_api.Application.Models;
-using ride_wise_api.Application.Services;
-using ride_wise_api.Application.Services.Interfaces;
+using RideWise.Api.Application.Models;
+using RideWise.Api.Application.Services;
+using RideWise.Api.Application.Services.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
-namespace ride_wise_api.Controllers
+namespace RideWise.Api.Controllers
 {
     [Route("locacao")]
     [ApiController]

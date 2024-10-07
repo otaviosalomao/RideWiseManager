@@ -1,10 +1,10 @@
-﻿using ride_wise_api.Application.Models;
-using ride_wise_api.Application.Repositories.Interfaces;
-using ride_wise_api.Domain.Models;
-using ride_wise_api.Infrastructure;
+﻿using RideWise.Api.Application.Models;
+using RideWise.Api.Application.Repositories.Interfaces;
+using RideWise.Api.Domain.Models;
+using RideWise.Api.Infrastructure;
 using System.Linq.Expressions;
 
-namespace ride_wise_api.Application.Repositories
+namespace RideWise.Api.Application.Repositories
 {
     public class MotorcycleRepository : RepositoryBase<Motorcycle>, IMotorcycleRepository
     {

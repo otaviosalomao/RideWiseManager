@@ -1,7 +1,7 @@
-﻿using ride_wise_api.Application.Services.Interfaces;
+﻿using RideWise.Api.Application.Services.Interfaces;
 using System.IO;
 
-namespace ride_wise_api.Application.Services
+namespace RideWise.Api.Application.Services
 {
     public class DriverLicenseFileManager : IDriverLicenseFileManager
     {

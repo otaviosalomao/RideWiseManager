@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using ride_wise_api.Application.Models;
-using ride_wise_api.Application.Repositories.Interfaces;
-using ride_wise_api.Domain.Services.Interfaces;
+using RideWise.Api.Application.Models;
+using RideWise.Api.Application.Repositories.Interfaces;
+using RideWise.Api.Domain.Services.Interfaces;
 
-namespace ride_wise_api.Application.Validators
+namespace RideWise.Api.Application.Validators
 {
     public class RentalRequestValidator : AbstractValidator<RentalRequest>
     {

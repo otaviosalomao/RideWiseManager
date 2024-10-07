@@ -1,4 +1,4 @@
-﻿namespace ride_wise_api.Domain.Enums
+﻿namespace RideWise.Api.Domain.Enums
 {
     public enum DriverLicenseType
     {

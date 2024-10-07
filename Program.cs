@@ -1,5 +1,5 @@
-using ride_wise_api.Application.Validators;
-using ride_wise_api.Extensions;
+using RideWise.Api.Application.Validators;
+using RideWise.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();

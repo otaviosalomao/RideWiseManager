@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ride_wise_api.Domain.Models;
+using RideWise.Api.Domain.Models;
 
-namespace ride_wise_api.Infrastructure.Configuration
+namespace RideWise.Api.Infrastructure.Configuration
 {
     public class MotorcycleConfiguration : IEntityTypeConfiguration<Motorcycle>
     {

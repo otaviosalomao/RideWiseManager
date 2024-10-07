@@ -1,8 +1,8 @@
-﻿using ride_wise_api.Application.Services.Interfaces;
-using ride_wise_api.Domain.Models;
+﻿using RideWise.Api.Application.Services.Interfaces;
+using RideWise.Api.Domain.Models;
 using System.Text.Json;
 
-namespace ride_wise_api.Application.Services
+namespace RideWise.Api.Application.Services
 {
     public class MotorcycleMessageBusProducer : IMotorcycleMessageBusProducer
     {

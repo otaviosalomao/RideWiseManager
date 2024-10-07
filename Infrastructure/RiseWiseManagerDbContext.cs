@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ride_wise_api.Domain.Models;
+using RideWise.Api.Domain.Models;
 using System.Reflection;
 
-namespace ride_wise_api.Infrastructure
+namespace RideWise.Api.Infrastructure
 {
     public class RiseWiseManagerDbContext : DbContext
     {

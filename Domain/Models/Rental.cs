@@ -1,4 +1,4 @@
-﻿namespace ride_wise_api.Domain.Models
+﻿namespace RideWise.Api.Domain.Models
 {
     public class Rental
     {
