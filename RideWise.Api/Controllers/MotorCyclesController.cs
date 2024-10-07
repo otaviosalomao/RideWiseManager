@@ -1,11 +1,7 @@
-﻿using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RideWise.Api.Application.Models;
 using RideWise.Api.Application.Services.Interfaces;
-using RideWise.Api.Application.Validators;
 using System.ComponentModel.DataAnnotations;
-using System.Net.Mime;
-using System.Security.Claims;
 
 namespace RideWise.Api.Controllers
 {
@@ -26,7 +22,7 @@ namespace RideWise.Api.Controllers
 
         // GET: api/<MotorcyclesController>
         [HttpGet]        
-        public async Task<IActionResult> Get([FromQuery] string? placa = null)
+        public async Task<IActionResult> GetAll([FromQuery] string? placa = null)
         {
             try
             {
@@ -70,7 +66,7 @@ namespace RideWise.Api.Controllers
 
         // POST api/<MotorcyclesController>
         [HttpPost]
-        public async Task<IActionResult> Post([Required][FromBody] MotorcycleRequest motorcycleRequest)
+        public async Task<IActionResult> Create([Required][FromBody] MotorcycleRequest motorcycleRequest)
         {
             try
             {
@@ -87,7 +83,7 @@ namespace RideWise.Api.Controllers
 
         // PUT api/<MotorcyclesController>/5
         [HttpPut("{id}/placa")]
-        public async Task<IActionResult> Put(
+        public async Task<IActionResult> UpdateLicensePlate(
             [Required][FromRoute] string id,
             [FromBody] MotorcycleLicensePlate licensePlate)
         {
