@@ -16,7 +16,7 @@ using RideWise.Api.Domain.Services;
 namespace RideWise.Api.Extensions
 {
     public static class ServiceExtensions
-    {
+    {        
         public static void ConfigureDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<RideWiseApiDbContext>(options =>

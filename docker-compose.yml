@@ -6,4 +6,5 @@ services:
       dockerfile: RideWise.Api\Dockerfile
     ports:
       - "5000:5000"
-      - "5001:5001"
+      - "5001:5001"  
+
