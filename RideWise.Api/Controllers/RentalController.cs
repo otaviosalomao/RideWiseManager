@@ -22,7 +22,7 @@ namespace RideWise.Api.Controllers
         }
         // POST
         [HttpPost]
-        public async Task<IActionResult> Post([Required][FromBody] RentalRequest rentalRequest)
+        public async Task<IActionResult> Create([Required][FromBody] RentalRequest rentalRequest)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace RideWise.Api.Controllers
         }
         // GET 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById([FromRoute] string id)
+        public async Task<IActionResult> GetByIdentification([FromRoute] string id)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace RideWise.Api.Controllers
         }
         // PUT 
         [HttpPut("{id}/devolucao")]
-        public async Task<IActionResult> Put(
+        public async Task<IActionResult> UpdateByDevolutionDate(
             [Required][FromRoute] string id,
             [FromBody] RentalDevolutionDate devolutionDate)
         {
