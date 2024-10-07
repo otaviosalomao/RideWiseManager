@@ -8,7 +8,7 @@ namespace RideWise.Api.Application.Repositories
 {
     public class MotorcycleRepository : RepositoryBase<Motorcycle>, IMotorcycleRepository
     {
-        public MotorcycleRepository(RiseWiseManagerDbContext repositoryContext) : base(repositoryContext)
+        public MotorcycleRepository(RideWiseApiDbContext repositoryContext) : base(repositoryContext)
         {
         }
 
