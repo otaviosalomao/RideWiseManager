@@ -10,8 +10,8 @@ using RideWise.Api.Infrastructure;
 
 namespace RideWise.Api.Migrations
 {
-    [DbContext(typeof(RiseWiseManagerDbContext))]
-    partial class RiseWiseManagerDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(RideWiseApiDbContext))]
+    partial class RideWiseApiDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

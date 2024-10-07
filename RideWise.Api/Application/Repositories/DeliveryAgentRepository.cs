@@ -8,7 +8,7 @@ namespace RideWise.Api.Application.Repositories
 {
     public class DeliveryAgentRepository : RepositoryBase<DeliveryAgent>, IDeliveryAgentRepository
     {
-        public DeliveryAgentRepository(RiseWiseManagerDbContext repositoryContext) : base(repositoryContext)
+        public DeliveryAgentRepository(RideWiseApiDbContext repositoryContext) : base(repositoryContext)
         {
         }
         public async Task<DeliveryAgent> Create(DeliveryAgent deliveryAgent)

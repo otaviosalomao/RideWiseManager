@@ -5,12 +5,12 @@ namespace RideWise.Api.Application.Repositories
 {
     public class RepositoryManager : IRepositoryManager
     {
-        private readonly RiseWiseManagerDbContext _context;
+        private readonly RideWiseApiDbContext _context;
         private readonly Lazy<IMotorcycleRepository> _motorcycleRepository;
         private readonly Lazy<IDeliveryAgentRepository> _deliveryAgentRepository;
         private readonly Lazy<IRentalRepository> _rentalRepository;
 
-        public RepositoryManager(RiseWiseManagerDbContext context)
+        public RepositoryManager(RideWiseApiDbContext context)
         {
             _context = context;
             _motorcycleRepository = new Lazy<IMotorcycleRepository>(() => new MotorcycleRepository(context));

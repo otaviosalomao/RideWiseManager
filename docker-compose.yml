@@ -1,8 +1,10 @@
-version: '3.4'
-
 services:
   ridewise.api:
     image: ${DOCKER_REGISTRY-}ridewiseapi
     build:
       context: .
       dockerfile: RideWise.Api\Dockerfile
+    ports:
+      - "5000:5000"
+      - "5001:5001"  
+

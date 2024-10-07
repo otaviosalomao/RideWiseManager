@@ -1,3 +1,4 @@
+using RideWise.Api.Application.Services;
 using RideWise.Api.Application.Validators;
 using RideWise.Api.Extensions;
 
@@ -11,7 +12,9 @@ builder.Services.ConfigureMapper();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddValidators();
+
 var app = builder.Build();
+MigrationService.InitializaMigration(app);
 
 if (app.Environment.IsDevelopment())
 {

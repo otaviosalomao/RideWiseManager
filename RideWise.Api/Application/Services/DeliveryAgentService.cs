@@ -44,7 +44,7 @@ namespace RideWise.Api.Application.Services
             _repositoryManager.Save();
             return _mapper.Map<DeliveryAgentResult>(result);
         }
-        public async Task UpdateIdentificationDocumentImageAsync(string identification, string identificationDocumentImage)
+        public async Task UpdateDriverLicenseImageAsync(string identification, string identificationDocumentImage)
         {
             var deliveryAgent =
                 await _repositoryManager.DeliveryAgent.Get(new DeliveryAgentFilter(identification: identification));

@@ -21,7 +21,7 @@ namespace RideWise.Api.Controllers
         }
         // POST
         [HttpPost]
-        public async Task<IActionResult> Post([Required][FromBody] DeliveryAgentRequest deliveryAgentRequest)
+        public async Task<IActionResult> Create([Required][FromBody] DeliveryAgentRequest deliveryAgentRequest)
         {
             try
             {
@@ -37,12 +37,12 @@ namespace RideWise.Api.Controllers
         }
         // POST
         [HttpPost("{id}/cnh")]
-        public async Task<IActionResult> Post([Required][FromBody] DeliveryAgentDriverLicenseRequest imagem_cnh, [Required][FromRoute] string id)
+        public async Task<IActionResult> UpdateDriverLicenseImage([Required][FromBody] DeliveryAgentDriverLicenseRequest imagem_cnh, [Required][FromRoute] string id)
         {
             try
             {
                 _logger.LogInfo($"Updating delivery agent {id}");
-                await _deliveryAgentService.UpdateIdentificationDocumentImageAsync(id, imagem_cnh.Imagem_cnh);
+                await _deliveryAgentService.UpdateDriverLicenseImageAsync(id, imagem_cnh.Imagem_cnh);
                 return Ok();
             }
             catch (Exception ex)

@@ -5,6 +5,6 @@ namespace RideWise.Api.Application.Services.Interfaces
     public interface IDeliveryAgentService
     {
         Task<DeliveryAgentResult> CreateAsync(DeliveryAgentRequest request);
-        Task UpdateIdentificationDocumentImageAsync(string identification, string identificationDocumentImage);
+        Task UpdateDriverLicenseImageAsync(string identification, string identificationDocumentImage);
     }
 }
