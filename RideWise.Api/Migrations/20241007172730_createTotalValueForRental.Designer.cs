@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RideWise.Api.Infrastructure;
@@ -11,9 +12,11 @@ using RideWise.Api.Infrastructure;
 namespace RideWise.Api.Migrations
 {
     [DbContext(typeof(RideWiseApiDbContext))]
-    partial class RideWiseApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241007172730_createTotalValueForRental")]
+    partial class createTotalValueForRental
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

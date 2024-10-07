@@ -29,7 +29,7 @@ namespace RideWise.Api.Extensions
             services.AddTransient<IDeliveryAgentService, DeliveryAgentService>();
             services.AddTransient<IMotorcycleService, MotorcycleService>();
             services.AddTransient<IRentService, RentService>();
-            services.AddTransient<IDriverLicenseFileManager, DriverLicenseFileManager>();
+            services.AddTransient<IDriverLicenseFileManagerService, DriverLicenseFileManagerService>();
             services.AddScoped<IMessageBusService, MessageBusService>();
             services.AddScoped<IMotorcycleMessageBusProducer, MotorcycleMessageBusProducer>();
             services.AddScoped<IRabbitMqService, RabbitMqService>();

@@ -11,7 +11,7 @@ namespace RideWise.Api.Application.Services
     {
         private readonly IRepositoryManager _repositoryManager;
         private readonly IMapper _mapper;
-        readonly ILoggerManager _logger;  
+        readonly ILoggerManager _logger;
         readonly IRentService _rentService;
 
         public RentalService(
@@ -22,7 +22,7 @@ namespace RideWise.Api.Application.Services
         {
             _repositoryManager = repositoryManager;
             _mapper = mapper;
-            _logger = loggerManager;    
+            _logger = loggerManager;
             _rentService = rentService;
         }
         public async Task<RentalResult> CreateAsync(RentalRequest request)
@@ -31,7 +31,7 @@ namespace RideWise.Api.Application.Services
                 deliveryAgentIdentification: request.Entregador_id,
                 motorcycleIdentification: request.Moto_id);
             var rental =
-                await _repositoryManager.Rental.Get(rentalFilters);            
+                await _repositoryManager.Rental.Get(rentalFilters);
             var existMotorcycle = await _repositoryManager.Motorcycle.Exists(request.Moto_id);
             var existDeliveryAgent = await _repositoryManager.DeliveryAgent.Exists(request.Entregador_id);
             if (!existDeliveryAgent)
@@ -53,8 +53,8 @@ namespace RideWise.Api.Application.Services
                 throw new Exception(errorMessage);
             }
             var newRental = _mapper.Map<Rental>(request);
-            newRental.DailyValue = _rentService.RentValue(newRental.PlanNumber);
-            var result = await _repositoryManager.Rental.Create(newRental);            
+            newRental.DailyValue = _rentService.RentPlanValue(newRental.PlanNumber);
+            var result = await _repositoryManager.Rental.Create(newRental);
             _repositoryManager.Save();
             return _mapper.Map<RentalResult>(result);
         }
@@ -75,8 +75,8 @@ namespace RideWise.Api.Application.Services
                 _logger.LogError(errorMessage);
                 throw new Exception(errorMessage);
             }
-
             rental.EndDate = devolutionDate;
+            rental.TotalValue = _rentService.RentTotalValue(rental);            
             await _repositoryManager.Rental.Update(rental);
             _repositoryManager.Save();
             return true;

@@ -11,13 +11,13 @@ namespace RideWise.Api.Application.Services
         private readonly IRepositoryManager _repositoryManager;
         private readonly IMapper _mapper;
         private readonly ILoggerManager _logger;
-        private readonly IDriverLicenseFileManager _driverLicenseFileManager;
+        private readonly IDriverLicenseFileManagerService _driverLicenseFileManager;
 
         public DeliveryAgentService(
             IMapper mapper,
             IRepositoryManager repositoryManager,
             ILoggerManager loggerManager,
-            IDriverLicenseFileManager driverLicenseFileManager)
+            IDriverLicenseFileManagerService driverLicenseFileManager)
         {
             _repositoryManager = repositoryManager;
             _mapper = mapper;

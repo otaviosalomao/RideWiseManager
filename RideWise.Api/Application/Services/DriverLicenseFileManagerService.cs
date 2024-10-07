@@ -3,11 +3,11 @@ using System.IO;
 
 namespace RideWise.Api.Application.Services
 {
-    public class DriverLicenseFileManager : IDriverLicenseFileManager
+    public class DriverLicenseFileManagerService : IDriverLicenseFileManagerService
     {
         private readonly string BASE_PATH;
 
-        public DriverLicenseFileManager(IConfiguration configuration)
+        public DriverLicenseFileManagerService(IConfiguration configuration)
         {
             BASE_PATH = configuration["DriverLicensePath:Path"];
         }

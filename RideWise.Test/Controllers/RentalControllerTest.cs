@@ -9,13 +9,13 @@ using Xunit;
 
 namespace RideWise.Test.Controllers
 {
-    public class RentalControllerTest
+    public class RentalContollerTest
     {
         readonly Mock<IRentalService> _rentalService;
         readonly Mock<ILoggerManager> _logger;
         readonly RentalController _sut;
 
-        public RentalControllerTest()
+        public RentalContollerTest()
         {
             _rentalService = new Mock<IRentalService>();
             _logger = new Mock<ILoggerManager>();
