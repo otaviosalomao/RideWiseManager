@@ -1,7 +1,7 @@
-﻿using ride_wise_api.Application.Repositories.Interfaces;
-using ride_wise_api.Infrastructure;
+﻿using RideWise.Api.Application.Repositories.Interfaces;
+using RideWise.Api.Infrastructure;
 
-namespace ride_wise_api.Application.Repositories
+namespace RideWise.Api.Application.Repositories
 {
     public class RepositoryManager : IRepositoryManager
     {

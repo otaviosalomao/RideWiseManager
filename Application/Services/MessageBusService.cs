@@ -1,9 +1,9 @@
-﻿using ride_wise_api.Application.Services.Interfaces;
+﻿using RideWise.Api.Application.Services.Interfaces;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.Json;
 
-namespace ride_wise_api.Application.Services
+namespace RideWise.Api.Application.Services
 {
     public class MessageBusService : IMessageBusService
     {

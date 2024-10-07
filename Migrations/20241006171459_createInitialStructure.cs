@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace ride_wise_api.Migrations
+namespace RideWise.Api.Migrations
 {
     /// <inheritdoc />
     public partial class createInitialStructure : Migration

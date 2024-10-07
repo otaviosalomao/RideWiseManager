@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
-using ride_wise_api.Domain.Enums;
+using RideWise.Api.Domain.Enums;
 
-namespace ride_wise_api.Application.Models
+namespace RideWise.Api.Application.Models
 {    
     public class DeliveryAgentRequest
     {        

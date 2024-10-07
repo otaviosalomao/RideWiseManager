@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace ride_wise_api.Application.Repositories.Interfaces
+namespace RideWise.Api.Application.Repositories.Interfaces
 {
     public interface IRepositoryBase<T>
     {

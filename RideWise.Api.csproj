@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>true</InvariantGlobalization>
-    <RootNamespace>ride_wise_api</RootNamespace>
+    <RootNamespace>RideWise.Api</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

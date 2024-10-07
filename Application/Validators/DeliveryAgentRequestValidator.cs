@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using ride_wise_api.Application.Models;
-using ride_wise_api.Domain.Enums;
+using RideWise.Api.Application.Models;
+using RideWise.Api.Domain.Enums;
 
-namespace ride_wise_api.Application.Validators
+namespace RideWise.Api.Application.Validators
 {
     public class DeliveryAgentRequestValidator : AbstractValidator<DeliveryAgentRequest>
     {

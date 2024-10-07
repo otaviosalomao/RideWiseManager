@@ -1,6 +1,6 @@
-﻿using ride_wise_api.Application.Models;
+﻿using RideWise.Api.Application.Models;
 
-namespace ride_wise_api.Application.Services.Interfaces
+namespace RideWise.Api.Application.Services.Interfaces
 {
     public interface IRentalService
     {

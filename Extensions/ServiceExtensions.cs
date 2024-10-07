@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using NLog;
-using ride_wise_api.Application.Mappings;
-using ride_wise_api.Application.Repositories;
-using ride_wise_api.Application.Repositories.Interfaces;
-using ride_wise_api.Application.Services;
-using ride_wise_api.Application.Services.Interfaces;
-using ride_wise_api.Infrastructure;
+using RideWise.Api.Application.Mappings;
+using RideWise.Api.Application.Repositories;
+using RideWise.Api.Application.Repositories.Interfaces;
+using RideWise.Api.Application.Services;
+using RideWise.Api.Application.Services.Interfaces;
+using RideWise.Api.Infrastructure;
 using FluentValidation;
-using ride_wise_api.Application.Validators;
+using RideWise.Api.Application.Validators;
 using FluentValidation.AspNetCore;
-using ride_wise_api.Domain.Services.Interfaces;
-using ride_wise_api.Domain.Services;
+using RideWise.Api.Domain.Services.Interfaces;
+using RideWise.Api.Domain.Services;
 
-namespace ride_wise_api.Extensions
+namespace RideWise.Api.Extensions
 {
     public static class ServiceExtensions
     {

@@ -1,9 +1,9 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using ride_wise_api.Application.Services.Interfaces;
+using RideWise.Api.Application.Services.Interfaces;
 using System.Text;
 
-namespace ride_wise_api.Application.Services
+namespace RideWise.Api.Application.Services
 {
     public class RabbitMqService : IRabbitMqService
     {

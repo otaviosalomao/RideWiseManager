@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using ride_wise_api.Application.Models;
+using RideWise.Api.Application.Models;
 
-namespace ride_wise_api.Application.Validators
+namespace RideWise.Api.Application.Validators
 {
     public class MotorcycleRequestValidator : AbstractValidator<MotorcycleRequest>
     {

@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using ride_wise_api.Infrastructure;
+using RideWise.Api.Infrastructure;
 
 #nullable disable
 
-namespace ride_wise_api.Migrations
+namespace RideWise.Api.Migrations
 {
     [DbContext(typeof(RiseWiseManagerDbContext))]
     [Migration("20241006171459_createInitialStructure")]
@@ -25,7 +25,7 @@ namespace ride_wise_api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ride_wise_api.Domain.Models.DeliveryAgent", b =>
+            modelBuilder.Entity("RideWise.Api.Domain.Models.DeliveryAgent", b =>
                 {
                     b.Property<int>("DriverLicenseNumber")
                         .HasColumnType("integer");
@@ -59,7 +59,7 @@ namespace ride_wise_api.Migrations
                     b.ToTable("DeliveryAgents");
                 });
 
-            modelBuilder.Entity("ride_wise_api.Domain.Models.Motorcycle", b =>
+            modelBuilder.Entity("RideWise.Api.Domain.Models.Motorcycle", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -90,7 +90,7 @@ namespace ride_wise_api.Migrations
                     b.ToTable("Motorcycles");
                 });
 
-            modelBuilder.Entity("ride_wise_api.Domain.Models.Rental", b =>
+            modelBuilder.Entity("RideWise.Api.Domain.Models.Rental", b =>
                 {
                     b.Property<string>("Identification")
                         .ValueGeneratedOnAdd()

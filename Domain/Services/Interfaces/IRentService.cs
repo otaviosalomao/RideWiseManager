@@ -1,4 +1,4 @@
-﻿namespace ride_wise_api.Domain.Services.Interfaces
+﻿namespace RideWise.Api.Domain.Services.Interfaces
 {
     public interface IRentService
     {
