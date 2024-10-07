@@ -19,8 +19,8 @@ namespace RideWise.Api.Extensions
     {
         public static void ConfigureDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<RiseWiseManagerDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("RiseWiseManagerDatabase")));
+            services.AddDbContext<RideWiseApiDbContext>(options =>
+            options.UseNpgsql(configuration.GetConnectionString("RideWiseApiDatabase")));
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
         public static void ConfigureServices(this IServiceCollection services)

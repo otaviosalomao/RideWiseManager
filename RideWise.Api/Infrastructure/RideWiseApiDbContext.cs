@@ -4,13 +4,13 @@ using System.Reflection;
 
 namespace RideWise.Api.Infrastructure
 {
-    public class RiseWiseManagerDbContext : DbContext
+    public class RideWiseApiDbContext : DbContext
     {
         public DbSet<DeliveryAgent> DeliveryAgents { get; set; }
         public DbSet<Motorcycle> Motorcycles { get; set; }
         public DbSet<Rental> Rentals { get; set; }
 
-        public RiseWiseManagerDbContext(DbContextOptions<RiseWiseManagerDbContext> options) : base(options)
+        public RideWiseApiDbContext(DbContextOptions<RideWiseApiDbContext> options) : base(options)
         {
         }
 

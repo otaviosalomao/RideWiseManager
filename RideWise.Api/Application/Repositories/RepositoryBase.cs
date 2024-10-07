@@ -7,9 +7,9 @@ namespace RideWise.Api.Application.Repositories
 {
     public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
-        private readonly RiseWiseManagerDbContext repositoryContext;
+        private readonly RideWiseApiDbContext repositoryContext;
 
-        public RepositoryBase(RiseWiseManagerDbContext repositoryContext)
+        public RepositoryBase(RideWiseApiDbContext repositoryContext)
         {
             this.repositoryContext = repositoryContext;
         }

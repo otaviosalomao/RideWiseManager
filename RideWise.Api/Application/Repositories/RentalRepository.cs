@@ -8,7 +8,7 @@ namespace RideWise.Api.Application.Repositories
 {
     public class RentalRepository : RepositoryBase<Rental>, IRentalRepository
     {
-        public RentalRepository(RiseWiseManagerDbContext repositoryContext) : base(repositoryContext)
+        public RentalRepository(RideWiseApiDbContext repositoryContext) : base(repositoryContext)
         {
         }
 

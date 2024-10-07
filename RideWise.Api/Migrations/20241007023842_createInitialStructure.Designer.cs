@@ -11,8 +11,8 @@ using RideWise.Api.Infrastructure;
 
 namespace RideWise.Api.Migrations
 {
-    [DbContext(typeof(RiseWiseManagerDbContext))]
-    [Migration("20241006171459_createInitialStructure")]
+    [DbContext(typeof(RideWiseApiDbContext))]
+    [Migration("20241007023842_createInitialStructure")]
     partial class createInitialStructure
     {
         /// <inheritdoc />
