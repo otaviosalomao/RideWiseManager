@@ -1,4 +1,5 @@
-﻿using RideWise.Api.Domain.Services.Interfaces;
+﻿using RideWise.Api.Domain.Models;
+using RideWise.Api.Domain.Services.Interfaces;
 
 namespace RideWise.Api.Domain.Services
 {
@@ -8,12 +9,16 @@ namespace RideWise.Api.Domain.Services
             new Dictionary<int, decimal>() {
                 { 7,30 }, { 15, 28 }, { 30, 22 }, { 45, 20 }, { 50, 18 }
             };
+        private readonly Dictionary<int, decimal> RENT_PLAN_FINE_VALUES =
+            new Dictionary<int, decimal>() {
+                { 7, 0.2m }, { 15, 0.4m }
+            };
 
-        public decimal RentValue(int daysPlan)
+        public decimal RentPlanValue(int daysPlan)
         {
-            if (RENT_PLAN_VALUES.TryGetValue(daysPlan, out var result))
+            if (RENT_PLAN_VALUES.TryGetValue(daysPlan, out var planValue))
             {
-                return result;
+                return planValue;
             }
             throw new Exception("Invalid rental Plan");
         }
@@ -21,37 +26,51 @@ namespace RideWise.Api.Domain.Services
         {
             return startRentDate.AddDays(daysPlan);
         }
-
-        public decimal TotalValueWhenEndBeforeEstimatedDate(DateTime startRentDate, DateTime endRentDate, int daysPlan)
+        public decimal RentTotalValue(Rental rental)
         {
-            if (RENT_PLAN_VALUES.TryGetValue(daysPlan, out var planValue))
+            var totalValue = RentPlanValue(rental.PlanNumber) * rental.PlanNumber;
+            if (rental.EndDate > rental.EstimatedEndDate)
             {
-                var remainingDays = (endRentDate - startRentDate).Days;
-                var dailyValue = planValue / daysPlan;
-                var remainingDailiesTotalValue = remainingDays * dailyValue;
+                totalValue =
+                    TotalValueWhenEndAfterEstimatedDate(rental);
+            }
+            if (rental.EndDate < rental.EstimatedEndDate)
+            {
+                totalValue =
+                    TotalValueWhenEndBeforeEstimatedDate(rental);
+            }
+            return totalValue;
+        }
+        private decimal TotalValueWhenEndBeforeEstimatedDate(Rental rental)
+        {
+            var planNumber = rental.PlanNumber;
+            var startRentDate = rental.StartDate;
+            if (RENT_PLAN_VALUES.TryGetValue(rental.PlanNumber, out var planValue))
+            {
+                var remainingDays = (startRentDate.AddDays(planNumber) - rental.EndDate).Days;
+                var remainingDailiesTotalValue = remainingDays * planValue;
+                var usedTotalValue = (rental.EndDate - startRentDate).Days * planValue;
                 var planFine = 0m;
-                switch (daysPlan)
+                if (RENT_PLAN_FINE_VALUES.TryGetValue(planNumber, out var fine))
                 {
-                    case 7:
-                        planFine = remainingDailiesTotalValue * 0.2m;
-                        break;
-                    case 15:
-                        planFine = remainingDailiesTotalValue * 0.4m;
-                        break;
+                    planFine = remainingDailiesTotalValue * fine;
                 }
-                return remainingDailiesTotalValue + planFine;
+                return usedTotalValue + remainingDailiesTotalValue + planFine;
             }
             throw new Exception("Invalid rental Plan");
         }
-        public decimal TotalValueWhenEndAfterEstimatedDate(DateTime estimatedEndRentDate, DateTime endRentDate, int daysPlan)
+        private decimal TotalValueWhenEndAfterEstimatedDate(Rental rental)
         {
-            if (RENT_PLAN_VALUES.TryGetValue(daysPlan, out var planValue))
+            var planNumber = rental.PlanNumber;
+            var startRentDate = rental.StartDate;
+            var estimatedEndRentDate = rental.EstimatedEndDate;
+            if (RENT_PLAN_VALUES.TryGetValue(planNumber, out var planValue))
             {
-                var additionalDays = (endRentDate - estimatedEndRentDate).Days;
-                var dailyValue = planValue / daysPlan;
-                var additionalDailiesTotalValue = (additionalDays * dailyValue);
+                var additionalDays = (rental.EndDate - estimatedEndRentDate).Days;
+                var usedTotalValue = (rental.EndDate - startRentDate).Days * planValue;
+                var additionalDailiesTotalValue = (additionalDays * planValue);
                 var planFine = additionalDays * 50;
-                return planFine + additionalDailiesTotalValue;
+                return usedTotalValue + planFine + additionalDailiesTotalValue;
             }
             throw new Exception("Invalid rental Plan");
         }
