@@ -1,6 +1,4 @@
-﻿using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-using RideWise.Api.Application.Services.Interfaces;
+﻿using RideWise.Api.Application.Services.Interfaces;
 using System.Text;
 
 namespace RideWise.Api.Application.Services

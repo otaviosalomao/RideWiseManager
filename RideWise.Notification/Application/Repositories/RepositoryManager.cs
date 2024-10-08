@@ -6,15 +6,15 @@ namespace RideWise.Notification.Application.Repositories
     public class RepositoryManager : IRepositoryManager
     {
         private readonly RideWiseNotificationDbContext _context;
-        private readonly Lazy<IMotorcycleNoticeRepository> _motorcycleNoticeRepository;
+        private readonly IMotorcycleNoticeRepository _motorcycleNoticeRepository;
 
         public RepositoryManager(RideWiseNotificationDbContext context)
         {
             _context = context;
-            _motorcycleNoticeRepository = new Lazy<IMotorcycleNoticeRepository>(() => new MotorcycleNoticeRepository(context));
+            _motorcycleNoticeRepository = new MotorcycleNoticeRepository(context);
         }
 
-        public IMotorcycleNoticeRepository MotorcycleNotice => _motorcycleNoticeRepository.Value;
+        public IMotorcycleNoticeRepository MotorcycleNotice => _motorcycleNoticeRepository;
 
         public void Save()
         {
