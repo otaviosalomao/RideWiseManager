@@ -22,7 +22,7 @@ namespace RideWise.Test.Domain.Services
         }
 
         [Fact]
-        public async void RentService_RentValue_Successfull()
+        public void RentService_RentValue_Successfull()
         {
             foreach (var item in RENT_PLAN_VALUES)
             {
@@ -32,12 +32,12 @@ namespace RideWise.Test.Domain.Services
         }
 
         [Fact]
-        public async void RentService_RentValue_Unsuccessfull()
+        public void RentService_RentValue_Unsuccessfull()
         {
             Assert.Throws<Exception>(() => _sut.RentPlanValue(5));
         }
         [Fact]
-        public async void RentService_EndRentDate_Successfull()
+        public void RentService_EndRentDate_Successfull()
         {
             foreach (var item in RENT_PLAN_VALUES)
             {
@@ -46,7 +46,7 @@ namespace RideWise.Test.Domain.Services
             }
         }
         [Fact]
-        public async void RentService_RentTotalValue_WhenEndBeforeEstimatedDate_Successfull()
+        public void RentService_RentTotalValue_WhenEndBeforeEstimatedDate_Successfull()
         {
             foreach (var item in RENT_PLAN_VALUES)
             {
@@ -77,7 +77,7 @@ namespace RideWise.Test.Domain.Services
         }
 
         [Fact]
-        public async void RentService_RentTotalValue_WhenEndAfterEstimatedDate_Successfull()
+        public void RentService_RentTotalValue_WhenEndAfterEstimatedDate_Successfull()
         {
             foreach (var item in RENT_PLAN_VALUES)
             {
@@ -103,19 +103,19 @@ namespace RideWise.Test.Domain.Services
             }
         }
         [Fact]
-        public async void RentService_RentTotalValue_Unsuccessfull()
+        public void RentService_RentTotalValue_Unsuccessfull()
         {
             var rental = new Rental() { PlanNumber = 5 };
             Assert.Throws<Exception>(() => _sut.RentTotalValue(rental));
         }
         [Fact]
-        public async void RentService_EstimateEndRentDate_Successfull()
+        public void RentService_EstimateEndRentDate_Successfull()
         {
             var result = _sut.EstimateEndRentDate(DateTime.Now.Date, 7);
             Assert.Equal(DateTime.Now.Date.AddDays(7), result);
         }
         [Fact]
-        public async void RentService_StartRentDate_Successfull()
+        public void RentService_StartRentDate_Successfull()
         {
             var result = _sut.StartRentDate(DateTime.Now.Date);
             Assert.Equal(DateTime.Now.Date.AddDays(1), result);
