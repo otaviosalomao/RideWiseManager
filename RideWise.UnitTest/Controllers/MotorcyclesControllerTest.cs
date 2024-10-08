@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using RideWise.Api.Application.Models;
-using RideWise.Api.Application.Services;
 using RideWise.Api.Application.Services.Interfaces;
 using RideWise.Api.Controllers;
 using Xunit;
@@ -24,7 +23,7 @@ namespace RideWise.Test.Controllers
 
         [Fact]
         public async void MotorcyclesController_GetAll_NotFound()
-        {            
+        {
             var motorcycleResult = Enumerable.Empty<MotorcycleResult>();
             _motorcycleService.Setup(x => x.GetAsync(It.IsAny<MotorcycleFilter>())).Returns(Task.FromResult(motorcycleResult));
 
@@ -127,7 +126,7 @@ namespace RideWise.Test.Controllers
         [Fact]
         public async void MotorcycleController_UpdateLicensePlate_ReturnUpdate()
         {
-            var motorcycleLicensePlate = new MotorcycleLicensePlate();            
+            var motorcycleLicensePlate = new MotorcycleLicensePlate();
             _motorcycleService.Setup(x => x.UpdateLicensePlateAsync(It.IsAny<string>(), It.IsAny<string>()));
 
             var result = (OkObjectResult)await _sut.UpdateLicensePlate(It.IsAny<string>(), motorcycleLicensePlate);
@@ -151,7 +150,7 @@ namespace RideWise.Test.Controllers
         }
         [Fact]
         public async void MotorcycleController_Delete_ReturnDelete()
-        {            
+        {
             _motorcycleService.Setup(x => x.DeleteAsync(It.IsAny<string>()));
 
             var result = (OkResult)await _sut.Delete(It.IsAny<string>());
@@ -163,7 +162,7 @@ namespace RideWise.Test.Controllers
 
         [Fact]
         public async void MotorcycleController_Delete_ReturnInvalidData()
-        {         
+        {
             _motorcycleService.Setup(x => x.DeleteAsync(It.IsAny<string>())).Throws(new SystemException("Error Creating motorcycle"));
 
             var result = (ObjectResult)await _sut.Delete(It.IsAny<string>());

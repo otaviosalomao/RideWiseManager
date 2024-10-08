@@ -8,7 +8,7 @@ namespace RideWise.Api.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<Rental> builder)
         {
-            builder.HasKey(u => new { u.Identification });            
+            builder.HasKey(u => new { u.Identification });
             builder.Property(f => f.Identification).ValueGeneratedOnAdd();
         }
     }

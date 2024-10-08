@@ -11,18 +11,18 @@ namespace RideWise.Api.Application.Services
         private readonly IRepositoryManager _repositoryManager;
         private readonly IMapper _mapper;
         readonly ILoggerManager _logger;
-        readonly IMotorcycleMessageBusProducer _messageBusProducer;
+        readonly IMotorcycleMessageBusProducerService _messageBusProducer;
 
         public MotorcycleService(
             IMapper mapper,
             IRepositoryManager repositoryManager,
             ILoggerManager loggerManager,
-            IMotorcycleMessageBusProducer messageBusProducer)
+            IMotorcycleMessageBusProducerService messageBusProducer)
         {
             _repositoryManager = repositoryManager;
             _mapper = mapper;
             _logger = loggerManager;
-            _messageBusProducer = messageBusProducer;            
+            _messageBusProducer = messageBusProducer;
         }
 
         public async Task<MotorcycleResult> CreateAsync(MotorcycleRequest request)

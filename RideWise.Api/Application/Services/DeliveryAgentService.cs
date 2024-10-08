@@ -28,7 +28,7 @@ namespace RideWise.Api.Application.Services
         {
             var filters = new DeliveryAgentFilter(
                 identificationDocument: request.Cnpj
-                ,driverLicenseNumber: request.Numero_cnh);
+                , driverLicenseNumber: request.Numero_cnh);
             var deliveryAgent =
                 await _repositoryManager.DeliveryAgent.Get(filters);
             if (deliveryAgent is not null)
@@ -40,7 +40,7 @@ namespace RideWise.Api.Application.Services
             var newDeliveryAgent = _mapper.Map<DeliveryAgent>(request);
             newDeliveryAgent.DriverLicenseFilePath =
                 await _driverLicenseFileManager.WriteFile(newDeliveryAgent.DriverLicenseNumber, request.Image_cnh);
-            var result = await _repositoryManager.DeliveryAgent.Create(newDeliveryAgent);            
+            var result = await _repositoryManager.DeliveryAgent.Create(newDeliveryAgent);
             _repositoryManager.Save();
             return _mapper.Map<DeliveryAgentResult>(result);
         }
@@ -56,8 +56,8 @@ namespace RideWise.Api.Application.Services
             }
             deliveryAgent.DriverLicenseFilePath =
                 await _driverLicenseFileManager.UpdateFile(
-                    deliveryAgent.DriverLicenseNumber, 
-                    identificationDocumentImage, 
+                    deliveryAgent.DriverLicenseNumber,
+                    identificationDocumentImage,
                     deliveryAgent.DriverLicenseFilePath);
             await _repositoryManager.DeliveryAgent.Update(deliveryAgent);
             _repositoryManager.Save();

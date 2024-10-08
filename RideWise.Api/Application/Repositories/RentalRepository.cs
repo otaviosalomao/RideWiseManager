@@ -15,7 +15,7 @@ namespace RideWise.Api.Application.Repositories
         public async Task<Rental> Create(Rental Rental)
         {
             return base.Create(Rental);
-        }       
+        }
 
         public async Task<Rental> Get(RentalFilter filters)
         {

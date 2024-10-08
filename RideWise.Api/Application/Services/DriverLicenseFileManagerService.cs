@@ -1,5 +1,4 @@
 ﻿using RideWise.Api.Application.Services.Interfaces;
-using System.IO;
 
 namespace RideWise.Api.Application.Services
 {
@@ -31,7 +30,7 @@ namespace RideWise.Api.Application.Services
         private string GetFolderDestinationPath()
         {
             var path = $"{BASE_PATH}\\{DateTime.Now.Year}\\{DateTime.Now.Month}\\{DateTime.Now.Day}";
-            if (!Directory.Exists(path)) 
+            if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }

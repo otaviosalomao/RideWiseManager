@@ -1,22 +1,21 @@
 ﻿using AutoMapper;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using NLog;
 using RideWise.Api.Application.Mappings;
 using RideWise.Api.Application.Repositories;
 using RideWise.Api.Application.Repositories.Interfaces;
 using RideWise.Api.Application.Services;
 using RideWise.Api.Application.Services.Interfaces;
-using RideWise.Api.Infrastructure;
-using FluentValidation;
 using RideWise.Api.Application.Validators;
-using FluentValidation.AspNetCore;
-using RideWise.Api.Domain.Services.Interfaces;
 using RideWise.Api.Domain.Services;
+using RideWise.Api.Domain.Services.Interfaces;
+using RideWise.Api.Infrastructure;
 
 namespace RideWise.Api.Extensions
 {
     public static class ServiceExtensions
-    {        
+    {
         public static void ConfigureDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<RideWiseApiDbContext>(options =>
@@ -31,7 +30,7 @@ namespace RideWise.Api.Extensions
             services.AddTransient<IRentService, RentService>();
             services.AddTransient<IDriverLicenseFileManagerService, DriverLicenseFileManagerService>();
             services.AddScoped<IMessageBusService, MessageBusService>();
-            services.AddScoped<IMotorcycleMessageBusProducer, MotorcycleMessageBusProducer>();
+            services.AddScoped<IMotorcycleMessageBusProducerService, MotorcycleMessageBusProducerService>();
             services.AddScoped<IRabbitMqService, RabbitMqService>();
         }
         public static void ConfigureRepositories(this IServiceCollection services)
@@ -40,14 +39,6 @@ namespace RideWise.Api.Extensions
             services.AddTransient<IMotorcycleRepository, MotorcycleRepository>();
             services.AddTransient<IDeliveryAgentRepository, DeliveryAgentRepository>();
         }
-
-        public static void ConfigureLogger(this IServiceCollection services)
-        {
-            LogManager.Setup(option =>
-                option.LoadConfigurationFromFile(string.Concat(Directory.GetCurrentDirectory(), "/Nlog.config")));
-            services.AddSingleton<ILoggerManager, LoggerManager>();
-        }
-
         public static void ConfigureMapper(this IServiceCollection services)
         {
             var mapperConfig = new MapperConfiguration(mc =>

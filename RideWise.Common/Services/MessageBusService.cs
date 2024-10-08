@@ -1,7 +1,7 @@
-﻿using RideWise.Api.Application.Services.Interfaces;
-using System.Runtime.Serialization.Formatters.Binary;
+﻿using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using RideWise.Api.Application.Services.Interfaces;
 using System.Text;
-using System.Text.Json;
 
 namespace RideWise.Api.Application.Services
 {
@@ -21,13 +21,6 @@ namespace RideWise.Api.Application.Services
             _logger.LogInfo($"sending to queue {queue} message {message}");
             var body = Encoding.UTF8.GetBytes(message);
             await _rabbitMqService.Publish(body, queue, exchange);
-        }
-        public async Task<T> Consume<T>(string queue, string exchange)
-        {
-            _logger.LogInfo($"consuming queue {queue}");
-            var body = await _rabbitMqService.Consume(queue, exchange);
-            using MemoryStream ms = new MemoryStream(body);
-            return JsonSerializer.Deserialize<T>(ms);
-        }
+        }        
     }
 }

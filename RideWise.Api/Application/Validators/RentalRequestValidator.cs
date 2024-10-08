@@ -33,6 +33,6 @@ namespace RideWise.Api.Application.Validators
                 .WithMessage("{\"mensagem\": \"Data de termino inválida\"}");
             RuleFor(o => o.Plano)
                 .Must(o => _rentService.ValidPlan(o)).WithMessage("{\"mensagem\": \"Plano invalido\"}");
-        }       
+        }
     }
 }

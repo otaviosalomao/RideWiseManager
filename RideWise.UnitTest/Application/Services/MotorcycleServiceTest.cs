@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
-using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
 using RideWise.Api.Application.Models;
 using RideWise.Api.Application.Repositories.Interfaces;
 using RideWise.Api.Application.Services;
 using RideWise.Api.Application.Services.Interfaces;
-using RideWise.Api.Controllers;
 using RideWise.Api.Domain.Models;
 using Xunit;
 
@@ -17,14 +14,14 @@ namespace RideWise.Test.Controllers
         readonly Mock<ILoggerManager> _logger;
         readonly Mock<IMapper> _mapper;
         readonly Mock<IRepositoryManager> _repositoryManager;
-        readonly Mock<IMotorcycleMessageBusProducer> _messageBusService;
+        readonly Mock<IMotorcycleMessageBusProducerService> _messageBusService;
         readonly MotorcycleService _sut;
         public MotorcycleServiceTest()
         {
             _logger = new Mock<ILoggerManager>();
             _mapper = new Mock<IMapper>();
             _repositoryManager = new Mock<IRepositoryManager>();
-            _messageBusService = new Mock<IMotorcycleMessageBusProducer>();
+            _messageBusService = new Mock<IMotorcycleMessageBusProducerService>();
             _sut = new MotorcycleService(_mapper.Object, _repositoryManager.Object, _logger.Object, _messageBusService.Object);
         }
 
@@ -34,7 +31,7 @@ namespace RideWise.Test.Controllers
             var motorcycleRequest = new MotorcycleRequest() { Placa = "123456" };
             var motorcycle = new Motorcycle() { LicensePlate = "123456" };
             var motorcycleResult = new MotorcycleResult() { Placa = "123456" };
-            _repositoryManager.Setup(x => x.Motorcycle.Get(It.IsAny<MotorcycleFilter>()));            
+            _repositoryManager.Setup(x => x.Motorcycle.Get(It.IsAny<MotorcycleFilter>()));
             _repositoryManager.Setup(x => x.Motorcycle.Create(It.IsAny<Motorcycle>())).Returns(Task.FromResult(motorcycle));
             _mapper.Setup(x => x.Map<Motorcycle>(motorcycleRequest)).Returns(motorcycle);
             _mapper.Setup(x => x.Map<MotorcycleResult>(motorcycle)).Returns(motorcycleResult);
@@ -61,7 +58,7 @@ namespace RideWise.Test.Controllers
             var motorcycleRequest = new MotorcycleRequest() { Placa = "123456" };
             var motorcycle = new List<Motorcycle>() { new Motorcycle() { LicensePlate = "123456" } };
             var motorcycleResult = new MotorcycleResult() { Placa = "123456" };
-            _repositoryManager.Setup(x => x.Motorcycle.Get(It.IsAny<MotorcycleFilter>())).Returns(Task.FromResult(motorcycle.AsEnumerable()));            
+            _repositoryManager.Setup(x => x.Motorcycle.Get(It.IsAny<MotorcycleFilter>())).Returns(Task.FromResult(motorcycle.AsEnumerable()));
             _repositoryManager.Setup(x => x.Motorcycle.Update(It.IsAny<Motorcycle>())).Returns(Task.FromResult(motorcycle));
             _repositoryManager.Setup(x => x.Save());
 

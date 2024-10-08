@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideWise.UnitTest", "RideWi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideWise.IntegrationTest", "RideWise.IntegrationTest\RideWise.IntegrationTest.csproj", "{0C0727F2-4169-4484-B409-15D4E67FB9D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideWise.Common", "RideWise.Common\RideWise.Common.csproj", "{47F9971F-C846-4FF0-B6FC-ABE7E2065A01}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideWise.Notification", "RideWise.Notification\RideWise.Notification.csproj", "{5445051E-7169-4F66-B812-B7BAF1F4B225}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{0C0727F2-4169-4484-B409-15D4E67FB9D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C0727F2-4169-4484-B409-15D4E67FB9D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C0727F2-4169-4484-B409-15D4E67FB9D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47F9971F-C846-4FF0-B6FC-ABE7E2065A01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47F9971F-C846-4FF0-B6FC-ABE7E2065A01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47F9971F-C846-4FF0-B6FC-ABE7E2065A01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47F9971F-C846-4FF0-B6FC-ABE7E2065A01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5445051E-7169-4F66-B812-B7BAF1F4B225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5445051E-7169-4F66-B812-B7BAF1F4B225}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5445051E-7169-4F66-B812-B7BAF1F4B225}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5445051E-7169-4F66-B812-B7BAF1F4B225}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,8 +7,8 @@ namespace RideWise.Api.Application.Validators
     {
         public MotorcycleRequestValidator()
         {
-            RuleFor(o => o.Ano)                
-                .NotEmpty().WithMessage("{\"mensagem\": \"Dados inválidos\"}");                
+            RuleFor(o => o.Ano)
+                .NotEmpty().WithMessage("{\"mensagem\": \"Dados inválidos\"}");
             RuleFor(o => o.Identificador)
                 .NotEmpty().WithMessage("{\"mensagem\": \"Dados inválidos\"}");
             RuleFor(o => o.Modelo)
