@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RideWise.Api.Application.Models;
-using RideWise.Api.Application.Services;
 using RideWise.Api.Application.Services.Interfaces;
 using System.ComponentModel.DataAnnotations;
 

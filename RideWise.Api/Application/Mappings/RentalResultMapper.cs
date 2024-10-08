@@ -13,7 +13,7 @@ namespace RideWise.Api.Application.Mappings
                 .ForMember(f => f.Moto_id, o => o.MapFrom((source, destination, member, context) => source.MotorcycleIdentification))
                 .ForMember(f => f.Data_inicio, o => o.MapFrom((source, destination, member, context) => source.StartDate))
                 .ForMember(f => f.Data_termino, o => o.MapFrom((source, destination, member, context) => source.EndDate))
-                .ForMember(f => f.Data_previsao_termino, o => o.MapFrom((source, destination, member, context) => source.EstimatedEndDate))                
+                .ForMember(f => f.Data_previsao_termino, o => o.MapFrom((source, destination, member, context) => source.EstimatedEndDate))
                 .ForMember(f => f.Valor_diaria, o => o.MapFrom((source, destination, member, context) => source.DailyValue));
         }
     }

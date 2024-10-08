@@ -1,6 +1,3 @@
-
-using FluentAssertions.Common;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHealthChecks();

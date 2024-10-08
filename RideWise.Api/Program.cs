@@ -1,5 +1,4 @@
 using RideWise.Api.Application.Services;
-using RideWise.Api.Application.Validators;
 using RideWise.Api.Extensions;
 using RideWise.Common.Extensions;
 

@@ -1,24 +1,21 @@
 ﻿using AutoMapper;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using NLog;
 using RideWise.Api.Application.Mappings;
 using RideWise.Api.Application.Repositories;
 using RideWise.Api.Application.Repositories.Interfaces;
 using RideWise.Api.Application.Services;
 using RideWise.Api.Application.Services.Interfaces;
-using RideWise.Api.Infrastructure;
-using FluentValidation;
 using RideWise.Api.Application.Validators;
-using FluentValidation.AspNetCore;
-using RideWise.Api.Domain.Services.Interfaces;
 using RideWise.Api.Domain.Services;
-using MassTransit.RabbitMqTransport.Configuration;
-using RideWise.Common.Models;
+using RideWise.Api.Domain.Services.Interfaces;
+using RideWise.Api.Infrastructure;
 
 namespace RideWise.Api.Extensions
 {
     public static class ServiceExtensions
-    {        
+    {
         public static void ConfigureDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<RideWiseApiDbContext>(options =>

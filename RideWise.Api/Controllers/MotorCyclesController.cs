@@ -21,7 +21,7 @@ namespace RideWise.Api.Controllers
         }
 
         // GET: api/<MotorcyclesController>
-        [HttpGet]        
+        [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] string? placa = null)
         {
             try
@@ -43,7 +43,7 @@ namespace RideWise.Api.Controllers
         }
 
         // GET api/<MotorcyclesController>/5
-        [HttpGet("{id}")]              
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdentification([FromRoute] string id)
         {
             try
@@ -70,9 +70,9 @@ namespace RideWise.Api.Controllers
         {
             try
             {
-                _logger.LogInfo($"create motorcycle {motorcycleRequest}");                
+                _logger.LogInfo($"create motorcycle {motorcycleRequest}");
                 var result = await _motorcycleService.CreateAsync(motorcycleRequest);
-                return Created("",result);
+                return Created("", result);
             }
             catch (Exception ex)
             {

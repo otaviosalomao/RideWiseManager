@@ -1,7 +1,5 @@
-﻿using FluentAssertions;
-using RideWise.Api.Domain.Models;
+﻿using RideWise.Api.Domain.Models;
 using RideWise.Api.Domain.Services;
-using RideWise.Api.Domain.Services.Interfaces;
 using Xunit;
 
 namespace RideWise.Test.Domain.Services
@@ -77,7 +75,7 @@ namespace RideWise.Test.Domain.Services
                 Assert.Equal(totalValue, result);
             }
         }
-       
+
         [Fact]
         public async void RentService_RentTotalValue_WhenEndAfterEstimatedDate_Successfull()
         {
