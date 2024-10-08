@@ -17,14 +17,14 @@ namespace RideWise.Test.Controllers
         readonly Mock<ILoggerManager> _logger;
         readonly Mock<IMapper> _mapper;
         readonly Mock<IRepositoryManager> _repositoryManager;
-        readonly Mock<IMotorcycleMessageBusProducer> _messageBusService;
+        readonly Mock<IMotorcycleMessageBusProducerService> _messageBusService;
         readonly MotorcycleService _sut;
         public MotorcycleServiceTest()
         {
             _logger = new Mock<ILoggerManager>();
             _mapper = new Mock<IMapper>();
             _repositoryManager = new Mock<IRepositoryManager>();
-            _messageBusService = new Mock<IMotorcycleMessageBusProducer>();
+            _messageBusService = new Mock<IMotorcycleMessageBusProducerService>();
             _sut = new MotorcycleService(_mapper.Object, _repositoryManager.Object, _logger.Object, _messageBusService.Object);
         }
 
