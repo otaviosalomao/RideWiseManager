@@ -1,10 +1,15 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using RideWise.Common.Extensions;
+using RabbitMQ.Client.Events;
+using RabbitMQ.Client;
 using RideWise.Notification.Extensions;
-using RideWise.RabbitMqConsumer.Services;
-using RideWise.RabbitMqConsumer.Services.Interfaces;
+using System.Text;
+using RideWise.Common.Models;
+using System.Text.Json;
+using Newtonsoft.Json;
+using RideWise.Notification.Domain.Models;
+using RideWise.Notification.Application.Repositories.Interfaces;
 
 var builder = new ConfigurationBuilder()
     .AddJsonFile("appSettings.json", false, false)
@@ -14,15 +19,51 @@ var builder = new ConfigurationBuilder()
 var config = builder.Build();
 IHost _host = Host.CreateDefaultBuilder().ConfigureServices(
     services =>
-    {
-        services.AddTransient<IMotorcycleNoticeMessageBusConsumerService, MotorcycleNoticeMessaBusConsumerService>();
-        services.ConfigureCommonServices();
-        services.ConfigureLogger();
+    {        
         services.ConfigureRabbitMQ(config);
         services.ConfigureDbContext(config);
         services.ConfigureRepositories();
+        services.ConfigureRabbitMQ(config);
 
     }).Build();
 
-var _consumer = _host.Services.GetRequiredService<IMotorcycleNoticeMessageBusConsumerService>();
-await _consumer.ProcessAsync();
+var _repositoryManager = _host.Services.GetRequiredService<IRepositoryManager>();
+
+var factory = new ConnectionFactory
+{
+    HostName = config["RabbitMqConfiguration:Host"],
+    UserName = config["RabbitMqConfiguration:Username"],
+    Password = config["RabbitMqConfiguration:Password"]
+};
+
+var connection = factory.CreateConnection();
+
+using var channel = connection.CreateModel();
+channel.QueueDeclare("ride-wise-api.create-motorcycle.queue",
+    durable: true,
+    exclusive: false,
+    autoDelete: false,
+    arguments: null);
+
+var consumer = new EventingBasicConsumer(channel);
+
+consumer.Received += (model, eventArgs) =>
+{
+    var body = eventArgs.Body.ToArray();
+    var message = Encoding.UTF8.GetString(body);
+    var result = JsonConvert.DeserializeObject<Motorcycle>(message);
+    if (result?.Year == 2024)
+    {
+        var motorcycleNotice = new MotorcycleNotice()
+        {
+            Year = result.Year,
+            LicensePlate = result.LicensePlate,
+            Model = result.Model
+        };
+        _repositoryManager.MotorcycleNotice.Create(motorcycleNotice);
+        _repositoryManager.Save();
+    }
+};
+channel.BasicConsume(queue: "ride-wise-api.create-motorcycle.queue", autoAck: false, consumer: consumer);
+
+Console.ReadKey();
