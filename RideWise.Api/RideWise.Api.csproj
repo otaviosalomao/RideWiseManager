@@ -35,6 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DriverLicenseFiles\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
