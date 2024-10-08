@@ -12,6 +12,8 @@ using RideWise.Api.Application.Validators;
 using FluentValidation.AspNetCore;
 using RideWise.Api.Domain.Services.Interfaces;
 using RideWise.Api.Domain.Services;
+using MassTransit.RabbitMqTransport.Configuration;
+using RideWise.Common.Models;
 
 namespace RideWise.Api.Extensions
 {
@@ -40,14 +42,6 @@ namespace RideWise.Api.Extensions
             services.AddTransient<IMotorcycleRepository, MotorcycleRepository>();
             services.AddTransient<IDeliveryAgentRepository, DeliveryAgentRepository>();
         }
-
-        public static void ConfigureLogger(this IServiceCollection services)
-        {
-            LogManager.Setup(option =>
-                option.LoadConfigurationFromFile(string.Concat(Directory.GetCurrentDirectory(), "/Nlog.config")));
-            services.AddSingleton<ILoggerManager, LoggerManager>();
-        }
-
         public static void ConfigureMapper(this IServiceCollection services)
         {
             var mapperConfig = new MapperConfiguration(mc =>
