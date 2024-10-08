@@ -16,6 +16,6 @@ namespace RideWise.Notification.Application.Repositories
         {
             repositoryContext.Set<T>().Add(entity);
             return entity;
-        }        
+        }
     }
 }

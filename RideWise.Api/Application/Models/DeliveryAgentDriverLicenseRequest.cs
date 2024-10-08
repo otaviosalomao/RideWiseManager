@@ -1,6 +1,4 @@
-﻿using System.Buffers.Text;
-
-namespace RideWise.Api.Application.Models
+﻿namespace RideWise.Api.Application.Models
 {
     public class DeliveryAgentDriverLicenseRequest
     {

@@ -1,7 +1,5 @@
 ﻿using RideWise.Api.Application.Services.Interfaces;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
-using System.Text.Json;
 
 namespace RideWise.Api.Application.Services
 {

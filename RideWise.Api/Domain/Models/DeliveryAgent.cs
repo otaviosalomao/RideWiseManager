@@ -1,6 +1,4 @@
-﻿using RideWise.Api.Domain.Enums;
-
-namespace RideWise.Api.Domain.Models
+﻿namespace RideWise.Api.Domain.Models
 {
     public class DeliveryAgent
     {
@@ -11,6 +9,6 @@ namespace RideWise.Api.Domain.Models
         public DateTime BirthDate { get; set; }
         public int DriverLicenseNumber { get; set; }
         public string DriverLicenseFilePath { get; set; }
-        public DriverLicenseType DriverLicenseType { get; set; }          
+        public string DriverLicenseType { get; set; }
     }
 }

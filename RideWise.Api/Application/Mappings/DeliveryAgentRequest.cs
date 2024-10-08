@@ -6,7 +6,7 @@ namespace RideWise.Api.Application.Mappings
 {
     public class DeliveryAgentRequestMapper : Profile
     {
-        public DeliveryAgentRequestMapper() 
+        public DeliveryAgentRequestMapper()
         {
             _ = CreateMap<DeliveryAgentRequest, DeliveryAgent>()
                 .ForMember(f => f.Identification, o => o.MapFrom((source, destination, member, context) => source.Identificador))

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using RideWise.Api.Application.Models;
-using RideWise.Api.Domain.Enums;
 using RideWise.Api.Domain.Models;
 
 namespace RideWise.Api.Application.Mappings

@@ -78,6 +78,6 @@ namespace RideWise.Test.Services
             _repositoryManager.Setup(x => x.Rental.Get(It.IsAny<RentalFilter>()));
 
             Assert.ThrowsAsync<Exception>(async () => await _sut.UpdateDevolutionDateAsync(It.IsAny<string>(), It.IsAny<DateTime>()));
-        }        
+        }
     }
 }

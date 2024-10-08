@@ -8,7 +8,7 @@ namespace RideWise.Api.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<MotorcycleNotice> builder)
         {
-            builder.HasKey(u => new { u.Id });            
+            builder.HasKey(u => new { u.Id });
             builder.Property(f => f.Id).ValueGeneratedOnAdd();
         }
     }

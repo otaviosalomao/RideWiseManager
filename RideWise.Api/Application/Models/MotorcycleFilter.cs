@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace RideWise.Api.Application.Models
+﻿namespace RideWise.Api.Application.Models
 {
     public class MotorcycleFilter
     {
@@ -11,10 +9,10 @@ namespace RideWise.Api.Application.Models
             Year = year;
             Model = model;
             LicensePlate = licensePlate;
-        }        
-        public string? Identification { get; set; }        
-        public int? Year { get; set; }        
-        public string? Model { get; set; }        
+        }
+        public string? Identification { get; set; }
+        public int? Year { get; set; }
+        public string? Model { get; set; }
         public string? LicensePlate { get; set; }
     }
 }

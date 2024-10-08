@@ -1,5 +1,4 @@
 ﻿using RideWise.Api.Application.Services.Interfaces;
-using RideWise.Api.Domain.Models;
 using RideWise.RabbitMqConsumer.Services.Interfaces;
 
 namespace RideWise.RabbitMqConsumer.Services
@@ -13,9 +12,9 @@ namespace RideWise.RabbitMqConsumer.Services
         public MotorcycleNoticeMessaBusConsumerService(IMessageBusService messageBusService)
         {
             _messageBusService = messageBusService;
-        }    
-        
-        public async Task ProcessAsync() 
+        }
+
+        public async Task ProcessAsync()
         {
             await _messageBusService.Consume(QUEUE_NAME, EXCHANGE);
         }

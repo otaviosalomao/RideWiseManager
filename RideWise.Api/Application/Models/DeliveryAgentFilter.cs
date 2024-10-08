@@ -1,18 +1,16 @@
-﻿using RideWise.Api.Domain.Enums;
-
-namespace RideWise.Api.Application.Models
+﻿namespace RideWise.Api.Application.Models
 {
     public class DeliveryAgentFilter
     {
         public DeliveryAgentFilter() { }
 
         public DeliveryAgentFilter(
-            string? identification = null, 
-            string? name = null, 
-            string? identificationDocument = null, 
-            DateTime? birthDate = null, 
-            int? driverLicenseNumber = null, 
-            DriverLicenseType? driverLicenseType = null, 
+            string? identification = null,
+            string? name = null,
+            string? identificationDocument = null,
+            DateTime? birthDate = null,
+            int? driverLicenseNumber = null,
+            string? driverLicenseType = null,
             string? driverLicenseImage = null)
         {
             Identification = identification;
@@ -29,7 +27,7 @@ namespace RideWise.Api.Application.Models
         public string? IdentificationDocument { get; set; }
         public DateTime? BirthDate { get; set; }
         public int? DriverLicenseNumber { get; set; }
-        public DriverLicenseType? DriverLicenseType { get; set; }
+        public string? DriverLicenseType { get; set; }
         public string? DriverLicenseImage { get; set; }
     }
 }

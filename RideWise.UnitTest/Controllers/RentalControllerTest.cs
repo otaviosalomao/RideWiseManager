@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using RideWise.Api.Application.Models;
-using RideWise.Api.Application.Services;
 using RideWise.Api.Application.Services.Interfaces;
 using RideWise.Api.Controllers;
 using Xunit;
@@ -49,7 +48,7 @@ namespace RideWise.Test.Controllers
         }
         [Fact]
         public async void MotorcyclesController_GetByIdentification_NotFound()
-        {            
+        {
             _rentalService.Setup(x => x.GetAsync(It.IsAny<RentalFilter>()));
 
             var result = (ObjectResult)await _sut.GetByIdentification(It.IsAny<string>());

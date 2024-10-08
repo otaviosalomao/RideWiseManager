@@ -1,10 +1,7 @@
-﻿using MassTransit.Serialization;
-using Microsoft.Extensions.Configuration;
-using RabbitMQ.Client;
+﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RideWise.Api.Application.Services.Interfaces;
 using RideWise.Common.Models;
-using System.Text;
 
 namespace RideWise.Api.Application.Services
 {
@@ -38,12 +35,12 @@ namespace RideWise.Api.Application.Services
             using var channel = connection.CreateModel();
             channel.QueueBind(queue: queue, exchange: exchange, routingKey: string.Empty);
             var consumer = new EventingBasicConsumer(channel);
-            
+
             consumer.Received += (model, ea) =>
             {
                 var body = ea.Body.ToArray();
             };
-            channel.BasicConsume(queue: queue, autoAck: true, consumer);            
+            channel.BasicConsume(queue: queue, autoAck: true, consumer);
         }
     }
 }

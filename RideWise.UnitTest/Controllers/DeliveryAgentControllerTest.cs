@@ -26,10 +26,10 @@ namespace RideWise.Test.Controllers
         {
             var deliveryAgentrequest = new Mock<DeliveryAgentRequest>();
             var deliveryAgentresult = new Mock<DeliveryAgentResult>();
-            _deliveryAgentService.Setup(x=>x.CreateAsync(It.IsAny<DeliveryAgentRequest>())).Returns(Task.FromResult(deliveryAgentresult.Object));
+            _deliveryAgentService.Setup(x => x.CreateAsync(It.IsAny<DeliveryAgentRequest>())).Returns(Task.FromResult(deliveryAgentresult.Object));
 
             var result = (CreatedResult)await _sut.Create(deliveryAgentrequest.Object);
-            
+
             _deliveryAgentService.Verify(x => x.CreateAsync(It.IsAny<DeliveryAgentRequest>()), Moq.Times.Once);
             result.StatusCode.Should().Be(201);
             result.Should().NotBeNull();
@@ -38,7 +38,7 @@ namespace RideWise.Test.Controllers
         [Fact]
         public async void DeliveryAgentController_Create_ReturnInvalidData()
         {
-            var deliveryAgentRequest = new Mock<DeliveryAgentRequest>();            
+            var deliveryAgentRequest = new Mock<DeliveryAgentRequest>();
             _deliveryAgentService.Setup(x => x.CreateAsync(It.IsAny<DeliveryAgentRequest>())).Throws(new SystemException("Error Creating delivery agent"));
 
             var result = (ObjectResult)await _sut.Create(deliveryAgentRequest.Object);
@@ -50,7 +50,7 @@ namespace RideWise.Test.Controllers
         [Fact]
         public async void DeliveryAgentController_UpdateDriverLicenseImage_ReturnUpdate()
         {
-            var deliveryAgentDriverLicenseRequest = new Mock<DeliveryAgentDriverLicenseRequest>();            
+            var deliveryAgentDriverLicenseRequest = new Mock<DeliveryAgentDriverLicenseRequest>();
             _deliveryAgentService.Setup(x => x.UpdateDriverLicenseImageAsync(It.IsAny<string>(), It.IsAny<string>()));
 
             var result = (OkResult)await _sut.UpdateDriverLicenseImage(deliveryAgentDriverLicenseRequest.Object, It.IsAny<string>());
@@ -62,7 +62,7 @@ namespace RideWise.Test.Controllers
 
         [Fact]
         public async void DeliveryAgentController_UpdateDriverLicenseImage_ReturnInvalidData()
-        {            
+        {
             var deliveryAgentDriverLicenseRequest = new Mock<DeliveryAgentDriverLicenseRequest>();
             _deliveryAgentService.Setup(x => x.UpdateDriverLicenseImageAsync(It.IsAny<string>(), It.IsAny<string>())).Throws(new SystemException("Error Creating delivery agent"));
 

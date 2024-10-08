@@ -1,7 +1,6 @@
 ﻿using RideWise.Notification.Application.Repositories.Interfaces;
 using RideWise.Notification.Domain.Models;
 using RideWise.Notification.Infrastructure;
-using System.Linq.Expressions;
 
 namespace RideWise.Notification.Application.Repositories
 {
@@ -14,6 +13,6 @@ namespace RideWise.Notification.Application.Repositories
         public async Task<MotorcycleNotice> Create(MotorcycleNotice motorcycle)
         {
             return base.Create(motorcycle);
-        }       
+        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using RideWise.Api.Application.Models;
-using RideWise.Api.Domain.Enums;
 
 namespace RideWise.Api.Application.Validators
 {
@@ -18,14 +17,19 @@ namespace RideWise.Api.Application.Validators
                .Must(o => BeAValidDate(o)).WithMessage("{\"mensagem\": \"Dados inválidos\"}");
             RuleFor(o => o.Numero_cnh)
               .NotEmpty().WithMessage("{\"mensagem\": \"Dados inválidos\"}");
-            RuleFor(o => o.Tipo_cnh)              
-              .IsInEnum().WithMessage("{\"mensagem\": \"Dados inválidos\"}");
+            RuleFor(o => o.Tipo_cnh)
+              .Must(o => BeAValidDriverLicenseType(o)).WithMessage("{\"mensagem\": \"Dados inválidos\"}");
             RuleFor(o => o.Image_cnh)
               .NotEmpty().WithMessage("{\"mensagem\": \"Dados inválidos\"}");
         }
         private bool BeAValidDate(DateTime date)
         {
             return !date.Equals(default(DateTime));
+        }
+        private bool BeAValidDriverLicenseType(string diverLicenseType)
+        {
+            var validTypes = new String[] { "A", "B", "AB" };
+            return validTypes.Contains(diverLicenseType);
         }
     }
 }

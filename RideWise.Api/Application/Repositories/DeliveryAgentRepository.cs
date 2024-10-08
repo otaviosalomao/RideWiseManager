@@ -32,7 +32,7 @@ namespace RideWise.Api.Application.Repositories
                 return FindByCondition(lambda).FirstOrDefault();
             }
             return GetAll().FirstOrDefault();
-        }      
+        }
         public async Task Update(DeliveryAgent deliveryAgent)
         {
             base.Update(deliveryAgent);
