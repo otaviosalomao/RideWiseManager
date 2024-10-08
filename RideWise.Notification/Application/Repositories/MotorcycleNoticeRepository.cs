@@ -10,7 +10,7 @@ namespace RideWise.Notification.Application.Repositories
         {
         }
 
-        public async Task<MotorcycleNotice> Create(MotorcycleNotice motorcycle)
+        public MotorcycleNotice Create(MotorcycleNotice motorcycle)
         {
             return base.Create(motorcycle);
         }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RideWise.Notification.Application.Repositories;
+using RideWise.Notification.Application.Repositories.Interfaces;
 using RideWise.Notification.Infrastructure;
 
 namespace RideWise.Notification.Extensions
@@ -12,6 +14,11 @@ namespace RideWise.Notification.Extensions
             services.AddDbContext<RideWiseNotificationDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("RideWiseNotificationDatabase")));
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        }
+
+        public static void ConfigureRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IRepositoryManager, RepositoryManager>();
         }
     }
 }
