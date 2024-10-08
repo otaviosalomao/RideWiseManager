@@ -11,6 +11,7 @@
         public DateTime CreatedAt { get; set; }
         public int PlanNumber { get; set; }
         public decimal DailyValue { get; set; }
+        public decimal TotalValue { get; set; }
     }
 }
 
