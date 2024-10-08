@@ -1,10 +1,6 @@
 ﻿using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 using RideWise.Api.Application.Services.Interfaces;
 using RideWise.Common.Models;
-using System.Text;
-using System.Threading.Channels;
-using static MassTransit.Monitoring.Performance.BuiltInCounters;
 
 namespace RideWise.Api.Application.Services
 {

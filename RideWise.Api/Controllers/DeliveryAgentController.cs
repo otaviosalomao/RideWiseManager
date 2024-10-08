@@ -4,8 +4,9 @@ using RideWise.Api.Application.Services.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
 namespace RideWise.Api.Controllers
-{
+{    
     [Route("entregadores")]
+    [Tags("Entregadores")]
     [ApiController]
     public class DeliveryAgentController : ControllerBase
     {
@@ -19,8 +20,17 @@ namespace RideWise.Api.Controllers
             _logger = loggerManager;
             _deliveryAgentService = deliveryAgentService;
         }
-        // POST
+        /// <summary>
+        /// Cadastrar um Entregador
+        /// </summary> 
+        /// <remarks>"tipo_cnh" deve ser: A, B ou AB</remarks>
+        /// <param name="deliveryAgentRequest">Dados do Entregador</param>
+        /// <returns>Dado cadastrado</returns>    
+        /// <response code="201">Sucesso</response>
+        /// <response code="400">Dados Inválidos</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([Required][FromBody] DeliveryAgentRequest deliveryAgentRequest)
         {
             try
@@ -35,8 +45,15 @@ namespace RideWise.Api.Controllers
                 return StatusCode(400, new { mensagem = "Dados inválidos" });
             }
         }
-        // POST
+        /// <summary>
+        /// Atualizar a CNH
+        /// </summary>  
+        /// <param name="imagem_cnh">Dados CNH</param>         
+        /// <response code="200">CNH atualizada</response>
+        /// <response code="400">Dados Inválidos</response>
         [HttpPost("{id}/cnh")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateDriverLicenseImage([Required][FromBody] DeliveryAgentDriverLicenseRequest imagem_cnh, [Required][FromRoute] string id)
         {
             try

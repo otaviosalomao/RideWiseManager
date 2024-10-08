@@ -12,8 +12,8 @@ using RideWise.Api.Infrastructure;
 namespace RideWise.Api.Migrations
 {
     [DbContext(typeof(RideWiseApiDbContext))]
-    [Migration("20241007023842_createInitialStructure")]
-    partial class createInitialStructure
+    [Migration("20241008133724_createStructure")]
+    partial class createStructure
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,14 +40,11 @@ namespace RideWise.Api.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("DriverLicenseType")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Identification")
+                    b.Property<string>("DriverLicenseType")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Id")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -61,14 +58,7 @@ namespace RideWise.Api.Migrations
 
             modelBuilder.Entity("RideWise.Api.Domain.Models.Motorcycle", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Identification")
-                        .IsRequired()
+                    b.Property<string>("Id")
                         .HasColumnType("text");
 
                     b.Property<string>("LicensePlate")
@@ -92,7 +82,7 @@ namespace RideWise.Api.Migrations
 
             modelBuilder.Entity("RideWise.Api.Domain.Models.Rental", b =>
                 {
-                    b.Property<string>("Identification")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
@@ -122,7 +112,10 @@ namespace RideWise.Api.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.HasKey("Identification");
+                    b.Property<decimal>("TotalValue")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Rentals");
                 });

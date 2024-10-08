@@ -25,7 +25,7 @@ namespace RideWise.Api.Application.Repositories
         public async Task<bool> Exists(string Identification)
         {
             var filter = new MotorcycleFilter(
-               identification: Identification);
+               Id: Identification);
             var result = await Get(filter);
             return result.Any();
         }
