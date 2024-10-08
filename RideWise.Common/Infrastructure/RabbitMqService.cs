@@ -30,24 +30,6 @@ namespace RideWise.Api.Application.Services
                                  routingKey: string.Empty,
                                  basicProperties: null,
                                  body: body);
-        }
-
-        public async Task<IModel> Consume(string queue, string exchange)
-        {
-            var connection = _connectionFactory.CreateConnection();
-            var channel = connection.CreateModel();
-            channel.QueueBind(queue: queue, exchange: exchange, routingKey: string.Empty);
-            return channel;
-            //var consumer = new EventingBasicConsumer(channel);
-            //consumer.Received += (model, ea) =>
-            //{
-            //    var body = ea.Body.ToArray();
-            //    var message = Encoding.UTF8.GetString(body);
-            //    Console.WriteLine(message);
-            //};
-            //channel.BasicConsume(queue: queue, autoAck: true, consumer);
-            //Console.ReadLine();
-            //return consumer;
-        }        
+        }            
     }
 }

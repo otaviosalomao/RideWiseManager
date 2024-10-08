@@ -11,7 +11,7 @@ using RideWise.Notification.Infrastructure;
 namespace RideWise.Notification.Migrations
 {
     [DbContext(typeof(RideWiseNotificationDbContext))]
-    [Migration("20241008052326_createNotificationStructure")]
+    [Migration("20241008105916_createNotificationStructure")]
     partial class createNotificationStructure
     {
         /// <inheritdoc />

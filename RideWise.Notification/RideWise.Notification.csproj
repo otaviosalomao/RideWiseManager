@@ -49,4 +49,8 @@
     <ProjectReference Include="..\RideWise.Common\RideWise.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>
