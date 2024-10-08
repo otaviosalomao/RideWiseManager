@@ -1,4 +1,6 @@
-﻿using RideWise.Api.Application.Services.Interfaces;
+﻿using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using RideWise.Api.Application.Services.Interfaces;
 using System.Text;
 
 namespace RideWise.Api.Application.Services
@@ -20,10 +22,10 @@ namespace RideWise.Api.Application.Services
             var body = Encoding.UTF8.GetBytes(message);
             await _rabbitMqService.Publish(body, queue, exchange);
         }
-        public async Task Consume(string queue, string exchange)
+        public async Task<IModel> Consume(string queue, string exchange)
         {
             _logger.LogInfo($"consuming queue {queue}");
-            await _rabbitMqService.Consume(queue, exchange);
+            return await _rabbitMqService.Consume(queue, exchange);
         }
     }
 }

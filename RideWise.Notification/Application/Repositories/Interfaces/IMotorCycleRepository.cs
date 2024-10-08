@@ -4,6 +4,6 @@ namespace RideWise.Notification.Application.Repositories.Interfaces
 {
     public interface IMotorcycleNoticeRepository
     {
-        Task<MotorcycleNotice> Create(MotorcycleNotice motorcycleNotice);
+        MotorcycleNotice Create(MotorcycleNotice motorcycleNotice);
     }
 }

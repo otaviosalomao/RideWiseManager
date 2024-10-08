@@ -20,9 +20,9 @@ IHost _host = Host.CreateDefaultBuilder().ConfigureServices(
         services.ConfigureLogger();
         services.ConfigureRabbitMQ(config);
         services.ConfigureDbContext(config);
+        services.ConfigureRepositories();
 
     }).Build();
 
 var _consumer = _host.Services.GetRequiredService<IMotorcycleNoticeMessageBusConsumerService>();
-
 await _consumer.ProcessAsync();
