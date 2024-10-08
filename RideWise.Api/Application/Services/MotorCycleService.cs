@@ -11,13 +11,13 @@ namespace RideWise.Api.Application.Services
         private readonly IRepositoryManager _repositoryManager;
         private readonly IMapper _mapper;
         readonly ILoggerManager _logger;
-        readonly IMotorcycleMessageBusProducer _messageBusProducer;
+        readonly IMotorcycleMessageBusProducerService _messageBusProducer;
 
         public MotorcycleService(
             IMapper mapper,
             IRepositoryManager repositoryManager,
             ILoggerManager loggerManager,
-            IMotorcycleMessageBusProducer messageBusProducer)
+            IMotorcycleMessageBusProducerService messageBusProducer)
         {
             _repositoryManager = repositoryManager;
             _mapper = mapper;

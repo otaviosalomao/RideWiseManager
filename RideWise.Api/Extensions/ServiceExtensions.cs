@@ -33,7 +33,7 @@ namespace RideWise.Api.Extensions
             services.AddTransient<IRentService, RentService>();
             services.AddTransient<IDriverLicenseFileManagerService, DriverLicenseFileManagerService>();
             services.AddScoped<IMessageBusService, MessageBusService>();
-            services.AddScoped<IMotorcycleMessageBusProducer, MotorcycleMessageBusProducer>();
+            services.AddScoped<IMotorcycleMessageBusProducerService, MotorcycleMessageBusProducerService>();
             services.AddScoped<IRabbitMqService, RabbitMqService>();
         }
         public static void ConfigureRepositories(this IServiceCollection services)

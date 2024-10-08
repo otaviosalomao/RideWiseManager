@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RideWise.RabbitMqConsumer.Services.Interfaces
 {
-    public interface IConsumer
+    public interface IMotorcycleNoticeMessageBusConsumerService
     {
         Task ProcessAsync();
     }

@@ -2,7 +2,7 @@
 
 namespace RideWise.Api.Application.Services.Interfaces
 {
-    public interface IMotorcycleMessageBusProducer
+    public interface IMotorcycleMessageBusProducerService
     {
         public Task Publish(Motorcycle motorcycle);
     }

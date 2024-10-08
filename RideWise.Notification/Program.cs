@@ -15,7 +15,7 @@ var config = builder.Build();
 IHost _host = Host.CreateDefaultBuilder().ConfigureServices(
     services =>
     {
-        services.AddTransient<IConsumer, Consumer>();
+        services.AddTransient<IMotorcycleNoticeMessageBusConsumerService, MotorcycleNoticeMessaBusConsumerService>();
         services.ConfigureCommonServices();
         services.ConfigureLogger();        
         services.ConfigureRabbitMQ(config);
@@ -23,6 +23,6 @@ IHost _host = Host.CreateDefaultBuilder().ConfigureServices(
 
     }).Build();
 
-var _consumer = _host.Services.GetRequiredService<IConsumer>();
+var _consumer = _host.Services.GetRequiredService<IMotorcycleNoticeMessageBusConsumerService>();
 
 await _consumer.ProcessAsync();
