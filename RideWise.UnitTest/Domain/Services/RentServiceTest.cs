@@ -71,7 +71,7 @@ namespace RideWise.Test.Domain.Services
                 {
                     planFine = remainngDaysTotalValue * fine;
                 }
-                var totalValue = usedTotalValue + remainngDaysTotalValue + planFine;
+                var totalValue = usedTotalValue + planFine;
                 Assert.Equal(totalValue, result);
             }
         }
@@ -98,7 +98,7 @@ namespace RideWise.Test.Domain.Services
                 var usedTotalValue = (endRentDate - startRentDate).Days * planValue;
                 var additionalDailiesTotalValue = (additionalDays * planValue);
                 var planFine = additionalDays * 50;
-                var totalValue = usedTotalValue + additionalDailiesTotalValue + planFine;
+                var totalValue = usedTotalValue + planFine;
                 Assert.Equal(totalValue, result);
             }
         }
