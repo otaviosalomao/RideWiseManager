@@ -6,10 +6,10 @@ namespace RideWise.Api.Application.Mappings
 {
     public class DeliveryAgentRequestMapper : Profile
     {
-        public DeliveryAgentRequestMapper()
+        public DeliveryAgentRequestMapper() 
         {
             _ = CreateMap<DeliveryAgentRequest, DeliveryAgent>()
-                .ForMember(f => f.Identification, o => o.MapFrom((source, destination, member, context) => source.Identificador))
+                .ForMember(f => f.Id, o => o.MapFrom((source, destination, member, context) => source.Identificador))
                 .ForMember(f => f.Name, o => o.MapFrom((source, destination, member, context) => source.Nome))
                 .ForMember(f => f.IdentificationDocument, o => o.MapFrom((source, destination, member, context) => source.Cnpj))
                 .ForMember(f => f.BirthDate, o => o.MapFrom((source, destination, member, context) => source.Data_nascimento))

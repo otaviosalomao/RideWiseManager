@@ -9,7 +9,7 @@ namespace RideWise.Api.Application.Mappings
         public DeliveryAgentResultMapper()
         {
             _ = CreateMap<DeliveryAgent, DeliveryAgentResult>()
-                .ForMember(f => f.Identificador, o => o.MapFrom((source, destination, member, context) => source.Identification))
+                .ForMember(f => f.Identificador, o => o.MapFrom((source, destination, member, context) => source.Id))
                 .ForMember(f => f.Nome, o => o.MapFrom((source, destination, member, context) => source.Name))
                 .ForMember(f => f.Cnpj, o => o.MapFrom((source, destination, member, context) => source.IdentificationDocument))
                 .ForMember(f => f.Data_nascimento, o => o.MapFrom((source, destination, member, context) => source.BirthDate))
