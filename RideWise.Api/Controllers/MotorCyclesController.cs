@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace RideWise.Api.Controllers
 {
     [Route("motos")]
+    [Tags("Motos")]
     [ApiController]
     public class MotorcyclesController : ControllerBase
     {
@@ -20,8 +21,16 @@ namespace RideWise.Api.Controllers
             _motorcycleService = motorcycleService;
         }
 
-        // GET: api/<MotorcyclesController>
+        /// <summary>
+        /// Buscar motos
+        /// </summary>                            
+        /// <response code="200">Sucesso</response>
+        /// <response code="404">Não Encontrado</response>
+        /// <response code="400">Dados Inválidos</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAll([FromQuery] string? placa = null)
         {
             try
@@ -42,8 +51,16 @@ namespace RideWise.Api.Controllers
             }
         }
 
-        // GET api/<MotorcyclesController>/5
+        /// <summary>
+        /// Buscar moto por Id
+        /// </summary>                            
+        /// <response code="200">Sucesso</response>
+        /// <response code="404">Não Encontrado</response>
+        /// <response code="400">Dados Inválidos</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetByIdentification([FromRoute] string id)
         {
             try
@@ -64,8 +81,14 @@ namespace RideWise.Api.Controllers
             }
         }
 
-        // POST api/<MotorcyclesController>
+        /// <summary>
+        /// Cadastrar moto
+        /// </summary>                            
+        /// <response code="201">Sucesso</response>        
+        /// <response code="400">Dados Inválidos</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([Required][FromBody] MotorcycleRequest motorcycleRequest)
         {
             try
@@ -81,8 +104,14 @@ namespace RideWise.Api.Controllers
             }
         }
 
-        // PUT api/<MotorcyclesController>/5
+        /// <summary>
+        /// Atualizar placa por id da moto
+        /// </summary>                            
+        /// <response code="200">Sucesso</response>        
+        /// <response code="400">Dados Inválidos</response>
         [HttpPut("{id}/placa")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateLicensePlate(
             [Required][FromRoute] string id,
             [FromBody] MotorcycleLicensePlate licensePlate)
@@ -100,8 +129,14 @@ namespace RideWise.Api.Controllers
             }
         }
 
-        // DELETE api/<MotorcyclesController>/5
+        /// <summary>
+        /// Excluir moto
+        /// </summary>                            
+        /// <response code="200">Sucesso</response>        
+        /// <response code="400">Dados Inválidos</response>
         [HttpDelete("{identification}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Delete([Required][FromRoute] string identification)
         {
             try

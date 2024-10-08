@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace RideWise.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class createInitialStructure : Migration
+    public partial class createStructure : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,12 +17,11 @@ namespace RideWise.Api.Migrations
                 {
                     IdentificationDocument = table.Column<string>(type: "text", nullable: false),
                     DriverLicenseNumber = table.Column<int>(type: "integer", nullable: false),
-                    Id = table.Column<int>(type: "integer", nullable: false),
-                    Identification = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: true),
                     Name = table.Column<string>(type: "text", nullable: false),
                     BirthDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     DriverLicenseFilePath = table.Column<string>(type: "text", nullable: false),
-                    DriverLicenseType = table.Column<int>(type: "integer", nullable: false)
+                    DriverLicenseType = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,9 +32,7 @@ namespace RideWise.Api.Migrations
                 name: "Motorcycles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Identification = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     Year = table.Column<int>(type: "integer", nullable: false),
                     Model = table.Column<string>(type: "text", nullable: false),
                     LicensePlate = table.Column<string>(type: "text", nullable: false)
@@ -49,7 +46,7 @@ namespace RideWise.Api.Migrations
                 name: "Rentals",
                 columns: table => new
                 {
-                    Identification = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     DeliveryAgentIdentification = table.Column<string>(type: "text", nullable: false),
                     MotorcycleIdentification = table.Column<string>(type: "text", nullable: false),
                     StartDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
@@ -57,11 +54,12 @@ namespace RideWise.Api.Migrations
                     EstimatedEndDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     PlanNumber = table.Column<int>(type: "integer", nullable: false),
-                    DailyValue = table.Column<decimal>(type: "numeric", nullable: false)
+                    DailyValue = table.Column<decimal>(type: "numeric", nullable: false),
+                    TotalValue = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rentals", x => x.Identification);
+                    table.PrimaryKey("PK_Rentals", x => x.Id);
                 });
 
             migrationBuilder.CreateIndex(

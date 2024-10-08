@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RideWise.Api.Infrastructure;
 
-namespace RideWise.Api.Application.Services
+namespace RideWise.Api.Infrastructure
 {
     public static class MigrationService
     {

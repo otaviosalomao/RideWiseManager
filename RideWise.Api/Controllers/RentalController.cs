@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace RideWise.Api.Controllers
 {
     [Route("locacao")]
+    [Tags("Locação")]
     [ApiController]
     public class RentalController : ControllerBase
     {
@@ -19,8 +20,14 @@ namespace RideWise.Api.Controllers
             _logger = loggerManager;
             _rentalService = rentalService;
         }
-        // POST
+        /// <summary>
+        /// Cadastrar locação
+        /// </summary>                            
+        /// <response code="201">Sucesso</response>        
+        /// <response code="400">Dados Inválidos</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([Required][FromBody] RentalRequest rentalRequest)
         {
             try
@@ -35,8 +42,16 @@ namespace RideWise.Api.Controllers
                 return StatusCode(400, new { mensagem = "Dados inválidos" });
             }
         }
-        // GET 
+        /// <summary>
+        /// Buscar locação por Id
+        /// </summary>                            
+        /// <response code="200">Sucesso</response>
+        /// <response code="404">Não Encontrado</response>
+        /// <response code="400">Dados Inválidos</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetByIdentification([FromRoute] string id)
         {
             try
@@ -56,8 +71,14 @@ namespace RideWise.Api.Controllers
                 return StatusCode(400, new { mensagem = "Dados inválidos" });
             }
         }
-        // PUT 
+        /// <summary>
+        /// Atualizar data de devolução e calcular valor
+        /// </summary>                            
+        /// <response code="200">Sucesso</response>        
+        /// <response code="400">Dados Inválidos</response>
         [HttpPut("{id}/devolucao")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateByDevolutionDate(
             [Required][FromRoute] string id,
             [FromBody] RentalDevolutionDate devolutionDate)
