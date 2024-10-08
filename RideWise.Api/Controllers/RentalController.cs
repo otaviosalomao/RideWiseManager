@@ -57,7 +57,7 @@ namespace RideWise.Api.Controllers
             try
             {
                 _logger.LogInfo($"get rental by identification {id}");
-                var filter = new RentalFilter(identification: id);
+                var filter = new RentalFilter(id: id);
                 var result = await _rentalService.GetAsync(filter);
                 if (result is not null)
                 {

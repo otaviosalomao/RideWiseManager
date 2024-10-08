@@ -67,7 +67,7 @@ namespace RideWise.Api.Application.Services
 
         public async Task<bool> UpdateDevolutionDateAsync(string identification, DateTime devolutionDate)
         {
-            var filter = new RentalFilter(identification: identification);
+            var filter = new RentalFilter(id: identification);
             var rental = await _repositoryManager.Rental.Get(filter);
             if (rental is null)
             {

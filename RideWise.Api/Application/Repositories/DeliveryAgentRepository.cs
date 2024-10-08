@@ -18,7 +18,7 @@ namespace RideWise.Api.Application.Repositories
         public async Task<bool> Exists(string Identification)
         {
             var filter = new DeliveryAgentFilter(
-               identification: Identification);
+               id: Identification);
             var result = await Get(filter);
             return result is not null;
         }
@@ -32,7 +32,7 @@ namespace RideWise.Api.Application.Repositories
                 return FindByCondition(lambda).FirstOrDefault();
             }
             return GetAll().FirstOrDefault();
-        }
+        }      
         public async Task Update(DeliveryAgent deliveryAgent)
         {
             base.Update(deliveryAgent);

@@ -44,13 +44,13 @@ namespace RideWise.Api.Application.Services
             _repositoryManager.Save();
             return _mapper.Map<DeliveryAgentResult>(result);
         }
-        public async Task UpdateDriverLicenseImageAsync(string identification, string identificationDocumentImage)
+        public async Task UpdateDriverLicenseImageAsync(string id, string identificationDocumentImage)
         {
             var deliveryAgent =
-                await _repositoryManager.DeliveryAgent.Get(new DeliveryAgentFilter(identification: identification));
+                await _repositoryManager.DeliveryAgent.Get(new DeliveryAgentFilter(id: id));
             if (deliveryAgent is null)
             {
-                var errorMessage = $"Delivery Agent with identification {identification} not Found";
+                var errorMessage = $"Delivery Agent with identification {id} not Found";
                 _logger.LogError(errorMessage);
                 throw new Exception(errorMessage);
             }

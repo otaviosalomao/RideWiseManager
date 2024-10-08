@@ -5,7 +5,7 @@
         public DeliveryAgentFilter() { }
 
         public DeliveryAgentFilter(
-            string? identification = null,
+            string? id = null,
             string? name = null,
             string? identificationDocument = null,
             DateTime? birthDate = null,
@@ -13,7 +13,7 @@
             string? driverLicenseType = null,
             string? driverLicenseImage = null)
         {
-            Identification = identification;
+            Id = id;
             Name = name;
             IdentificationDocument = identificationDocument;
             BirthDate = birthDate;
@@ -22,7 +22,7 @@
             DriverLicenseImage = driverLicenseImage;
         }
 
-        public string? Identification { get; set; }
+        public string? Id { get; set; }
         public string? Name { get; set; }
         public string? IdentificationDocument { get; set; }
         public DateTime? BirthDate { get; set; }

@@ -66,7 +66,7 @@ namespace RideWise.Api.Controllers
             try
             {
                 _logger.LogInfo($"get motorcycle by identification {id}");
-                var filter = new MotorcycleFilter(identification: id);
+                var filter = new MotorcycleFilter(Id: id);
                 var result = await _motorcycleService.GetAsync(filter);
                 if (result.Any())
                 {
@@ -134,20 +134,20 @@ namespace RideWise.Api.Controllers
         /// </summary>                            
         /// <response code="200">Sucesso</response>        
         /// <response code="400">Dados Inválidos</response>
-        [HttpDelete("{identification}")]
+        [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Delete([Required][FromRoute] string identification)
+        public async Task<IActionResult> Delete([Required][FromRoute] string id)
         {
             try
             {
-                _logger.LogInfo($"delete motorcycle identification {identification}");
-                var result = await _motorcycleService.DeleteAsync(identification);
+                _logger.LogInfo($"delete motorcycle identification {id}");
+                var result = await _motorcycleService.DeleteAsync(id);
                 return Ok();
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Erro deleting motorcycle {identification}: {ex.Message}");
+                _logger.LogError($"Erro deleting motorcycle {id}: {ex.Message}");
                 return StatusCode(400, new { mensagem = "Dados inválidos" });
             }
         }

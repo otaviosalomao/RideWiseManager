@@ -4,7 +4,7 @@
     {
         public RentalFilter() { }
         public RentalFilter(
-            string identification = null,
+            string id = null,
             string deliveryAgentIdentification = null,
             string motorcycleIdentification = null,
             DateTime? startDate = null,
@@ -12,7 +12,7 @@
             DateTime? estimatedEndDate = null,
             string planNumber = null)
         {
-            Identification = identification;
+            Id = id;
             DeliveryAgentIdentification = deliveryAgentIdentification;
             MotorcycleIdentification = motorcycleIdentification;
             StartDate = startDate;
@@ -21,7 +21,7 @@
             PlanNumber = planNumber;
         }
 
-        public string Identification { get; set; }
+        public string Id { get; set; }
         public string DeliveryAgentIdentification { get; set; }
         public string MotorcycleIdentification { get; set; }
         public DateTime? StartDate { get; set; }
