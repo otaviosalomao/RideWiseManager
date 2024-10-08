@@ -21,11 +21,6 @@ namespace RideWise.Api.Application.Services
             _logger.LogInfo($"sending to queue {queue} message {message}");
             var body = Encoding.UTF8.GetBytes(message);
             await _rabbitMqService.Publish(body, queue, exchange);
-        }
-        public async Task<IModel> Consume(string queue, string exchange)
-        {
-            _logger.LogInfo($"consuming queue {queue}");
-            return await _rabbitMqService.Consume(queue, exchange);
-        }
+        }        
     }
 }

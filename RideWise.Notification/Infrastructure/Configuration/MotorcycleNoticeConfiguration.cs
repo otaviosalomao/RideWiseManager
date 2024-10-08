@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RideWise.Notification.Domain.Models;
 
-namespace RideWise.Api.Infrastructure.Configuration
+namespace RideWise.Notification.Infrastructure.Configuration
 {
     public class MotorcycleNoticeConfiguration : IEntityTypeConfiguration<MotorcycleNotice>
     {
