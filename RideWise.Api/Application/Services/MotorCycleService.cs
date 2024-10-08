@@ -45,7 +45,7 @@ namespace RideWise.Api.Application.Services
         public async Task<bool> DeleteAsync(string identification)
         {
             var motorcycle =
-                await _repositoryManager.Motorcycle.Get(new MotorcycleFilter(identification: identification));
+                await _repositoryManager.Motorcycle.Get(new MotorcycleFilter(Id: identification));
             if (!motorcycle.Any())
             {
                 _logger.LogError($"Motorcycle not found for identification {identification}");
@@ -64,7 +64,7 @@ namespace RideWise.Api.Application.Services
 
         public async Task<bool> UpdateLicensePlateAsync(string identification, string licensePlate)
         {
-            var filter = new MotorcycleFilter(identification: identification);
+            var filter = new MotorcycleFilter(Id: identification);
             var motorcycle =
                 await _repositoryManager.Motorcycle.Get(filter);
             if (!motorcycle.Any())
