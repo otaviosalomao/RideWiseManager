@@ -6,7 +6,6 @@ using RabbitMQ.Client;
 using RideWise.Notification.Extensions;
 using System.Text;
 using RideWise.Common.Models;
-using System.Text.Json;
 using Newtonsoft.Json;
 using RideWise.Notification.Domain.Models;
 using RideWise.Notification.Application.Repositories.Interfaces;
@@ -19,7 +18,7 @@ var builder = new ConfigurationBuilder()
 var config = builder.Build();
 IHost _host = Host.CreateDefaultBuilder().ConfigureServices(
     services =>
-    {        
+    {
         services.ConfigureRabbitMQ(config);
         services.ConfigureDbContext(config);
         services.ConfigureRepositories();
@@ -49,19 +48,27 @@ var consumer = new EventingBasicConsumer(channel);
 
 consumer.Received += (model, eventArgs) =>
 {
-    var body = eventArgs.Body.ToArray();
-    var message = Encoding.UTF8.GetString(body);
-    var result = JsonConvert.DeserializeObject<Motorcycle>(message);
-    if (result?.Year == 2024)
+    try
     {
-        var motorcycleNotice = new MotorcycleNotice()
+        var body = eventArgs.Body.ToArray();
+        var message = Encoding.UTF8.GetString(body);
+        var result = JsonConvert.DeserializeObject<Motorcycle>(message);
+        if (result?.Year == 2024)
         {
-            Year = result.Year,
-            LicensePlate = result.LicensePlate,
-            Model = result.Model
-        };
-        _repositoryManager.MotorcycleNotice.Create(motorcycleNotice);
-        _repositoryManager.Save();
+            var motorcycleNotice = new MotorcycleNotice()
+            {
+                Year = result.Year,
+                LicensePlate = result.LicensePlate,
+                Model = result.Model
+            };
+            _repositoryManager.MotorcycleNotice.Create(motorcycleNotice);
+            _repositoryManager.Save();
+            channel.BasicAck(eventArgs.DeliveryTag, false);
+        }
+    }
+    catch (Exception ex)
+    {
+        channel.BasicNack(eventArgs.DeliveryTag, false, true);
     }
 };
 channel.BasicConsume(queue: "ride-wise-api.create-motorcycle.queue", autoAck: false, consumer: consumer);
