@@ -1,6 +1,9 @@
-﻿using RabbitMQ.Client;
+﻿using MassTransit.Serialization;
+using Microsoft.Extensions.Configuration;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RideWise.Api.Application.Services.Interfaces;
+using RideWise.Common.Models;
 using System.Text;
 
 namespace RideWise.Api.Application.Services
@@ -8,16 +11,13 @@ namespace RideWise.Api.Application.Services
     public class RabbitMqService : IRabbitMqService
     {
         private readonly ConnectionFactory _connectionFactory;
-        private readonly IConfiguration _configuration;
-
-        public RabbitMqService(IConfiguration configuration)
+        public RabbitMqService(RabbitMqConfiguration rabbitMqConfiguration)
         {
-            _configuration = configuration;
             _connectionFactory = new ConnectionFactory
             {
-                HostName = _configuration["RabbitMqConfiguration:Host"],
-                UserName = _configuration["RabbitMqConfiguration:Username"],
-                Password = _configuration["RabbitMqConfiguration:Password"]
+                HostName = rabbitMqConfiguration.HostName,
+                UserName = rabbitMqConfiguration.UserName,
+                Password = rabbitMqConfiguration.Password
             };
         }
 
@@ -32,16 +32,18 @@ namespace RideWise.Api.Application.Services
                                  body: body);
         }
 
-        public async Task<byte[]> Consume(string queue, string exchange)
+        public async Task Consume(string queue, string exchange)
         {
             using var connection = _connectionFactory.CreateConnection();
             using var channel = connection.CreateModel();
             channel.QueueBind(queue: queue, exchange: exchange, routingKey: string.Empty);
             var consumer = new EventingBasicConsumer(channel);
-            byte[] message = null;
-            consumer.Received += (model, ea) => message = ea.Body.ToArray();
-            channel.BasicConsume(queue: queue, autoAck: true, consumer);
-            return message;
+            
+            consumer.Received += (model, ea) =>
+            {
+                var body = ea.Body.ToArray();
+            };
+            channel.BasicConsume(queue: queue, autoAck: true, consumer);            
         }
     }
 }

@@ -22,12 +22,10 @@ namespace RideWise.Api.Application.Services
             var body = Encoding.UTF8.GetBytes(message);
             await _rabbitMqService.Publish(body, queue, exchange);
         }
-        public async Task<T> Consume<T>(string queue, string exchange)
+        public async Task Consume(string queue, string exchange)
         {
             _logger.LogInfo($"consuming queue {queue}");
-            var body = await _rabbitMqService.Consume(queue, exchange);
-            using MemoryStream ms = new MemoryStream(body);
-            return JsonSerializer.Deserialize<T>(ms);
+            await _rabbitMqService.Consume(queue, exchange);
         }
     }
 }
