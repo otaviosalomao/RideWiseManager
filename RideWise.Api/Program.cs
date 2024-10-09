@@ -34,7 +34,6 @@ builder.Services.AddValidators();
 builder.Services.ConfigureRabbitMQ(builder.Configuration);
 
 var app = builder.Build();
-MigrationService.InitializaMigration(app);
 
 if (app.Environment.IsDevelopment())
 {
