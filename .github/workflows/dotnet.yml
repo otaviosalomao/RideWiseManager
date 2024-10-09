@@ -25,4 +25,4 @@ jobs:
     - name: Build
       run: dotnet build --no-restore RideWise.Api/RideWise.Api.csproj
     - name: Test
-      run: dotnet test --no-build --verbosity normal RideWise.UnitTest/RideWise.UnitTest.csproj
+      run: dotnet test --verbosity normal RideWise.UnitTest/RideWise.UnitTest.csproj
