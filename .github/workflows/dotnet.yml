@@ -23,6 +23,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore RideWiseManager.sln
     - name: Build
-      run: dotnet build --no-restore RideWise.Api.csproj
+      run: dotnet build --no-restore RideWise.Api/RideWise.Api.csproj
     - name: Test
-      run: dotnet test --no-build --verbosity normal RideWise.UnitTest.csproj
+      run: dotnet test --no-build --verbosity normal RideWise.UnitTest/RideWise.UnitTest.csproj
