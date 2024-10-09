@@ -48,8 +48,9 @@ namespace RideWise.Api.Application.Services
                 await _repositoryManager.Motorcycle.Get(new MotorcycleFilter(Id: identification));
             if (!motorcycle.Any())
             {
-                _logger.LogError($"Motorcycle not found for identification {identification}");
-                return false;
+                var errorMessage = $"Motorcycle not found for identification {identification}";
+                _logger.LogError(errorMessage);
+                throw new Exception(errorMessage);
             }
             await _repositoryManager.Motorcycle.Delete(motorcycle.FirstOrDefault());
             _repositoryManager.Save();
