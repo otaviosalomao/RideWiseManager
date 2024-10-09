@@ -20,7 +20,9 @@ namespace RideWise.Api.Application.Validators
             RuleFor(o => o.Tipo_cnh)
               .Must(o => BeAValidDriverLicenseType(o)).WithMessage("{\"mensagem\": \"Dados inválidos\"}");
             RuleFor(o => o.Image_cnh)
-              .NotEmpty().WithMessage("{\"mensagem\": \"Dados inválidos\"}");
+              .NotEmpty().WithMessage("{\"mensagem\": \"Dados inválidos\"}")
+              .NotNull().WithMessage("{\"mensagem\": \"Dados inválidos\"}")
+              .Must(o => BeValidBase64String(o)).WithMessage("{\"mensagem\": \"Dados inválidos\"}");
         }
         private bool BeAValidDate(DateTime date)
         {
@@ -30,6 +32,11 @@ namespace RideWise.Api.Application.Validators
         {
             var validTypes = new String[] { "A", "B", "AB" };
             return validTypes.Contains(diverLicenseType);
+        }
+        private bool BeValidBase64String(string base64)
+        {
+            Span<byte> buffer = new Span<byte>(new byte[base64.Length]);
+            return Convert.TryFromBase64String(base64, buffer, out int bytesParsed);
         }
     }
 }

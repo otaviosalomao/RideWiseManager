@@ -48,7 +48,7 @@ namespace RideWise.Api.Application.Services
             }
             if (rental is not null)
             {
-                var errorMessage = $"Rental with Id {request.Entregador_id} already exist";
+                var errorMessage = $"Rental with DeliveryAgentId {request.Entregador_id} and MotorcycleId {request.Moto_id} already exist";
                 _logger.LogError(errorMessage);
                 throw new Exception(errorMessage);
             }

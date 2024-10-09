@@ -51,7 +51,7 @@ namespace RideWise.Test.Controllers
         {
             _rentalService.Setup(x => x.GetAsync(It.IsAny<RentalFilter>()));
 
-            var result = (ObjectResult)await _sut.GetByIdentification(It.IsAny<string>());
+            var result = (ObjectResult)await _sut.GetById(It.IsAny<string>());
 
             _rentalService.Verify(x => x.GetAsync(It.IsAny<RentalFilter>()), Moq.Times.Once);
             result.StatusCode.Should().Be(404);
@@ -63,7 +63,7 @@ namespace RideWise.Test.Controllers
             var rentalResult = new RentalResult();
             _rentalService.Setup(x => x.GetAsync(It.IsAny<RentalFilter>())).Returns(Task.FromResult(rentalResult));
 
-            var result = (ObjectResult)await _sut.GetByIdentification(It.IsAny<string>());
+            var result = (ObjectResult)await _sut.GetById(It.IsAny<string>());
 
             _rentalService.Verify(x => x.GetAsync(It.IsAny<RentalFilter>()), Moq.Times.Once);
             result.StatusCode.Should().Be(200);
@@ -76,7 +76,7 @@ namespace RideWise.Test.Controllers
             rentalResult.Add(new RentalResult());
             _rentalService.Setup(x => x.GetAsync(It.IsAny<RentalFilter>())).Throws(new SystemException("Error Getting Rental"));
 
-            var result = (ObjectResult)await _sut.GetByIdentification(It.IsAny<string>());
+            var result = (ObjectResult)await _sut.GetById(It.IsAny<string>());
 
             _rentalService.Verify(x => x.GetAsync(It.IsAny<RentalFilter>()), Moq.Times.Once);
             result.StatusCode.Should().Be(400);
