@@ -55,7 +55,7 @@ namespace RideWise.Api.Domain.Services
                 {
                     planFine = remainingDailiesTotalValue * fine;
                 }
-                return usedTotalValue + remainingDailiesTotalValue + planFine;
+                return usedTotalValue + planFine;
             }
             throw new Exception("Invalid rental Plan");
         }
@@ -67,10 +67,9 @@ namespace RideWise.Api.Domain.Services
             if (RENT_PLAN_VALUES.TryGetValue(planNumber, out var planValue))
             {
                 var additionalDays = (rental.EndDate - estimatedEndRentDate).Days;
-                var usedTotalValue = (rental.EndDate - startRentDate).Days * planValue;
-                var additionalDailiesTotalValue = (additionalDays * planValue);
+                var usedTotalValue = (rental.EndDate - startRentDate).Days * planValue;                
                 var planFine = additionalDays * 50;
-                return usedTotalValue + planFine + additionalDailiesTotalValue;
+                return usedTotalValue + planFine;
             }
             throw new Exception("Invalid rental Plan");
         }

@@ -13,10 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="WeatherForecast.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="MassTransit" Version="8.2.5" />
@@ -35,11 +31,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <Folder Include="DriverLicenseFiles\" />
+    <Folder Include="Migrations\" />    
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\RideWise.Common\RideWise.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="RideWise.IntegrationTest"/>
   </ItemGroup>
 
 </Project>

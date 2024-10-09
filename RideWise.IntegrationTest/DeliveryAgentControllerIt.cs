@@ -1,80 +1,88 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Moq;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using RideWise.Api.Application.Models;
-using RideWise.Api.Application.Services.Interfaces;
 using RideWise.Api.Infrastructure;
-using System.Net.Mime;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using RideWise.IntegrationTest.Configurations;
+using System.Net.Http.Headers;
+using System.Text;
 using Xunit;
 
 namespace RideWise.IntegrationTest
 {
-    public class DeliveryAgentControllerIt : WebApplicationFactory<Program>
+    public class DeliveryAgentControllerIt : BaseControllerIt, IClassFixture<CustomWebApplicationFactory<Program>>
     {
-        private const string BaseUri = "entregadores";
-        private WebApplicationFactory<Program> _factory;
-        private readonly Mock<IDeliveryAgentService> _deliveryAgentServiceMock;
-
-        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        private const string validDriverLicenseImageBase64 = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAApgAAAKYB3X3/OAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAANCSURBVEiJtZZPbBtFFMZ/M7ubXdtdb1xSFyeilBapySVU8h8OoFaooFSqiihIVIpQBKci6KEg9Q6H9kovIHoCIVQJJCKE1ENFjnAgcaSGC6rEnxBwA04Tx43t2FnvDAfjkNibxgHxnWb2e/u992bee7tCa00YFsffekFY+nUzFtjW0LrvjRXrCDIAaPLlW0nHL0SsZtVoaF98mLrx3pdhOqLtYPHChahZcYYO7KvPFxvRl5XPp1sN3adWiD1ZAqD6XYK1b/dvE5IWryTt2udLFedwc1+9kLp+vbbpoDh+6TklxBeAi9TL0taeWpdmZzQDry0AcO+jQ12RyohqqoYoo8RDwJrU+qXkjWtfi8Xxt58BdQuwQs9qC/afLwCw8tnQbqYAPsgxE1S6F3EAIXux2oQFKm0ihMsOF71dHYx+f3NND68ghCu1YIoePPQN1pGRABkJ6Bus96CutRZMydTl+TvuiRW1m3n0eDl0vRPcEysqdXn+jsQPsrHMquGeXEaY4Yk4wxWcY5V/9scqOMOVUFthatyTy8QyqwZ+kDURKoMWxNKr2EeqVKcTNOajqKoBgOE28U4tdQl5p5bwCw7BWquaZSzAPlwjlithJtp3pTImSqQRrb2Z8PHGigD4RZuNX6JYj6wj7O4TFLbCO/Mn/m8R+h6rYSUb3ekokRY6f/YukArN979jcW+V/S8g0eT/N3VN3kTqWbQ428m9/8k0P/1aIhF36PccEl6EhOcAUCrXKZXXWS3XKd2vc/TRBG9O5ELC17MmWubD2nKhUKZa26Ba2+D3P+4/MNCFwg59oWVeYhkzgN/JDR8deKBoD7Y+ljEjGZ0sosXVTvbc6RHirr2reNy1OXd6pJsQ+gqjk8VWFYmHrwBzW/n+uMPFiRwHB2I7ih8ciHFxIkd/3Omk5tCDV1t+2nNu5sxxpDFNx+huNhVT3/zMDz8usXC3ddaHBj1GHj/As08fwTS7Kt1HBTmyN29vdwAw+/wbwLVOJ3uAD1wi/dUH7Qei66PfyuRj4Ik9is+hglfbkbfR3cnZm7chlUWLdwmprtCohX4HUtlOcQjLYCu+fzGJH2QRKvP3UNz8bWk1qMxjGTOMThZ3kvgLI5AzFfo379UAAAAASUVORK5CYII=";
+        public DeliveryAgentControllerIt(CustomWebApplicationFactory<Program> factory) : base(factory)
         {
-            builder.ConfigureTestServices(services =>
-            {
-                services.RemoveAll(typeof(DbContextOptions<RideWiseApiDbContext>));
-            });
-        }
-        public DeliveryAgentControllerIt(WebApplicationFactory<Program> factory)
-        {
-            _factory = factory;
-            _deliveryAgentServiceMock = new Mock<IDeliveryAgentService>();
         }
 
         [Fact]
-        public async Task CreateDeliveryAgent_Responds200()
+        async Task CreateDeliveryAgent_SendingValidDeliveryAgent_ReturnsSuccess()
         {
-            var client = _factory.CreateClient();
-            var body = new DeliveryAgentRequest()
+            InitializeDbTest(feedDb: false);
+            var deliveryAgentRequest = new DeliveryAgentRequest()
             {
-                Data_nascimento = DateTime.Now,
-                Numero_cnh = 123456,
-                Tipo_cnh = "A",
-                Identificador = "123",
                 Cnpj = "123456789",
-                Image_cnh = "as321das132d132asd132as312das312da132asd312"
-            };
-            var deliveryAgentResult = new DeliveryAgentResult()
-            {
                 Data_nascimento = DateTime.Now,
+                Identificador = "1",
+                Image_cnh = validDriverLicenseImageBase64,
+                Nome = "Teste",
                 Numero_cnh = 123456,
-                Tipo_cnh = "A",
-                Identificador = "123",
-                Cnpj = "123456789"
+                Tipo_cnh = "A"
             };
-            _ = _deliveryAgentServiceMock.Setup(_ => _.CreateAsync(body)).Returns(Task.FromResult(deliveryAgentResult));
-            var httpClient = _factory.WithWebHostBuilder(builder => builder.ConfigureServices(services => services.AddScoped(_ => _deliveryAgentServiceMock.Object)))
-                .CreateClient();
-            var response = await httpClient.PostAsync(BaseUri, toHttpContent(body));
-            response.EnsureSuccessStatusCode();
-            var responseBody = await response.Content.ReadAsStringAsync();
-            AssertHasAllDeliveryAgentResultField(responseBody);
-        }
 
-        private static HttpContent toHttpContent<T>(T body)
-        {
-            var appCustomOptions = new JsonSerializerOptions();
-            appCustomOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase, allowIntegerValues: false));
-            var bodyAsJsonStr = JsonSerializer.Serialize(body, appCustomOptions);
-            var bodyAsJsonBuffer = System.Text.Encoding.UTF8.GetBytes(bodyAsJsonStr);
-            var httpContent = new ByteArrayContent(bodyAsJsonBuffer);
-            httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(MediaTypeNames.Application.Json);
-            return httpContent;
+            var response = await Post<DeliveryAgentRequest>(deliveryAgentRequest, "entregadores");
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
         }
-        private static void AssertHasAllDeliveryAgentResultField(string responseBody)
+        [Fact]
+        async Task CreateDeliveryAgent_AlreadyExistsDeliveryAgent_ReturnsBadRequest()
         {
-            Assert.Contains("Identificador", responseBody);
+            InitializeDbTest(feedDb: true);
+            var deliveryAgentRequest = new DeliveryAgentRequest()
+            {
+                Cnpj = "1234567893",
+                Data_nascimento = DateTime.Now,
+                Identificador = "1",
+                Image_cnh = validDriverLicenseImageBase64,
+                Nome = "Teste",
+                Numero_cnh = 12345,
+                Tipo_cnh = "A"
+            };
+            
+            var response = await Post<DeliveryAgentRequest>(deliveryAgentRequest, "entregadores");
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+        }
+        [Fact]
+        async Task CreateDeliveryAgent_InvalidDriverLicense_ReturnsBadRequest()
+        {
+            InitializeDbTest(feedDb: true);
+            var deliveryAgentRequest = new DeliveryAgentRequest()
+            {
+                Cnpj = "1234567893",
+                Data_nascimento = DateTime.Now,
+                Identificador = "1",
+                Image_cnh = validDriverLicenseImageBase64,
+                Nome = "Teste",
+                Numero_cnh = 12345,
+                Tipo_cnh = "C"
+            };
+
+            var response = await Post<DeliveryAgentRequest>(deliveryAgentRequest, "entregadores");
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+        }
+        [Fact]
+        async Task CreateDeliveryAgent_UpdatingValidDriverLicenseImage_ReturnsSuccessuful()
+        {
+            InitializeDbTest(feedDb: true);
+            var deliveryAgentDriverLicenseRequest = new DeliveryAgentDriverLicenseRequest()
+            {
+                Imagem_cnh = validDriverLicenseImageBase64
+            };            
+            var response = await Post<DeliveryAgentDriverLicenseRequest>(deliveryAgentDriverLicenseRequest, "entregadores/1/cnh");
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
         }
     }
 }

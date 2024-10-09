@@ -1,14 +1,16 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using RabbitMQ.Client.Events;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using RideWise.Api.Application.Services.Interfaces;
+using RideWise.Common.Extensions;
+using RideWise.Common.Models;
+using RideWise.Notification.Application.Repositories.Interfaces;
+using RideWise.Notification.Domain.Models;
 using RideWise.Notification.Extensions;
 using System.Text;
-using RideWise.Common.Models;
-using Newtonsoft.Json;
-using RideWise.Notification.Domain.Models;
-using RideWise.Notification.Application.Repositories.Interfaces;
 
 var builder = new ConfigurationBuilder()
     .AddJsonFile("appSettings.json", false, false)
@@ -22,11 +24,15 @@ IHost _host = Host.CreateDefaultBuilder().ConfigureServices(
         services.ConfigureRabbitMQ(config);
         services.ConfigureDbContext(config);
         services.ConfigureRepositories();
-        services.ConfigureRabbitMQ(config);
-
+        services.ConfigureLogger();
     }).Build();
 
 var _repositoryManager = _host.Services.GetRequiredService<IRepositoryManager>();
+var _logger = _host.Services.GetRequiredService<ILoggerManager>();
+var motorcycleNotificationQueue = config["Queues:MotorcycleNotification"];
+var yearNotificationCriteria = Convert.ToInt32(config["NotificationCriteria:Year"]);
+_logger.LogInfo("Start listening");
+Console.WriteLine($"Start listening queue: {motorcycleNotificationQueue}");
 
 var factory = new ConnectionFactory
 {
@@ -38,7 +44,7 @@ var factory = new ConnectionFactory
 var connection = factory.CreateConnection();
 
 using var channel = connection.CreateModel();
-channel.QueueDeclare("ride-wise-api.create-motorcycle.queue",
+channel.QueueDeclare(motorcycleNotificationQueue,
     durable: true,
     exclusive: false,
     autoDelete: false,
@@ -48,12 +54,12 @@ var consumer = new EventingBasicConsumer(channel);
 
 consumer.Received += (model, eventArgs) =>
 {
+    var body = eventArgs.Body.ToArray();
+    var message = Encoding.UTF8.GetString(body);
     try
     {
-        var body = eventArgs.Body.ToArray();
-        var message = Encoding.UTF8.GetString(body);
         var result = JsonConvert.DeserializeObject<Motorcycle>(message);
-        if (result?.Year == 2024)
+        if (result?.Year == yearNotificationCriteria)
         {
             var motorcycleNotice = new MotorcycleNotice()
             {
@@ -64,13 +70,15 @@ consumer.Received += (model, eventArgs) =>
             _repositoryManager.MotorcycleNotice.Create(motorcycleNotice);
             _repositoryManager.Save();
             channel.BasicAck(eventArgs.DeliveryTag, false);
-        }
+            _logger.LogInfo($"Successfull processing message: {message}");
+        }        
     }
     catch (Exception ex)
     {
+        _logger.LogError($"Failed processing message: {message}");
         channel.BasicNack(eventArgs.DeliveryTag, false, true);
     }
 };
-channel.BasicConsume(queue: "ride-wise-api.create-motorcycle.queue", autoAck: false, consumer: consumer);
+channel.BasicConsume(queue: motorcycleNotificationQueue, autoAck: false, consumer: consumer);
 
 Console.ReadKey();

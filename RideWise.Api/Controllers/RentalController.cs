@@ -52,7 +52,7 @@ namespace RideWise.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetByIdentification([FromRoute] string id)
+        public async Task<IActionResult> GetById([FromRoute] string id)
         {
             try
             {
