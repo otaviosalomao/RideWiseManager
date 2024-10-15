@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
@@ -10,11 +11,11 @@ using RideWise.Common.Models;
 using RideWise.Notification.Application.Repositories.Interfaces;
 using RideWise.Notification.Domain.Models;
 using RideWise.Notification.Extensions;
+using RideWise.Notification.Infrastructure;
 using System.Text;
 
 var builder = new ConfigurationBuilder()
-    .AddJsonFile("appSettings.json", false, false)
-    .AddJsonFile("appSettings.Development.json", false, false)
+    .AddJsonFile("notificationSettings.json", false, false)    
     .AddEnvironmentVariables();
 
 var config = builder.Build();
@@ -25,7 +26,8 @@ IHost _host = Host.CreateDefaultBuilder().ConfigureServices(
         services.ConfigureDbContext(config);
         services.ConfigureRepositories();
         services.ConfigureLogger();
-    }).Build();
+
+    }).Build().MigrateDatabase<RideWiseNotificationDbContext>();
 
 var _repositoryManager = _host.Services.GetRequiredService<IRepositoryManager>();
 var _logger = _host.Services.GetRequiredService<ILoggerManager>();
@@ -71,7 +73,7 @@ consumer.Received += (model, eventArgs) =>
             _repositoryManager.Save();
             channel.BasicAck(eventArgs.DeliveryTag, false);
             _logger.LogInfo($"Successfull processing message: {message}");
-        }        
+        }
     }
     catch (Exception ex)
     {

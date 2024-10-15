@@ -1,6 +1,11 @@
 {
   "ConnectionStrings": {
-    "RideWiseNotificationDatabase": "Host=localhost; Database=ride_wise_notification; Username=postgres; Password=123456"
+    "RideWiseNotificationDatabase": "Host=postgres; Database=ride_wise_notification; Username=postgres; Password=123456"
+  },
+  "RabbitMqConfiguration": {
+    "Host": "localhost",
+    "Username": "guest",
+    "Password": "guest"
   },
   "Queues": {
     "MotorcycleNotification": "ride-wise-api.create-motorcycle.queue"

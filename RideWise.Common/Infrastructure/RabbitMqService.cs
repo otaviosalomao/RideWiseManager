@@ -21,6 +21,8 @@ namespace RideWise.Api.Application.Services
         {
             using var connection = _connectionFactory.CreateConnection();
             using var channel = connection.CreateModel();
+            channel.ExchangeDeclare(exchange: exchange, type: ExchangeType.Fanout);
+            channel.QueueDeclare(queue: queue, durable: true, autoDelete: false, exclusive: false);
             channel.QueueBind(queue: queue, exchange: exchange, routingKey: string.Empty);
             channel.BasicPublish(exchange: exchange,
                                  routingKey: string.Empty,

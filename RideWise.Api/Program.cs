@@ -17,7 +17,7 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "RideWise.API",
+        Title = "RideWise.Api",
         Version = "1.0.0",
         Contact = new OpenApiContact
         {
@@ -26,7 +26,7 @@ builder.Services.AddSwaggerGen(options =>
             Url = new Uri("https://www.linkedin.com/in/otaviosalomao/")
         }
     });
-    var xmlFile = "RideWise.API.xml";
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     options.IncludeXmlComments(xmlPath);
 });

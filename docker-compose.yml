@@ -10,7 +10,22 @@ services:
     depends_on:
       - postgres
       - rabbitmq
-
+    networks:
+      - ridewise_net
+    command: ["bash", "-c", "dotnet RideWise.Api.dll", "--urls", "http://*:5000;http://*:5001"]
+        
+  ridewise.notification:
+    image: ridewiseapi
+    build:
+      context: .
+      dockerfile: Dockerfile    
+    depends_on:
+      - postgres
+      - rabbitmq
+    networks:
+      - ridewise_net
+    command: ["bash", "-c", "dotnet RideWise.Notification.dll"]
+      
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: 'rabbitmq'
@@ -34,6 +49,8 @@ services:
       interval: 5s
       timeout: 10s
       retries: 10
+    networks:
+      - ridewise_net
 
 networks:
   ridewise_net:
