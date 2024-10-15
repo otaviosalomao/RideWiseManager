@@ -1,7 +1,8 @@
-﻿using RideWise.Api.Application.Services.Interfaces;
+﻿using RideWise.Common.Infrastructure;
+using RideWise.Common.Services.Interfaces;
 using System.Text;
 
-namespace RideWise.Api.Application.Services
+namespace RideWise.Common.Services
 {
     public class MessageBusService : IMessageBusService
     {

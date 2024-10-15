@@ -1,13 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using RideWise.Api.Application.Services.Interfaces;
 using RideWise.Common.Extensions;
 using RideWise.Common.Models;
+using RideWise.Common.Services.Interfaces;
 using RideWise.Notification.Application.Repositories.Interfaces;
 using RideWise.Notification.Domain.Models;
 using RideWise.Notification.Extensions;
@@ -15,21 +13,19 @@ using RideWise.Notification.Infrastructure;
 using System.Text;
 
 var builder = new ConfigurationBuilder()
-    .AddJsonFile("notificationSettings.json", false, false);       
-
+    .AddJsonFile("appSettings.json", false, false);
 var config = builder.Build();
-IHost _host = Host.CreateDefaultBuilder().ConfigureServices(
-    services =>
-    {
-        services.ConfigureRabbitMQ(config);
-        services.ConfigureDbContext(config);
-        services.ConfigureRepositories();
-        services.ConfigureLogger();
+var services = new ServiceCollection();
 
-    }).Build().MigrateDatabase<RideWiseNotificationDbContext>();
+services.ConfigureDbContext(config);
+services.ConfigureRepositories();
+services.ConfigureLogger();
 
-var _repositoryManager = _host.Services.GetRequiredService<IRepositoryManager>();
-var _logger = _host.Services.GetRequiredService<ILoggerManager>();
+var serviceProvider = services.BuildServiceProvider();
+MigrationService.InitializaMigration(serviceProvider);
+
+var _repositoryManager = serviceProvider.GetService<IRepositoryManager>();
+var _logger = serviceProvider.GetRequiredService<ILoggerManager>();
 var motorcycleNotificationQueue = config["Queues:MotorcycleNotification"];
 var yearNotificationCriteria = Convert.ToInt32(config["NotificationCriteria:Year"]);
 _logger.LogInfo("Start listening");
@@ -77,7 +73,7 @@ consumer.Received += (model, eventArgs) =>
     catch (Exception ex)
     {
         _logger.LogError($"Failed processing message: {message}");
-        channel.BasicNack(eventArgs.DeliveryTag, false, true);
+        channel.BasicNack(eventArgs.DeliveryTag, false, false);
     }
 };
 channel.BasicConsume(queue: motorcycleNotificationQueue, autoAck: false, consumer: consumer);

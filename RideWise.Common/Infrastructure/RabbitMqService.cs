@@ -1,8 +1,7 @@
 ﻿using RabbitMQ.Client;
-using RideWise.Api.Application.Services.Interfaces;
 using RideWise.Common.Models;
 
-namespace RideWise.Api.Application.Services
+namespace RideWise.Common.Infrastructure
 {
     public class RabbitMqService : DefaultBasicConsumer, IRabbitMqService
     {

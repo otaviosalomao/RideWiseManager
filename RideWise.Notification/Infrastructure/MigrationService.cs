@@ -1,30 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using RideWise.Notification.Infrastructure;
 
-public static class MigrationExtensions
+namespace RideWise.Notification.Infrastructure
 {
-    public static IHost MigrateDatabase<T>(this IHost host) where T : DbContext
+    public static class MigrationService
     {
-        using (var scope = host.Services.CreateScope())
+        public static void InitializaMigration(this ServiceProvider serviceProvider)
         {
-            var services = scope.ServiceProvider;
-            var logger = services.GetRequiredService<ILogger<T>>();
-            var context = services.GetRequiredService<T>();
-
-            try
-            {
-                logger.LogInformation("Migrating database associated with context {DbContextName}", typeof(T).Name);
-                context.Database.Migrate();
-                logger.LogInformation("Migrated database associated with context {DbContextName}", typeof(T).Name);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "An error occurred while migrating the database used on context {DbContextName}", typeof(T).Name);
-            }
+            var context = serviceProvider.GetService<RideWiseNotificationDbContext>();
+            context.Database.Migrate();
         }
-
-        return host;
     }
 }
