@@ -4,6 +4,7 @@ using Moq;
 using RideWise.Api.Application.Models;
 using RideWise.Api.Application.Services.Interfaces;
 using RideWise.Api.Controllers;
+using RideWise.Common.Services.Interfaces;
 using Xunit;
 
 namespace RideWise.Test.Controllers

@@ -4,6 +4,7 @@ using RideWise.Api.Application.Repositories.Interfaces;
 using RideWise.Api.Application.Services.Interfaces;
 using RideWise.Api.Domain.Models;
 using RideWise.Api.Domain.Services.Interfaces;
+using RideWise.Common.Services.Interfaces;
 
 namespace RideWise.Api.Application.Services
 {

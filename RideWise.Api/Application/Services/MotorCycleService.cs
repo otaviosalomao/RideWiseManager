@@ -3,6 +3,7 @@ using RideWise.Api.Application.Models;
 using RideWise.Api.Application.Repositories.Interfaces;
 using RideWise.Api.Application.Services.Interfaces;
 using RideWise.Api.Domain.Models;
+using RideWise.Common.Services.Interfaces;
 
 namespace RideWise.Api.Application.Services
 {

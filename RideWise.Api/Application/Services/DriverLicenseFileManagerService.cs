@@ -1,4 +1,5 @@
 ﻿using RideWise.Api.Application.Services.Interfaces;
+using RideWise.Common.Services.Interfaces;
 
 namespace RideWise.Api.Application.Services
 {

@@ -4,9 +4,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile    
+    stdin_open: true  
+    tty: true         
     depends_on:
-      - postgres
-      - rabbitmq
+     postgres:
+      condition: service_started
+     rabbitmq:
+      condition: service_healthy      
     networks:
       - ridewise_net
     command: ["dotnet", "RideWise.Notification.dll"] 
@@ -22,8 +26,10 @@ services:
       - "5000:5000"  
       - "5001:5001" 
     depends_on:
-      - postgres
-      - rabbitmq
+      postgres:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy 
     networks:
       - ridewise_net
     command: ["dotnet", "RideWise.Api.dll"]    
@@ -38,6 +44,11 @@ services:
     - "15672:15672"    # Porta para o painel de gerenciamento do RabbitMQ
     networks:
       - ridewise_net
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
       
   postgres:
     container_name: "Postgres"

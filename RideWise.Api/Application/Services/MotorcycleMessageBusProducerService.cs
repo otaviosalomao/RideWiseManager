@@ -1,5 +1,6 @@
 ﻿using RideWise.Api.Application.Services.Interfaces;
 using RideWise.Api.Domain.Models;
+using RideWise.Common.Services.Interfaces;
 using System.Text.Json;
 
 namespace RideWise.Api.Application.Services
