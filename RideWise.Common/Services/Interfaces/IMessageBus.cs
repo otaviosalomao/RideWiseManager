@@ -1,7 +1,4 @@
-﻿using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-
-namespace RideWise.Api.Application.Services.Interfaces
+﻿namespace RideWise.Common.Services.Interfaces
 {
     public interface IMessageBusService
     {

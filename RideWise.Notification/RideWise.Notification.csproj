@@ -9,12 +9,12 @@
 
   <ItemGroup>
     <None Remove="appsettings.Development.json" />
+    <None Remove="appSettings.json" />
     <None Remove="NLog.config" />
-    <None Remove="notificationSettings.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="notificationSettings.json">
+    <Content Include="appSettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="NLog.config">

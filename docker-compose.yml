@@ -1,4 +1,16 @@
 services:
+  ridewise.notification:
+    image: ridewiseapi
+    build:
+      context: .
+      dockerfile: Dockerfile    
+    depends_on:
+      - postgres
+      - rabbitmq
+    networks:
+      - ridewise_net
+    command: ["dotnet", "RideWise.Notification.dll"] 
+ 
   ridewise.api:
     image: ridewiseapi
     build:
@@ -14,19 +26,7 @@ services:
       - rabbitmq
     networks:
       - ridewise_net
-    # command: ["bash", "-c", "dotnet RideWise.Api.dll"]
-        
-  # ridewise.notification:
-  #   image: ridewiseapi
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile    
-  #   depends_on:
-  #     - postgres
-  #     - rabbitmq
-  #   networks:
-  #     - ridewise_net
-  #   command: ["bash", "-c", "dotnet RideWise.Notification.dll"]
+    command: ["dotnet", "RideWise.Api.dll"]    
       
   rabbitmq: # login guest:guest
     image: rabbitmq:3-management

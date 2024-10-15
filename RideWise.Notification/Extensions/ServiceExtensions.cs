@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RideWise.Common.Models;
 using RideWise.Notification.Application.Repositories;
 using RideWise.Notification.Application.Repositories.Interfaces;
 using RideWise.Notification.Infrastructure;

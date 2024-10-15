@@ -1,8 +1,8 @@
 ﻿using NLog;
-using RideWise.Api.Application.Services.Interfaces;
+using RideWise.Common.Services.Interfaces;
 using ILogger = NLog.ILogger;
 
-namespace RideWise.Api.Application.Services
+namespace RideWise.Common.Services
 {
     public class LoggerManager : ILoggerManager
     {

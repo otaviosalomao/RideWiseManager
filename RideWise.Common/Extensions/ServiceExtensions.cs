@@ -1,9 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NLog;
-using RideWise.Api.Application.Services;
-using RideWise.Api.Application.Services.Interfaces;
+using RideWise.Common.Infrastructure;
 using RideWise.Common.Models;
+using RideWise.Common.Services;
+using RideWise.Common.Services.Interfaces;
 
 namespace RideWise.Common.Extensions
 {
