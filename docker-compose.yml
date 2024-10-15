@@ -34,14 +34,14 @@ services:
       - ridewise_net
     command: ["dotnet", "RideWise.Api.dll"]    
       
-  rabbitmq: # login guest:guest
+  rabbitmq: 
     image: rabbitmq:3-management
     hostname: "rabbitmq"
     labels:
       NAME: "rabbitmq"
     ports:    
     - "5672:5672"    
-    - "15672:15672"    # Porta para o painel de gerenciamento do RabbitMQ
+    - "15672:15672"    
     networks:
       - ridewise_net
     healthcheck:
