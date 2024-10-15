@@ -48,7 +48,7 @@ namespace RideWise.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Erro getting motorcycle by license plate {placa}: {ex.Message}");
-                return StatusCode(400, new { mensagem = "Dados inválidos" });
+                return StatusCode(400, new { mensagem = ex.Message });
             }
         }
 
@@ -78,7 +78,7 @@ namespace RideWise.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Erro getting motorcycle by {id}: {ex.Message}");
-                return StatusCode(400, new { mensagem = "Dados inválidos" });
+                return StatusCode(400, new { mensagem = ex.Message });
             }
         }
 
@@ -101,7 +101,7 @@ namespace RideWise.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Erro creating motorcycle {motorcycleRequest}: {ex.Message}");
-                return StatusCode(400, new { mensagem = "Dados inválidos" });
+                return StatusCode(400, new { mensagem = ex.Message });
             }
         }
 
@@ -126,7 +126,7 @@ namespace RideWise.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Erro updating motorcycle {id}: {ex.Message}");
-                return StatusCode(400, new { mensagem = "Dados inválidos" });
+                return StatusCode(400, new { mensagem = ex.Message });
             }
         }
 
@@ -149,7 +149,7 @@ namespace RideWise.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Erro deleting motorcycle {id}: {ex.Message}");
-                return StatusCode(400, new { mensagem = "Dados inválidos" });
+                return StatusCode(400, new { mensagem = ex.Message });
             }
         }
     }
