@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideWise.Notification", "Ri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideWise.IntegrationTest", "RideWise.IntegrationTest\RideWise.IntegrationTest.csproj", "{AAB1E30D-1A17-4979-96B3-2F8D2152DEDF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{2662047F-6EDC-450B-AF81-05EBE5AEC63E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{2662047F-6EDC-450B-AF81-05EBE5AEC63E}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
 		Dockerfile = Dockerfile
