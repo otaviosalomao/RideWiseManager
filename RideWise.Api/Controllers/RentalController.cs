@@ -40,7 +40,7 @@ namespace RideWise.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Erro creating rental {rentalRequest}: {ex.Message}");
-                return StatusCode(400, new { mensagem = "Dados inválidos" });
+                return StatusCode(400, new { mensagem = ex.Message });
             }
         }
         /// <summary>
@@ -69,7 +69,7 @@ namespace RideWise.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Erro getting rental by {id}: {ex.Message}");
-                return StatusCode(400, new { mensagem = "Dados inválidos" });
+                return StatusCode(400, new { mensagem = ex.Message });
             }
         }
         /// <summary>
@@ -93,7 +93,7 @@ namespace RideWise.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Erro updating rental {id}: {ex.Message}");
-                return StatusCode(400, new { mensagem = "Dados inválidos" });
+                return StatusCode(400, new { mensagem = ex.Message });
             }
         }
     }

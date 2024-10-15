@@ -43,7 +43,7 @@ namespace RideWise.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Erro creating delivery agent {deliveryAgentRequest}: {ex.Message}");
-                return StatusCode(400, new { mensagem = "Dados inválidos" });
+                return StatusCode(400, new { mensagem = ex.Message });
             }
         }
         /// <summary>
@@ -66,7 +66,7 @@ namespace RideWise.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Erro updating delivery agent identification {id}: {ex.Message}");
-                return StatusCode(400, new { mensagem = "Dados inválidos" });
+                return StatusCode(400, new { mensagem = ex.Message });
             }
         }
     }
