@@ -3,7 +3,7 @@
     "RideWiseNotificationDatabase": "Host=postgres; Database=ride_wise_notification; Username=postgres; Password=123456"
   },
   "RabbitMqConfiguration": {
-    "Host": "localhost",
+    "Hostname": "rabbitmq",
     "Username": "guest",
     "Password": "guest"
   },

@@ -35,4 +35,4 @@ WORKDIR /app
 COPY --from=build /app/out .
 
 # Defina o comando de entrada para o contêiner
-#CMD ["dotnet", "RideWise.Api.dll"]
+CMD ["dotnet", "RideWise.Api.dll"]

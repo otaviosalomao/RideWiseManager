@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.OpenApi.Models;
 using RideWise.Api.Extensions;
 using RideWise.Api.Infrastructure;
@@ -35,12 +36,13 @@ builder.Services.ConfigureRabbitMQ(builder.Configuration);
 
 var app = builder.Build();
 MigrationService.InitializaMigration(app);
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
+var option = new RewriteOptions();
+option.AddRedirect("^$", "swagger");
+app.UseRewriter(option);
+
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

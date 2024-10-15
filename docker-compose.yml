@@ -4,34 +4,42 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "5000:5000"
-      - "5001:5001"  
+    environment:            
+      - ASPNETCORE_HTTP_PORTS=5001
+    ports:      
+      - "5000:5000"  
+      - "5001:5001" 
     depends_on:
       - postgres
       - rabbitmq
     networks:
       - ridewise_net
-    command: ["bash", "-c", "dotnet RideWise.Api.dll", "--urls", "http://*:5000;http://*:5001"]
+    # command: ["bash", "-c", "dotnet RideWise.Api.dll"]
         
-  ridewise.notification:
-    image: ridewiseapi
-    build:
-      context: .
-      dockerfile: Dockerfile    
-    depends_on:
-      - postgres
-      - rabbitmq
-    networks:
-      - ridewise_net
-    command: ["bash", "-c", "dotnet RideWise.Notification.dll"]
+  # ridewise.notification:
+  #   image: ridewiseapi
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile    
+  #   depends_on:
+  #     - postgres
+  #     - rabbitmq
+  #   networks:
+  #     - ridewise_net
+  #   command: ["bash", "-c", "dotnet RideWise.Notification.dll"]
       
-  rabbitmq:
-    image: rabbitmq:3-management-alpine
-    container_name: 'rabbitmq'
+  rabbitmq: # login guest:guest
+    image: rabbitmq:3-management
+    hostname: "rabbitmq"
+    labels:
+      NAME: "rabbitmq"
     ports:
-      - "5672:5672"      # Porta para a comunicação com o RabbitMQ
-      - "15672:15672"    # Porta para o painel de gerenciamento do RabbitMQ
+    - "4369:4369"
+    - "5671:5671"
+    - "5672:5672"
+    - "25672:25672"
+    - "15671:15671"
+    - "15672:15672"    # Porta para o painel de gerenciamento do RabbitMQ
     networks:
       - ridewise_net
       
@@ -41,7 +49,7 @@ services:
     environment:
       - "POSTGRES_USER=postgres"
       - "POSTGRES_PASSWORD=123456"
-      - "POSTGRES_DB=JobService"
+      - "POSTGRES_DB=ride_wise_api"
     ports:
       - "5432:5432"
     healthcheck:
