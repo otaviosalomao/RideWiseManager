@@ -17,7 +17,7 @@ namespace RideWise.Common.Extensions
         {
             var rabbitMqConfiguration = new RabbitMqConfiguration()
             {
-                HostName = configuration["RabbitMqConfiguration:Host"],
+                HostName = configuration["RabbitMqConfiguration:Hostname"],
                 UserName = configuration["RabbitMqConfiguration:Username"],
                 Password = configuration["RabbitMqConfiguration:Password"]
             };

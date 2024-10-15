@@ -15,8 +15,7 @@ using RideWise.Notification.Infrastructure;
 using System.Text;
 
 var builder = new ConfigurationBuilder()
-    .AddJsonFile("notificationSettings.json", false, false)    
-    .AddEnvironmentVariables();
+    .AddJsonFile("notificationSettings.json", false, false);       
 
 var config = builder.Build();
 IHost _host = Host.CreateDefaultBuilder().ConfigureServices(
@@ -38,7 +37,7 @@ Console.WriteLine($"Start listening queue: {motorcycleNotificationQueue}");
 
 var factory = new ConnectionFactory
 {
-    HostName = config["RabbitMqConfiguration:Host"],
+    HostName = config["RabbitMqConfiguration:Hostname"],
     UserName = config["RabbitMqConfiguration:Username"],
     Password = config["RabbitMqConfiguration:Password"]
 };
