@@ -6,6 +6,7 @@ using RideWise.Api.Application.Services;
 using RideWise.Api.Application.Services.Interfaces;
 using RideWise.Api.Domain.Models;
 using RideWise.Api.Domain.Services.Interfaces;
+using RideWise.Common.Services.Interfaces;
 using Xunit;
 
 namespace RideWise.Test.Services

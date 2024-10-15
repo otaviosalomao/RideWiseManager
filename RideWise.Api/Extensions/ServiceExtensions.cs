@@ -11,6 +11,9 @@ using RideWise.Api.Application.Validators;
 using RideWise.Api.Domain.Services;
 using RideWise.Api.Domain.Services.Interfaces;
 using RideWise.Api.Infrastructure;
+using RideWise.Common.Infrastructure;
+using RideWise.Common.Services;
+using RideWise.Common.Services.Interfaces;
 
 namespace RideWise.Api.Extensions
 {
